@@ -20,11 +20,11 @@ export default async function TeamButton({ id }: TeamButtonProps) {
 				alt={`${data.team.displayName} logo`}
 				height={100}
 				width={100}
-				className='size-10'
+				className='size-20'
 			/>
-			<span className='font-medium flex gap-1 items-baseline'>
-				{data.team.rank && <span className='font-light'>{data.team.rank}&nbsp;</span>}
-				<span className='text-xl'>{data.team.displayName}</span>
+			<span className='font-black flex gap-1 items-baseline text-slate-700 text-sm lg:text-xl'>
+				{data.team.rank && <span className='font-medium'>{data.team.rank}&nbsp;</span>}
+				<span className=''>{data.team.displayName}</span>
 			</span>
 		</a>
 	);

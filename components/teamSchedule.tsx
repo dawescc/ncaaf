@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface Team {
 	location: string;
@@ -86,52 +87,58 @@ export default async function TeamSchedule({ teamid }: TeamScheduleProps) {
 	const highlightedGameId = highlightGame(data.events);
 
 	return (
-		<div className='flex flex-col gap-2 p-4 bg-gray-100'>
+		<div className='flex flex-col gap-0 py-6 bg-gray-100'>
 			{data.events.map((event) => {
 				const homeTeam = event.competitions[0].competitors.find((team) => team.homeAway === "home");
 				const awayTeam = event.competitions[0].competitors.find((team) => team.homeAway === "away");
 				const isHighlighted = event.id === highlightedGameId;
+				const isCompleted = event.status?.type?.completed;
+				const hasScore = homeTeam?.score?.displayValue || awayTeam?.score?.displayValue;
 
 				return (
 					<div
 						key={event.id}
-						className={`flex items-center justify-between p-2 border-b border-gray-300 ${isHighlighted ? "bg-yellow-200" : "bg-white"}`}>
+						className={`flex items-center justify-between py-2 px-4 border-b border-gray-300 ${isHighlighted ? "bg-yellow-200" : "bg-white"}`}>
 						<div className='flex items-center gap-2'>
-							{awayTeam && (
-								<>
-									<Image
-										src={awayTeam.team.logos[0].href}
-										alt={awayTeam.team.displayName}
-										width={30}
-										height={30}
-									/>
-									<span className='text-sm font-semibold'>{awayTeam.team.displayName}</span>
-									{awayTeam.score && <span className='text-sm'>{awayTeam.score.displayValue}</span>}
-								</>
-							)}
+							<TeamDisplay
+								team={awayTeam?.team}
+								score={awayTeam?.score?.displayValue}
+							/>
+							<span className='text-xs font-bold'>@</span>
+							<TeamDisplay
+								team={homeTeam?.team}
+								score={homeTeam?.score?.displayValue}
+							/>
 						</div>
-						<div className='flex items-center gap-2'>
-							<div className='text-center text-sm font-bold'>@</div>
-							{homeTeam && (
-								<>
-									<Image
-										src={homeTeam.team.logos[0].href}
-										alt={homeTeam.team.displayName}
-										width={30}
-										height={30}
-									/>
-									<span className='text-sm font-semibold'>{homeTeam.team.displayName}</span>
-									{homeTeam.score && <span className='text-sm'>{homeTeam.score.displayValue}</span>}
-								</>
+						<div className='text-right text-xs text-gray-600'>
+							{isCompleted || hasScore ? (
+								<span className='font-semibold text-red-500'>FINAL</span>
+							) : (
+								<span>{event.timeValid ? formatDate(event.date) : "TBD"}</span>
 							)}
-						</div>
-						<div className='text-right text-sm text-gray-600'>
-							<span>{event.timeValid ? formatDate(event.date) : "TBD"}</span>
-							{event.status?.type?.description && <span className='block text-xs text-red-500'>{event.status.type.description}</span>}
 						</div>
 					</div>
 				);
 			})}
 		</div>
+	);
+}
+
+function TeamDisplay({ team, score }: { team?: Team; score?: string }) {
+	if (!team) return null;
+
+	return (
+		<Link
+			href={`/team/${team.id}`}
+			className='flex items-center gap-1'>
+			<Image
+				src={team.logos[0].href}
+				alt={team.displayName}
+				width={20}
+				height={20}
+			/>
+			<span className='text-xs font-semibold'>{team.abbreviation}</span>
+			{score && <span className='text-lg font-bold ml-2'>{score}</span>}
+		</Link>
 	);
 }
