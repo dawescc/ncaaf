@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { MouseEvent } from "react";
 
 interface Team {
 	id: string;
@@ -16,6 +18,7 @@ interface SearchResultsProps {
 	searchTerm: string;
 	teams: Record<string, Team>;
 	conferences: Record<string, Conference>;
+	onResultClick: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
 
 function formatName(name: string): string {
@@ -25,7 +28,7 @@ function formatName(name: string): string {
 		.join(" ");
 }
 
-export default function SearchResult({ searchTerm, teams, conferences }: SearchResultsProps) {
+export default function SearchResult({ searchTerm, teams, conferences, onResultClick }: SearchResultsProps) {
 	const filteredTeams = Object.values(teams).filter((team) => team.slug.toLowerCase().includes(searchTerm.toLowerCase()));
 
 	const filteredConferences = Object.values(conferences).filter((conference) =>
@@ -37,11 +40,13 @@ export default function SearchResult({ searchTerm, teams, conferences }: SearchR
 	}
 
 	return (
-		<div className='flex flex-col space-y-2 p-2 max-h-60 overflow-y-auto'>
+		<div className='flex flex-col space-y-2 p-2 max-h-full overflow-y-auto'>
 			{filteredTeams.map((team) => (
-				<div
+				<Link
 					key={team.id}
-					className='flex items-center p-2'>
+					href={`/teams/${team.id}`}
+					className='flex items-center p-2'
+					onClick={onResultClick}>
 					<Image
 						src={`https://a.espncdn.com/i/teamlogos/ncaa/500/${team.id}.png`}
 						alt={`${team.slug} logo`}
@@ -50,12 +55,14 @@ export default function SearchResult({ searchTerm, teams, conferences }: SearchR
 						className='size-10 mr-2'
 					/>
 					<span className='text-sm font-medium capitalize'>{formatName(team.slug)}</span>
-				</div>
+				</Link>
 			))}
 			{filteredConferences.map((conference) => (
-				<div
+				<Link
+					href={`/conferences/${conference.id}`}
 					key={conference.id}
-					className='flex items-center p-2'>
+					className='flex items-center p-2'
+					onClick={onResultClick}>
 					<Image
 						src={conference.href}
 						alt={`${conference.full} logo`}
@@ -64,7 +71,7 @@ export default function SearchResult({ searchTerm, teams, conferences }: SearchR
 						className='size-10 mr-2'
 					/>
 					<span className='text-sm font-medium capitalize'>{conference.full}</span>
-				</div>
+				</Link>
 			))}
 			{filteredTeams.length === 0 && filteredConferences.length === 0 && <div className='p-2 text-gray-500'>No results found</div>}
 		</div>
