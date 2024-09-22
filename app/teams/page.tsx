@@ -1,11 +1,11 @@
 import TeamButton from "@/components/teamButton";
-import { teams, conferences } from "@/data/teams";
+import { teams } from "@/data/teams";
 
 export default async function Home() {
 	return (
 		<div className=''>
-			<main className='px-2 py-4'>
-				<div className='flex flex-col space-y-3 max-w-xl mx-auto'>
+			<main className='px-2 py-4 max-w-3xl mx-auto'>
+				<div className='grid grid-cols-2 gap-3'>
 					{Object.values(teams).map((team) => (
 						<TeamButton
 							key={team.id}
