@@ -16,7 +16,7 @@ export default async function ConferencePage({ params }: { params: { slug: strin
 			<main className='px-2 py-4'>
 				<h1 className='text-3xl font-bold text-center'>{conferenceName}</h1>
 				<div className='flex flex-col space-y-3 max-w-xl mx-auto'>
-					{conferenceStandings.map((team) => {
+					{conferenceStandings.map((team: any) => {
 						const schoolName = team.School.toLowerCase();
 						const teamInfo = Object.values(teams).find((t) => t.slug.toLowerCase().includes(schoolName) && t.conference === params.slug);
 

@@ -1,5 +1,5 @@
 import TeamButton from "@/components/teamButton";
-import { teams, conferences } from "@/data/teams";
+import { teams } from "@/data/teams";
 
 export default async function Home() {
 	return (

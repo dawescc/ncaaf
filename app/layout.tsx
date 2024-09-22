@@ -10,7 +10,6 @@ export const metadata: Metadata = {
 };
 
 const notoSans = Noto_Sans({ subsets: ["latin"] });
-const notoSerif = Noto_Serif({ subsets: ["latin"] });
 
 export default function RootLayout({
 	children,
