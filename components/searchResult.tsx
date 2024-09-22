@@ -1,9 +1,21 @@
 import Image from "next/image";
 
+interface Team {
+	id: string;
+	slug: string;
+}
+
+interface Conference {
+	id: string;
+	short: string;
+	full: string;
+	href: string;
+}
+
 interface SearchResultsProps {
 	searchTerm: string;
-	teams: Record<string, any>;
-	conferences: Record<string, any>;
+	teams: Record<string, Team>;
+	conferences: Record<string, Conference>;
 }
 
 function formatName(name: string): string {
