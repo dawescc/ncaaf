@@ -98,7 +98,9 @@ export default async function TeamSchedule({ teamid }: TeamScheduleProps) {
 				return (
 					<div
 						key={event.id}
-						className={`flex items-center justify-between py-2 px-4 border-b border-gray-300 ${isHighlighted ? "bg-yellow-200" : "bg-white"}`}>
+						className={`flex items-center justify-between py-2 px-4 border-b border-gray-300 ${
+							isHighlighted ? "bg-yellow-200 hover:bg-yellow-300" : "bg-white hover:bg-gray-100"
+						}`}>
 						<div className='flex items-center gap-2'>
 							<TeamDisplay
 								team={awayTeam?.team}
