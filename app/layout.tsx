@@ -18,9 +18,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={`${notoSans.className} antialiased`}>
+			<body className={`${notoSans.className} antialiased flex flex-col min-h-screen`}>
 				<GlobalNavigation />
-				{children}
+				<main className='flex-grow px-2 py-4 max-w-3xl mx-auto'>{children}</main>
 				<GlobalFooter />
 			</body>
 		</html>

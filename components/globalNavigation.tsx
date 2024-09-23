@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Search } from "./searchButton";
 
 const navItems = [
 	{ name: "Conferences", href: "/conferences" },
@@ -28,7 +27,6 @@ export default function GlobalNavigation() {
 								{item.name}
 							</Link>
 						))}
-						<Search />
 					</div>
 				</div>
 			</nav>
