@@ -11,7 +11,7 @@ export default function GlobalNavigation() {
 		<header className='sticky top-0 z-50 bg-white border-gray-300 border-b-2'>
 			<nav className='container mx-auto px-4 sm:px-6 lg:px-8'>
 				<div className='flex items-center justify-between h-16'>
-					<div className='flex items-center bg-orange-400 text-white px-1'>
+					<div className='flex items-center bg-black text-white px-1'>
 						<Link
 							href='/'
 							className={`text-2xl font-black font-serif`}>

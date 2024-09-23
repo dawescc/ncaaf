@@ -1,5 +1,10 @@
-import { conferences, teams } from "@/data/teams";
+import Top25 from "@/components/apRankings";
 
-export default function Rankings() {
-	return <div className='grid grid-cols-1 gap-3'></div>;
+export default async function Page() {
+	return (
+		<div className='px-10 py-20 flex flex-col space-y-4'>
+			<h1 className='font-bold text-3xl font-serif'>AP Top 25</h1>
+			<Top25 />
+		</div>
+	);
 }

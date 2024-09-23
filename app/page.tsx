@@ -1,18 +1,19 @@
-import { FaSmileBeam } from "react-icons/fa";
+import Top25 from "@/components/apRankings";
+import ConferenceList from "@/components/confList";
 
 export default async function Home() {
 	return (
-		<div className=''>
-			<main className='px-2 py-4'>
-				<div className='px-10 py-20 flex flex-col space-y-4'>
-					<h1 className='font-bold text-3xl font-serif'>Hello</h1>
-					<p>This is an app that makes it easy to look at CFB Div I conference and teams.</p>
-					<p>
-						Other things will be added in the future.
-						<FaSmileBeam className='inline ml-1' />
-					</p>
+		<div className='px-5 py-10 flex flex-col space-y-4'>
+			<div className='flex flex-col md:flex-row md:flex-wrap gap-4'>
+				<div className='flex flex-col gap-2'>
+					<h2 className='font-bold text-2xl font-serif'>AP Top 25</h2>
+					<Top25 />
 				</div>
-			</main>
+				<div className='flex flex-col gap-2'>
+					<h2 className='font-bold text-2xl font-serif'>Conferences</h2>
+					<ConferenceList />
+				</div>
+			</div>
 		</div>
 	);
 }

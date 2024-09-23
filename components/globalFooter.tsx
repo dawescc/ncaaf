@@ -50,7 +50,7 @@ export default function GlobalFooter() {
 							</div>
 						</div>
 					</div>
-					<div className='mt-auto flex justify-center border-gray-300 border-t-[1px] pt-2'>
+					<div className='mt-auto flex justify-center'>
 						<span className='text-gray-400 text-xs'>
 							designed && developed with <BsHeartFill className='inline-flex' />
 						</span>

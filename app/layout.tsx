@@ -20,7 +20,7 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={`${notoSans.className} antialiased flex flex-col min-h-screen`}>
 				<GlobalNavigation />
-				<main className='flex-grow px-2 py-4 max-w-3xl mx-auto'>{children}</main>
+				<main className='flex-grow px-2 py-4 max-w-7xl mx-auto'>{children}</main>
 				<GlobalFooter />
 			</body>
 		</html>
