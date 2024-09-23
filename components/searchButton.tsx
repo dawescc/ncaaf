@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, MouseEvent } from "react";
+import { useState } from "react";
 import { Drawer } from "vaul";
 import { FaSearch, FaWindowClose } from "react-icons/fa";
 import { teams, conferences } from "@/data/teams";
@@ -15,7 +15,7 @@ export function Search() {
 		setIsOpen(false);
 	};
 
-	const handleResultClick = (event: MouseEvent<HTMLAnchorElement>) => {
+	const handleResultClick = () => {
 		handleDrawerClose();
 	};
 

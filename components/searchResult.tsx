@@ -21,6 +21,8 @@ interface SearchResultsProps {
 	onResultClick: (event: MouseEvent<HTMLAnchorElement>) => void;
 }
 
+type SearchResultItem = Team | Conference;
+
 function formatName(name: string): string {
 	return name
 		.split("-")
@@ -37,7 +39,7 @@ export default function SearchResult({ searchTerm, teams, conferences, onResultC
 		[conference.short, conference.full, conference.id].some((field) => field.toLowerCase().includes(searchTerm.toLowerCase()))
 	);
 
-	const renderResults = (items: any[], type: string) => {
+	const renderResults = (items: SearchResultItem[], type: string) => {
 		return items.map((item) => (
 			<Link
 				key={item.id}
@@ -45,13 +47,13 @@ export default function SearchResult({ searchTerm, teams, conferences, onResultC
 				className='flex items-center p-2'
 				onClick={onResultClick}>
 				<Image
-					src={type === "teams" ? `https://a.espncdn.com/i/teamlogos/ncaa/500/${item.id}.png` : item.href}
-					alt={`${item.slug || item.full} logo`}
+					src={type === "teams" ? `https://a.espncdn.com/i/teamlogos/ncaa/500/${item.id}.png` : (item as Conference).href}
+					alt={`${(item as Team).slug || (item as Conference).full} logo`}
 					height={50}
 					width={50}
 					className='size-10 mr-2'
 				/>
-				<span className='text-sm font-medium capitalize'>{formatName(item.slug || item.full)}</span>
+				<span className='text-sm font-medium capitalize'>{formatName((item as Team).slug || (item as Conference).full)}</span>
 			</Link>
 		));
 	};
