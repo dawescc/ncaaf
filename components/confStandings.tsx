@@ -1,6 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 
+type APIStanding = {
+	team: {
+		$ref: string;
+	};
+};
+
 type Team = {
 	id: number;
 	name: string;
@@ -59,9 +65,9 @@ const fetchStandings = async (conf_id: number): Promise<Standing[]> => {
 	const response = await fetch(
 		`https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/seasons/2024/types/2/groups/${conf_id}/standings/1`
 	);
-	const data = await response.json();
+	const data: { standings: APIStanding[] } = await response.json();
 
-	const standingsPromises = data.standings.map(async (standing: any) => {
+	const standingsPromises = data.standings.map(async (standing: APIStanding) => {
 		const teamResponse = await fetch(standing.team.$ref);
 		const teamData: TeamData = await teamResponse.json();
 
