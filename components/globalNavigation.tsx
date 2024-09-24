@@ -1,35 +1,44 @@
 import Link from "next/link";
 
-const navItems = [
-	{ name: "Conferences", href: "/conferences" },
-	{ name: "Teams", href: "/teams" },
-	{ name: "AP 25", href: "/rankings" },
-];
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
+import Logo from "./logo";
 
-export default function GlobalNavigation() {
+export function GlobalNavigation() {
 	return (
-		<header className='sticky top-0 z-50 bg-white border-gray-300 border-b-2'>
-			<nav className='container mx-auto px-4 sm:px-6 lg:px-8'>
-				<div className='flex items-center justify-between h-16'>
-					<div className='flex items-center bg-black text-white px-1'>
+		<div className='px-2 py-1 z-[50] fixed bg-white flex w-full shadow-sm border-slate-500/15 border-b-[1px]'>
+			<div className='font-serif font-bold mr-auto'>
+				<Link href={"/"}>
+					<Logo className='size-12' />
+				</Link>
+			</div>
+			<NavigationMenu>
+				<NavigationMenuList>
+					<NavigationMenuItem>
 						<Link
-							href='/'
-							className={`text-2xl font-black font-serif`}>
-							NCAAF
+							href='/conferences'
+							legacyBehavior
+							passHref>
+							<NavigationMenuLink className={navigationMenuTriggerStyle()}>Conferences</NavigationMenuLink>
 						</Link>
-					</div>
-					<div className='flex items-baseline space-x-4'>
-						{navItems.map((item) => (
-							<Link
-								key={item.name}
-								href={item.href}
-								className={`px-3 py-2 rounded-md text-sm font-medium hover:underline`}>
-								{item.name}
-							</Link>
-						))}
-					</div>
-				</div>
-			</nav>
-		</header>
+					</NavigationMenuItem>
+					<NavigationMenuItem>
+						<Link
+							href='/teams'
+							legacyBehavior
+							passHref>
+							<NavigationMenuLink className={navigationMenuTriggerStyle()}>Teams</NavigationMenuLink>
+						</Link>
+					</NavigationMenuItem>
+					<NavigationMenuItem>
+						<Link
+							href='/rankings'
+							legacyBehavior
+							passHref>
+							<NavigationMenuLink className={navigationMenuTriggerStyle()}>AP 25</NavigationMenuLink>
+						</Link>
+					</NavigationMenuItem>
+				</NavigationMenuList>
+			</NavigationMenu>
+		</div>
 	);
 }

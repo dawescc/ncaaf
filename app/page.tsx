@@ -1,19 +1,23 @@
 import Top25 from "@/components/apRankings";
 import ConferenceList from "@/components/confList";
+import { Card, CardContent } from "@/components/ui/card";
+import { Container } from "@/components/ui/container";
 
 export default async function Home() {
 	return (
-		<div className='px-5 pt-10 pb-20 flex flex-col space-y-4'>
+		<Container>
 			<div className='flex flex-col md:flex-row md:flex-wrap gap-8 md:gap-10'>
-				<div className='flex flex-col gap-2'>
-					<h2 className='font-bold text-2xl font-serif'>AP Top 25</h2>
-					<Top25 />
-				</div>
-				<div className='flex flex-col gap-2'>
-					<h2 className='font-bold text-2xl font-serif'>Conferences</h2>
-					<ConferenceList />
-				</div>
+				<Card className='pt-4 h-fit'>
+					<CardContent>
+						<Top25 />
+					</CardContent>
+				</Card>
+				<Card className='pt-4 h-fit'>
+					<CardContent>
+						<ConferenceList />
+					</CardContent>
+				</Card>
 			</div>
-		</div>
+		</Container>
 	);
 }

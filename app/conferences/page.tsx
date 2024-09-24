@@ -1,11 +1,16 @@
 import ConferenceList from "@/components/confList";
+import { Card, CardContent } from "@/components/ui/card";
+import { Container } from "@/components/ui/container";
 
 const ConferencesPage = () => {
 	return (
-		<div className='px-10 pb-20 pt-10 flex flex-col space-y-4'>
-			<h1 className='font-bold text-3xl font-serif'>Conferences</h1>
-			<ConferenceList />
-		</div>
+		<Container>
+			<Card className='pt-4 h-fit'>
+				<CardContent>
+					<ConferenceList />
+				</CardContent>
+			</Card>
+		</Container>
 	);
 };
 

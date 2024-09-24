@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
 
 type Team = {
 	id: number;
@@ -69,10 +70,14 @@ const fetchTeamRecord = async (recordRef: string): Promise<Team["conferenceRecor
 	return conferenceRecord;
 };
 
-const fetchRankings = async (): Promise<Ranking[]> => {
+const fetchRankings = async (): Promise<{ rankings: Ranking[]; headline: { long: string; short: string } }> => {
 	const rankingsResponse = await fetch("https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/rankings/1");
 	const rankingsData = await rankingsResponse.json();
 	const ranks: RankData[] = rankingsData.ranks;
+	const headline = {
+		long: rankingsData.headline,
+		short: rankingsData.shortHeadline,
+	};
 
 	const teamPromises = ranks.map(async (rank) => {
 		const teamResponse = await fetch(rank.team.$ref);
@@ -98,52 +103,52 @@ const fetchRankings = async (): Promise<Ranking[]> => {
 		};
 	});
 
-	return Promise.all(teamPromises);
+	const rankings = await Promise.all(teamPromises);
+	return { rankings, headline };
 };
 
 const Top25 = async () => {
-	const rankings = await fetchRankings();
-
+	const { rankings, headline } = await fetchRankings();
 	return (
-		<div className='overflow-x-auto border-gray-200/50 border-[1px] shadow-sm rounded-lg'>
-			<table className='w-full min-w-full divide-y divide-gray-200'>
-				<thead className='bg-gray-50'>
-					<tr>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>Rank</th>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>Team</th>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>W</th>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>L</th>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>Conf</th>
-					</tr>
-				</thead>
-				<tbody className='bg-white divide-y divide-gray-200'>
-					{rankings.map((ranking) => (
-						<tr key={ranking.team.id}>
-							<td className='px-2 py-4 whitespace-nowrap text-sm text-gray-900 sm:px-6'>{ranking.current}</td>
-							<td className='px-2 py-4 whitespace-nowrap flex items-center sm:px-6'>
-								<Link
-									href={`/teams/${ranking.team.slug}`}
-									className='flex items-center'>
-									<Image
-										src={ranking.team.logo}
-										alt={ranking.team.name}
-										width={32}
-										height={32}
-										className='mr-4'
-									/>
-									<span className='font-medium text-gray-900'>{ranking.team.name}</span>
-								</Link>
-							</td>
-							<td className='px-2 py-4 whitespace-nowrap text-sm text-gray-900 sm:px-6'>{ranking.record.wins}</td>
-							<td className='px-2 py-4 whitespace-nowrap text-sm text-gray-900 sm:px-6'>{ranking.record.losses}</td>
-							<td className='px-2 py-4 whitespace-nowrap text-sm text-gray-900 sm:px-6'>
-								{ranking.team.conferenceRecord ? `${ranking.team.conferenceRecord.wins}-${ranking.team.conferenceRecord.losses}` : "N/A"}
-							</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-		</div>
+		<Table>
+			<TableTitle>{headline.short}</TableTitle>
+			<TableCaption>{headline.long}</TableCaption>
+			<TableHeader>
+				<TableRow>
+					<TableHead className='p-2 md:p-4'>Rank</TableHead>
+					<TableHead className='p-2 md:p-4'>Team</TableHead>
+					<TableHead>W</TableHead>
+					<TableHead>L</TableHead>
+					<TableHead className='text-right p-2 md:p-4'>CONF</TableHead>
+				</TableRow>
+			</TableHeader>
+			<TableBody>
+				{rankings.map((ranking) => (
+					<TableRow key={ranking.team.id}>
+						<TableCell className='p-2 md:p-4'>{ranking.current}</TableCell>
+						<TableCell className='p-2 md:p-4'>
+							<Link
+								href={`/teams/${ranking.team.slug}`}
+								className='flex items-center'>
+								<Image
+									src={ranking.team.logo}
+									alt={ranking.team.name}
+									width={32}
+									height={32}
+									className='mr-4'
+								/>
+								<span className='font-medium'>{ranking.team.name}</span>
+							</Link>
+						</TableCell>
+						<TableCell>{ranking.record.wins}</TableCell>
+						<TableCell>{ranking.record.losses}</TableCell>
+						<TableCell className='text-right p-2 md:p-4'>
+							{ranking.team.conferenceRecord ? `${ranking.team.conferenceRecord.wins}-${ranking.team.conferenceRecord.losses}` : "N/A"}
+						</TableCell>
+					</TableRow>
+				))}
+			</TableBody>
+		</Table>
 	);
 };
 

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans } from "next/font/google";
 import "./globals.css";
-import GlobalNavigation from "@/components/globalNavigation";
+import { GlobalNavigation } from "@/components/globalNavigation";
 import GlobalFooter from "@/components/globalFooter";
 
 export const metadata: Metadata = {
@@ -20,7 +20,7 @@ export default function RootLayout({
 		<html lang='en'>
 			<body className={`${notoSans.className} antialiased flex flex-col min-h-screen`}>
 				<GlobalNavigation />
-				<main className='container flex flex-col flex-grow px-2 py-4 mx-auto'>{children}</main>
+				<main className='w-full'>{children}</main>
 				<GlobalFooter />
 			</body>
 		</html>

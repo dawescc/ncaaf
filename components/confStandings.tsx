@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
 
 type APIStanding = {
 	team: {
@@ -99,43 +100,42 @@ const ConfStandings = async ({ conf_id }: { conf_id: number }) => {
 	const standings = await fetchStandings(conf_id);
 
 	return (
-		<div className='overflow-x-auto border-gray-200/50 border-[1px] shadow-sm rounded-lg'>
-			<table className='w-full min-w-full divide-y divide-gray-200'>
-				<thead className='bg-gray-50'>
-					<tr>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>Team</th>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>W</th>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>L</th>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>Conf</th>
-						<th className='px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider sm:px-6'>Streak</th>
-					</tr>
-				</thead>
-				<tbody className='bg-white divide-y divide-gray-200'>
-					{standings.map((standing) => (
-						<tr key={standing.team.id}>
-							<td className='px-2 py-4 whitespace-nowrap flex items-center sm:px-6'>
-								<Link
-									href={`/teams/${standing.team.slug}`}
-									className='flex items-center'>
-									<Image
-										src={standing.team.logo}
-										alt={standing.team.name}
-										width={32}
-										height={32}
-										className='mr-4'
-									/>
-									<span className='font-medium text-gray-900'>{standing.team.name}</span>
-								</Link>
-							</td>
-							<td className='px-2 py-4 whitespace-nowrap text-sm text-gray-900 sm:px-6'>{standing.record.wins}</td>
-							<td className='px-2 py-4 whitespace-nowrap text-sm text-gray-900 sm:px-6'>{standing.record.losses}</td>
-							<td className='px-2 py-4 whitespace-nowrap text-sm text-gray-900 sm:px-6'>{`${standing.record.conferenceWins}-${standing.record.conferenceLosses}`}</td>
-							<td className='px-2 py-4 whitespace-nowrap text-sm text-gray-900 sm:px-6'>{standing.record.streak}</td>
-						</tr>
-					))}
-				</tbody>
-			</table>
-		</div>
+		<Table>
+			<TableTitle>Conference Standings</TableTitle>
+			<TableHeader>
+				<TableRow>
+					<TableHead className='p-2 md:p-4'>Team</TableHead>
+					<TableHead>W</TableHead>
+					<TableHead>L</TableHead>
+					<TableHead>Conf</TableHead>
+					<TableHead className='text-right p-2 md:p-4'>Streak</TableHead>
+				</TableRow>
+			</TableHeader>
+			<TableBody>
+				{standings.map((standing) => (
+					<TableRow key={standing.team.id}>
+						<TableCell className='p-2 md:p-4'>
+							<Link
+								href={`/teams/${standing.team.slug}`}
+								className='flex items-center'>
+								<Image
+									src={standing.team.logo}
+									alt={standing.team.name}
+									width={32}
+									height={32}
+									className='mr-4'
+								/>
+								<span className='font-medium'>{standing.team.name}</span>
+							</Link>
+						</TableCell>
+						<TableCell>{standing.record.wins}</TableCell>
+						<TableCell>{standing.record.losses}</TableCell>
+						<TableCell>{`${standing.record.conferenceWins}-${standing.record.conferenceLosses}`}</TableCell>
+						<TableCell className='text-right p-2 md:p-4'>{standing.record.streak}</TableCell>
+					</TableRow>
+				))}
+			</TableBody>
+		</Table>
 	);
 };
 

@@ -1,6 +1,7 @@
 import ConfStandings from "@/components/confStandings";
 import TeamBanner from "@/components/teamBanner";
 import TeamStats from "@/components/teamStats";
+import { Container } from "@/components/ui/container";
 import { teams } from "@/data/teams";
 import Link from "next/link";
 
@@ -9,19 +10,19 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	const team = Object.values(teams).find((team) => team.slug === teamSlug);
 	if (!team) {
 		return (
-			<div className='px-10 py-20 flex flex-col space-y-4'>
+			<Container>
 				<h1 className='font-bold text-3xl font-serif'>Team not found.</h1>
 				<Link
 					href='/'
 					className='hover:underline'>
 					Go home
 				</Link>
-			</div>
+			</Container>
 		);
 	}
 
 	return (
-		<div className='flex-grow flex flex-col gap-6'>
+		<Container>
 			<TeamBanner teamId={parseInt(team.id)} />
 			<div className='flex-grow flex flex-col md:flex-row flex-wrap gap-4'>
 				<div className='flex flex-col gap-2'>
@@ -33,6 +34,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
 					<TeamStats teamId={parseInt(team.id)} />
 				</div>
 			</div>
-		</div>
+		</Container>
 	);
 }
