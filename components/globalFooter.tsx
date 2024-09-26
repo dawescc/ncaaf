@@ -16,7 +16,7 @@ const navItems = [
 
 export default function GlobalFooter() {
 	return (
-		<footer className='bg-slate-100 border-slate-500/15 border-t-[1px]'>
+		<footer className='bg-secondary border-t-[1px]'>
 			<div className='min-h-[75dvh] md:min-h-[60dvh] mx-auto py-10 px-4 flex flex-col justify-between'>
 				<div className='max-w-6xl mx-auto w-full flex-grow flex flex-col justify-center'>
 					<div className='grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-8 items-center'>
@@ -25,11 +25,11 @@ export default function GlobalFooter() {
 						</div>
 
 						<div className='text-center md:text-left'>
-							<blockquote className='text-xl md:text-2xl font-serif font-medium text-slate-600'>
-								<FaQuoteLeft className='inline-block mr-2 text-slate-400' />
+							<blockquote className='text-xl md:text-2xl font-serif font-medium text-accent-foreground'>
+								<FaQuoteLeft className='inline-block mr-2' />
 								That boy don&#39;t know the meaning of the word fear. In fact, I just saw his grades, and that boy don&#39;t know the meaning of
 								a lot of words.
-								<FaQuoteRight className='inline-block ml-2 text-slate-400' />
+								<FaQuoteRight className='inline-block ml-2' />
 							</blockquote>
 						</div>
 

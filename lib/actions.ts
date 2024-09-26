@@ -234,8 +234,23 @@ export async function getConferenceStandings(conf_id: number): Promise<APIStandi
 	const response = await fetch(
 		`https://site.web.api.espn.com/apis/v2/sports/football/college-football/standings?&group=${conf_id}&level=3&sort=leaguewinpercent%3Adesc%2Cvsconf_wins%3Adesc%2Cvsconf_gamesbehind%3Aasc%2Cvsconf_playoffseed%3Aasc%2Cwins%3Adesc%2Closses%3Adesc%2Cplayoffseed%3Aasc%2Calpha%3Aasc&startingseason=2004`
 	);
-	const data: { standings: { entries: APIStanding[] } } = await response.json();
-	return data.standings.entries;
+	const data = await response.json();
+
+	if (conf_id === 37) {
+		// Special case for Sun Belt Conference
+		// Assuming we want to combine standings from all divisions (e.g., East, West)
+		const allEntries: APIStanding[] = [];
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		data.children.forEach((division: any) => {
+			if (division.standings && division.standings.entries) {
+				allEntries.push(...division.standings.entries);
+			}
+		});
+		return allEntries;
+	} else {
+		// Default case for other conferences
+		return data.standings.entries;
+	}
 }
 
 export async function getTeamLeaders(teamId: number): Promise<APITeamLeaders> {

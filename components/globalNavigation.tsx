@@ -5,7 +5,7 @@ import Logo from "./logo";
 
 export function GlobalNavigation() {
 	return (
-		<div className='px-2 py-1 z-[50] fixed bg-white flex w-full shadow-sm border-slate-500/15 border-b-[1px]'>
+		<div className='px-2 py-1 z-[50] fixed bg-background flex w-full shadow-sm border-b-[1px]'>
 			<div className='font-serif font-bold mr-auto'>
 				<Link href={"/"}>
 					<Logo className='size-12' />

@@ -14,7 +14,7 @@ type LeaderData = {
 
 const fetchTeamLeaders = async (teamId: number): Promise<LeaderData[]> => {
 	const leadersData = await getTeamLeaders(teamId);
-	const categories = ["passingYards", "rushingYards", "receivingYards"];
+	const categories = ["passingLeader", "rushingLeader", "receivingLeader", "totalTackles"];
 
 	const leaderPromises = categories.map(async (category) => {
 		const categoryData = leadersData.categories.find((cat) => cat.name === category);
@@ -44,9 +44,9 @@ const TeamLeaders = async ({ teamId }: { teamId: number }) => {
 			<TableCaption>Statistical leaders for the team</TableCaption>
 			<TableHeader>
 				<TableRow>
-					<TableHead className='p-2 md:p-4'>Category</TableHead>
-					<TableHead className='p-2 md:p-4'>Player</TableHead>
-					<TableHead className='text-right p-2 md:p-4'>Yds.</TableHead>
+					<TableHead className='p-2 md:p-4'>Stat</TableHead>
+					<TableHead className='p-2 md:p-4'>Name</TableHead>
+					<TableHead className='text-right p-2 md:p-4'>#</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
