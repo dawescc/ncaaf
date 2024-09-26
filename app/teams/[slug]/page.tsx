@@ -1,6 +1,9 @@
 import ConfStandings from "@/components/confStandings";
 import TeamBanner from "@/components/teamBanner";
+import TeamLeaders from "@/components/teamLeaders";
+import TeamSchedule from "@/components/teamSchedule";
 import TeamStats from "@/components/teamStats";
+import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { teams } from "@/data/teams";
 import Link from "next/link";
@@ -24,15 +27,27 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	return (
 		<Container>
 			<TeamBanner teamId={parseInt(team.id)} />
-			<div className='flex-grow flex flex-col md:flex-row flex-wrap gap-4'>
-				<div className='flex flex-col gap-2'>
-					<h2 className='font-bold text-2xl font-serif'>Conference Standings</h2>
-					<ConfStandings conf_id={team.conference} />
-				</div>
-				<div className='flex flex-col gap-2'>
-					<h2 className='font-bold text-2xl font-serif'>Statistics</h2>
-					<TeamStats teamId={parseInt(team.id)} />
-				</div>
+			<div className='flex flex-col md:flex-row md:flex-wrap gap-4 py-10'>
+				<Card className='pt-4 h-fit flex-1'>
+					<CardContent>
+						<ConfStandings conf_id={team.conference} />
+					</CardContent>
+				</Card>
+				<Card className='pt-4 h-fit flex-1'>
+					<CardContent>
+						<TeamLeaders teamId={parseInt(team.id)} />
+					</CardContent>
+				</Card>
+				<Card className='pt-4 h-fit flex-1'>
+					<CardContent>
+						<TeamSchedule teamId={parseInt(team.id)} />
+					</CardContent>
+				</Card>
+				<Card className='pt-4 h-fit flex-1'>
+					<CardContent>
+						<TeamStats teamId={parseInt(team.id)} />
+					</CardContent>
+				</Card>
 			</div>
 		</Container>
 	);

@@ -149,17 +149,17 @@ export const teams: Record<string, TeamInfo> = {
 };
 
 export const conferences: Record<string, ConferenceInfo> = {
-	aac: {
-		id: 1,
-		short: "AAC",
-		full: "American Athletic Conference",
-		href: "https://loodibee.com/wp-content/uploads/American_Athletic_Conference_logo-480x480.png",
-	},
 	acc: {
-		id: 151,
+		id: 1,
 		short: "ACC",
 		full: "Atlantic Coast Conference",
 		href: "https://loodibee.com/wp-content/uploads/Atlantic_Coast_Conference_ACC_logo-480x480.png",
+	},
+	aac: {
+		id: 151,
+		short: "AAC",
+		full: "American Athletic Conference",
+		href: "https://loodibee.com/wp-content/uploads/American_Athletic_Conference_logo-480x480.png",
 	},
 	big12: {
 		id: 4,

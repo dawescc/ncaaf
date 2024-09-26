@@ -85,7 +85,7 @@ TableCaption.displayName = "TableCaption";
 const TableTitle = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
 	<div
 		ref={ref}
-		className={cn("mb-4 text-lg font-semibold font-serif", className)}
+		className={cn("mb-4 text-xl md:text-2xl font-bold font-serif", className)}
 		{...props}
 	/>
 ));

@@ -1,19 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
-
-type APIStanding = {
-	team: {
-		$ref: string;
-	};
-};
-
-type Team = {
-	id: number;
-	name: string;
-	logo: string;
-	slug: string;
-};
+import { getConferenceStandings, getTeamInfo } from "@/lib/actions";
 
 type Record = {
 	wins: number;
@@ -24,80 +12,45 @@ type Record = {
 };
 
 type Standing = {
-	team: Team;
+	team: {
+		id: string;
+		name: string;
+		logo: string;
+		slug: string;
+	};
 	record: Record;
 };
 
-type RecordData = {
-	items: {
-		description: string;
-		stats: {
-			name: string;
-			value: number;
-			displayValue: string;
-		}[];
-	}[];
-};
-
-type TeamData = {
-	id: number;
-	displayName: string;
-	logos: { href: string }[];
-	slug: string;
-	record?: { $ref: string };
-};
-
-const fetchTeamRecord = async (recordRef: string): Promise<Record> => {
-	const recordResponse = await fetch(recordRef);
-	const recordData: RecordData = await recordResponse.json();
-	const overallRecordItem = recordData.items.find((item) => item.description === "Overall Record");
-	const conferenceRecordItem = recordData.items.find((item) => item.description === "Conference Record");
-
-	return {
-		wins: overallRecordItem?.stats.find((stat) => stat.name === "wins")?.value || 0,
-		losses: overallRecordItem?.stats.find((stat) => stat.name === "losses")?.value || 0,
-		streak: overallRecordItem?.stats.find((stat) => stat.name === "streak")?.displayValue || "",
-		conferenceWins: conferenceRecordItem?.stats.find((stat) => stat.name === "wins")?.value || 0,
-		conferenceLosses: conferenceRecordItem?.stats.find((stat) => stat.name === "losses")?.value || 0,
-	};
-};
-
-const fetchStandings = async (conf_id: number): Promise<Standing[]> => {
-	const response = await fetch(
-		`https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/seasons/2024/types/2/groups/${conf_id}/standings/1`
-	);
-	const data: { standings: APIStanding[] } = await response.json();
-
-	const standingsPromises = data.standings.map(async (standing: APIStanding) => {
-		const teamResponse = await fetch(standing.team.$ref);
-		const teamData: TeamData = await teamResponse.json();
-
-		const record = teamData.record
-			? await fetchTeamRecord(teamData.record.$ref)
-			: {
-					wins: 0,
-					losses: 0,
-					streak: "",
-					conferenceWins: 0,
-					conferenceLosses: 0,
-			  };
-
-		return {
-			team: {
-				id: teamData.id,
-				name: teamData.displayName,
-				logo: teamData.logos[0]?.href || "",
-				slug: teamData.slug,
-			},
-			record,
-		};
-	});
-
-	return Promise.all(standingsPromises);
-};
-
 const ConfStandings = async ({ conf_id }: { conf_id: number }) => {
-	const standings = await fetchStandings(conf_id);
+	const apiStandings = await getConferenceStandings(conf_id);
+
+	const standings: Standing[] = await Promise.all(
+		apiStandings.map(async (entry) => {
+			const teamInfo = await getTeamInfo(parseInt(entry.team.id));
+
+			const overallRecord = entry.stats.find((stat) => stat.name === "overall");
+			const conferenceRecord = entry.stats.find((stat) => stat.name === "vs. Conf.");
+			const streakStat = entry.stats.find((stat) => stat.name === "streak");
+
+			const record: Record = {
+				wins: parseInt(overallRecord?.displayValue.split("-")[0] || "0"),
+				losses: parseInt(overallRecord?.displayValue.split("-")[1] || "0"),
+				streak: streakStat?.displayValue || "",
+				conferenceWins: parseInt(conferenceRecord?.displayValue.split("-")[0] || "0"),
+				conferenceLosses: parseInt(conferenceRecord?.displayValue.split("-")[1] || "0"),
+			};
+
+			return {
+				team: {
+					id: entry.team.id,
+					name: teamInfo.displayName,
+					logo: teamInfo.logos[0]?.href || "",
+					slug: teamInfo.slug,
+				},
+				record,
+			};
+		})
+	);
 
 	return (
 		<Table>

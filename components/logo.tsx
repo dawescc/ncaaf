@@ -9,8 +9,8 @@ const Logo = ({ className }: LogoTypes) => (
 		xmlns='http://www.w3.org/2000/svg'
 		className={className}>
 		<g
-			fill-rule='evenodd'
-			clip-rule='evenodd'>
+			fillRule='evenodd'
+			clipRule='evenodd'>
 			<path
 				d='M8.504 39.647c11.761 7.599 175.748 23.187 175.748 23.187-129.346 63.611-162.227 93.978-162.227 93.978 3.352-15.561 4.721-29.725 4.777-42.436 8.325 3.465 22.349 6.092 45.676 3.996l8.437-10.812-54.867-10.308C22.64 60.041 8.504 39.647 8.504 39.647z'
 				fill='#3b4977'
