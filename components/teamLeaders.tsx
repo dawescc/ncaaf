@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
+import { Table, TableBody, TableCaption, TableCell, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
 import { getTeamLeaders, getAthleteInfo } from "@/lib/actions";
 import { Athlete } from "@/lib/types";
 
@@ -25,7 +25,7 @@ const fetchTeamLeaders = async (teamId: number): Promise<LeaderData[]> => {
 		const athlete = await getAthleteInfo(athleteId);
 
 		return {
-			category: categoryData.displayName,
+			category: categoryData.shortDisplayName,
 			displayValue: leader.displayValue,
 			athlete: athlete,
 		};
@@ -43,11 +43,7 @@ const TeamLeaders = async ({ teamId }: { teamId: number }) => {
 			<TableTitle>Team Leaders</TableTitle>
 			<TableCaption>Statistical leaders for the team</TableCaption>
 			<TableHeader>
-				<TableRow>
-					<TableHead className='p-2 md:p-4'>Stat</TableHead>
-					<TableHead className='p-2 md:p-4'>Name</TableHead>
-					<TableHead className='text-right p-2 md:p-4'>#</TableHead>
-				</TableRow>
+				<TableRow></TableRow>
 			</TableHeader>
 			<TableBody>
 				{leaders.map((leader) => (

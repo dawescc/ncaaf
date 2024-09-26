@@ -45,7 +45,7 @@ export type Venue = {
 	grass: boolean;
 };
 
-export type EventInfo = {
+export type Event = {
 	id: string;
 	uid: string;
 	date: string;
@@ -113,13 +113,13 @@ export type Team = {
 	};
 };
 
-export type ScoreResponse = {
+export type Score = {
 	displayValue: string;
 	value: number;
 	winner: boolean;
 };
 
-export type APIStanding = {
+export type Standing = {
 	team: { id: string };
 	stats: {
 		name: string;
@@ -127,7 +127,7 @@ export type APIStanding = {
 	}[];
 };
 
-export type APITeamLeaders = {
+export type TeamLeaders = {
 	abbreviation: string;
 	id: string;
 	name: string;
@@ -152,6 +152,33 @@ export type APITeamLeaders = {
 		}[];
 	}[];
 };
+
+export interface SeasonLeaders {
+	$ref: string;
+	id: string;
+	name: string;
+	abbreviation: string;
+	type: string;
+	categories: {
+		abbreviation: string;
+		displayName: string;
+		name: string;
+		shortDisplayName: string;
+		leaders: {
+			displayValue: string;
+			value: number;
+			athlete: {
+				$ref: string;
+			};
+			team: {
+				$ref: string;
+			};
+			statistics: {
+				$ref: string;
+			};
+		}[];
+	}[];
+}
 
 export type Athlete = {
 	uid: string;

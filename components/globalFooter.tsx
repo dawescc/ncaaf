@@ -2,12 +2,13 @@ import Link from "next/link";
 import { BsHeartFill } from "react-icons/bs";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import Logo from "./logo";
+import { siteConfig } from "@/lib/siteConfig";
 
-const linkItems = [
-	{ name: "dawes.cc", href: "https://dawes.cc" },
-	{ name: "github", href: "https://github.com/dawescc" },
-	{ name: "twitter", href: "https://twitter.com/dawescc" },
-];
+const linkItems = Object.entries(siteConfig.links).map(([name, href]) => ({
+	name: name, // Capitalize the first letter
+	href,
+}));
+
 const navItems = [
 	{ name: "AP Top 25", href: "/rankings" },
 	{ name: "conferences", href: "/conferences" },
@@ -69,10 +70,10 @@ export default function GlobalFooter() {
 				</div>
 
 				<div className='mt-8 text-center flex flex-col'>
-					<span className='text-slate-400 text-xs'>
+					<span className='text-accent text-xs'>
 						designed && developed with <BsHeartFill className='inline-flex' />
 					</span>
-					<span className='text-xs font-light text-slate-400/80 mt-8'>
+					<span className='text-xs font-light text-accent/80 mt-8'>
 						Not affiliated with NCAA or any other institution mentioned within. All rights belong to their owners.
 					</span>
 				</div>

@@ -1,11 +1,12 @@
 "use server";
 
-import { APIStanding, APITeamLeaders, Athlete, Competitor, CompetitorIds, CompetitorsResponse, EventInfo, ScoreResponse, Team } from "@/lib/types";
+import { api } from "./api";
+import { Standing, Athlete, Competitor, CompetitorIds, CompetitorsResponse, Event, Score, Team, TeamLeaders, SeasonLeaders } from "@/lib/types";
 
 // returns current season: number
 export async function getCurrentSeasonYear(): Promise<number> {
 	try {
-		const response = await fetch("https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/seasons", {
+		const response = await fetch(`${api}/seasons`, {
 			next: { revalidate: 86400 }, // Cache for 24 hours
 		});
 
@@ -36,7 +37,7 @@ export async function getCurrentSeasonYear(): Promise<number> {
 // returns if event is completed: boolean
 export async function isEventCompleted(eventId: number): Promise<boolean> {
 	try {
-		const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/events/${eventId}/competitions/${eventId}/status`;
+		const url = `${api}/events/${eventId}/competitions/${eventId}/status`;
 		const response = await fetch(url, {
 			next: { revalidate: 60 }, // Cache for 1 minute, adjust as needed
 		});
@@ -59,9 +60,9 @@ export async function isEventCompleted(eventId: number): Promise<boolean> {
 }
 
 // gets event information: json
-export async function getEventInfo(eventId: number): Promise<EventInfo> {
+export async function getEvent(eventId: number): Promise<Event> {
 	try {
-		const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/events/${eventId}/competitions/${eventId}`;
+		const url = `${api}/events/${eventId}/competitions/${eventId}`;
 		const response = await fetch(url, {
 			next: { revalidate: 60 }, // Cache for 1 minute, adjust as needed
 		});
@@ -70,7 +71,7 @@ export async function getEventInfo(eventId: number): Promise<EventInfo> {
 			throw new Error("Failed to fetch event information");
 		}
 
-		const data: EventInfo = await response.json();
+		const data: Event = await response.json();
 		return data;
 	} catch (error) {
 		console.error(`Error fetching information for event ${eventId}:`, error);
@@ -81,7 +82,7 @@ export async function getEventInfo(eventId: number): Promise<EventInfo> {
 // gets event data: string
 export async function getEventDate(eventId: number): Promise<string> {
 	try {
-		const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/events/${eventId}`;
+		const url = `${api}/events/${eventId}`;
 		const response = await fetch(url, {
 			next: { revalidate: 3600 }, // Cache for 1 hour, adjust as needed
 		});
@@ -101,7 +102,7 @@ export async function getEventDate(eventId: number): Promise<string> {
 // returns if event time is valid: boolean
 export async function isEventTimeValid(eventId: number): Promise<boolean> {
 	try {
-		const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/events/${eventId}`;
+		const url = `${api}/events/${eventId}`;
 		const response = await fetch(url, {
 			next: { revalidate: 60 }, // Cache for 1 minute, adjust as needed
 		});
@@ -121,7 +122,7 @@ export async function isEventTimeValid(eventId: number): Promise<boolean> {
 // returns the ids of each of the competitors in a given event id: number
 export async function getEventCompetitors(eventId: number): Promise<CompetitorIds> {
 	try {
-		const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/events/${eventId}/competitions/${eventId}/competitors`;
+		const url = `${api}/events/${eventId}/competitions/${eventId}/competitors`;
 		const response = await fetch(url, {
 			next: { revalidate: 60 }, // Cache for 1 minute, adjust as needed
 		});
@@ -157,7 +158,7 @@ export async function getEventCompetitors(eventId: number): Promise<CompetitorId
 // returns team info: json
 export async function getTeamInfo(teamId: number): Promise<Team> {
 	try {
-		const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/teams/${teamId}`;
+		const url = `${api}/teams/${teamId}`;
 		const response = await fetch(url, {
 			next: { revalidate: 3600 }, // Cache for 1 hour, adjust as needed
 		});
@@ -203,7 +204,7 @@ export async function getTeamRank(teamId: number): Promise<number | null> {
 // returns a teams score in a given game
 export async function getScore(eventId: number, teamId: number): Promise<number> {
 	try {
-		const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/events/${eventId}/competitions/${eventId}/competitors/${teamId}/score`;
+		const url = `${api}/events/${eventId}/competitions/${eventId}/competitors/${teamId}/score`;
 		const response = await fetch(url, {
 			next: { revalidate: 60 }, // Cache for 1 minute, adjust as needed for live games
 		});
@@ -212,7 +213,7 @@ export async function getScore(eventId: number, teamId: number): Promise<number>
 			throw new Error("Failed to fetch score data");
 		}
 
-		const data: ScoreResponse = await response.json();
+		const data: Score = await response.json();
 
 		// Convert displayValue to a number
 		const score = parseInt(data.displayValue, 10);
@@ -230,7 +231,7 @@ export async function getScore(eventId: number, teamId: number): Promise<number>
 }
 
 // returns conference standings
-export async function getConferenceStandings(conf_id: number): Promise<APIStanding[]> {
+export async function getConferenceStandings(conf_id: number): Promise<Standing[]> {
 	const response = await fetch(
 		`https://site.web.api.espn.com/apis/v2/sports/football/college-football/standings?&group=${conf_id}&level=3&sort=leaguewinpercent%3Adesc%2Cvsconf_wins%3Adesc%2Cvsconf_gamesbehind%3Aasc%2Cvsconf_playoffseed%3Aasc%2Cwins%3Adesc%2Closses%3Adesc%2Cplayoffseed%3Aasc%2Calpha%3Aasc&startingseason=2004`
 	);
@@ -239,7 +240,7 @@ export async function getConferenceStandings(conf_id: number): Promise<APIStandi
 	if (conf_id === 37) {
 		// Special case for Sun Belt Conference
 		// Assuming we want to combine standings from all divisions (e.g., East, West)
-		const allEntries: APIStanding[] = [];
+		const allEntries: Standing[] = [];
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		data.children.forEach((division: any) => {
 			if (division.standings && division.standings.entries) {
@@ -253,10 +254,10 @@ export async function getConferenceStandings(conf_id: number): Promise<APIStandi
 	}
 }
 
-export async function getTeamLeaders(teamId: number): Promise<APITeamLeaders> {
+export async function getTeamLeaders(teamId: number): Promise<TeamLeaders> {
 	try {
 		const season = await getCurrentSeasonYear();
-		const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/seasons/${season}/types/2/teams/${teamId}/leaders`;
+		const url = `${api}/seasons/${season}/types/2/teams/${teamId}/leaders`;
 		const response = await fetch(url, {
 			next: { revalidate: 3600 }, // Cache for 1 hour, adjust as needed
 		});
@@ -265,7 +266,7 @@ export async function getTeamLeaders(teamId: number): Promise<APITeamLeaders> {
 			throw new Error("Failed to fetch team leaders");
 		}
 
-		const data: APITeamLeaders = await response.json();
+		const data: TeamLeaders = await response.json();
 		return data;
 	} catch (error) {
 		console.error(`Error fetching leaders for team ${teamId}:`, error);
@@ -273,10 +274,30 @@ export async function getTeamLeaders(teamId: number): Promise<APITeamLeaders> {
 	}
 }
 
+export async function getSeasonLeaders(): Promise<SeasonLeaders> {
+	try {
+		const season = await getCurrentSeasonYear();
+		const url = `${api}/seasons/${season}/types/2/leaders`;
+		const response = await fetch(url, {
+			next: { revalidate: 3600 }, // Cache for 1 hour, adjust as needed
+		});
+
+		if (!response.ok) {
+			throw new Error("Failed to fetch season leaders");
+		}
+
+		const data: SeasonLeaders = await response.json();
+		return data;
+	} catch (error) {
+		console.error(`Error fetching season leaders:`, error);
+		throw error;
+	}
+}
+
 export async function getAthleteInfo(athleteId: number): Promise<Athlete> {
 	try {
 		const season = await getCurrentSeasonYear();
-		const url = `https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/seasons/${season}/athletes/${athleteId}`;
+		const url = `${api}/seasons/${season}/athletes/${athleteId}`;
 		const response = await fetch(url, {
 			next: { revalidate: 3600 }, // Cache for 1 hour, adjust as needed
 		});
