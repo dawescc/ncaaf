@@ -34,6 +34,32 @@ export async function getCurrentSeasonYear(): Promise<number> {
 	}
 }
 
+// returns week number
+export async function getCurrentWeekNumber(): Promise<number> {
+	const season: number = await getCurrentSeasonYear();
+	try {
+		const url = `${api}/seasons/${season}/types/2/`;
+		const response = await fetch(url, {
+			next: { revalidate: 60 }, // Cache for 1 minute, adjust as needed
+		});
+
+		if (!response.ok) {
+			throw new Error("Failed to fetch current week data");
+		}
+
+		const data = await response.json();
+
+		if (!data.week || typeof data.week.number !== "number") {
+			throw new Error("Invalid week data");
+		}
+
+		return data.week.number;
+	} catch (error) {
+		console.error(`Error checking for current week number:`, error);
+		throw error;
+	}
+}
+
 // returns if event is completed: boolean
 export async function isEventCompleted(eventId: number): Promise<boolean> {
 	try {
@@ -310,6 +336,25 @@ export async function getAthleteInfo(athleteId: number): Promise<Athlete> {
 		return data;
 	} catch (error) {
 		console.error(`Error fetching information for athlete ${athleteId}:`, error);
+		throw error;
+	}
+}
+
+export async function getWeekGames(weekNumber: number): Promise<Event[]> {
+	try {
+		const url = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?week=${weekNumber}&groups=80`;
+		const response = await fetch(url, {
+			next: { revalidate: 3600 }, // Cache for 1 hour, adjust as needed
+		});
+
+		if (!response.ok) {
+			throw new Error("Failed to fetch week games");
+		}
+
+		const data = await response.json();
+		return data.events;
+	} catch (error) {
+		console.error(`Error fetching games for week ${weekNumber}:`, error);
 		throw error;
 	}
 }
