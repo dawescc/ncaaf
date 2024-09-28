@@ -1,6 +1,6 @@
 "use server";
 
-import { api } from "./api";
+import { api, scoreApi } from "./api";
 import { Standing, Athlete, Competitor, CompetitorIds, CompetitorsResponse, Event, Score, Team, TeamLeaders, SeasonLeaders } from "@/lib/types";
 
 // returns current season: number
@@ -342,7 +342,7 @@ export async function getAthleteInfo(athleteId: number): Promise<Athlete> {
 
 export async function getWeekGames(weekNumber: number): Promise<Event[]> {
 	try {
-		const url = `https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?week=${weekNumber}&groups=80`;
+		const url = scoreApi(weekNumber);
 		const response = await fetch(url, {
 			next: { revalidate: 3600 }, // Cache for 1 hour, adjust as needed
 		});

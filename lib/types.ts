@@ -218,3 +218,24 @@ export type Athlete = {
 	slug: string;
 	linked: boolean;
 };
+
+export type GameEvent = {
+	id: string;
+	date: string;
+	name: string;
+	shortName: string;
+	competitions: Array<{
+		competitors: Competitor[];
+	}>;
+	status: {
+		type: {
+			state: "pre" | "in" | "post";
+		};
+		displayClock: string;
+		period: number;
+	};
+	links: Array<{
+		text: string;
+		href: string;
+	}>;
+};
