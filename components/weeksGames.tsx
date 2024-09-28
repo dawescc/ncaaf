@@ -40,7 +40,7 @@ type GameEvent = {
 
 async function fetchWeekGames(weekNumber: number): Promise<GameEvent[]> {
 	const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?week=${weekNumber}&groups=80`, {
-		next: { revalidate: 60 },
+		cache: "no-store",
 	});
 
 	if (!response.ok) {
