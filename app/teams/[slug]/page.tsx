@@ -6,22 +6,19 @@ import TeamStats from "@/components/teamStats";
 import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 import { teams } from "@/data/teams";
-import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { slug: string } }) {
-	const teamSlug = params.slug;
-	const team = Object.values(teams).find((team) => team.slug === teamSlug);
+	const slugOrId = params.slug;
+	let team = Object.values(teams).find((team) => team.slug === slugOrId);
+
+	// If not found by slug, try to find by ID
 	if (!team) {
-		return (
-			<Container>
-				<h1 className='font-bold text-3xl font-serif'>Team not found.</h1>
-				<Link
-					href='/'
-					className='hover:underline'>
-					Go home
-				</Link>
-			</Container>
-		);
+		team = Object.values(teams).find((team) => team.id === slugOrId);
+	}
+
+	if (!team) {
+		notFound();
 	}
 
 	return (
@@ -51,4 +48,22 @@ export default async function Page({ params }: { params: { slug: string } }) {
 			</div>
 		</Container>
 	);
+}
+
+export async function generateMetadata({ params }: { params: { slug: string } }) {
+	const slugOrId = params.slug;
+	const team = Object.values(teams).find((team) => team.slug === slugOrId || team.id === slugOrId);
+
+	if (!team) {
+		return {
+			title: "Team Not Found",
+		};
+	}
+
+	return {
+		title: team.slug,
+		alternates: {
+			canonical: `/teams/${team.slug}`,
+		},
+	};
 }

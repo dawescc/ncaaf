@@ -1,7 +1,21 @@
 "use server";
 
+import { unstable_noStore as noStore } from "next/cache";
+import { teams } from "@/data/teams";
 import { api, scoreApi } from "./api";
-import { Standing, Athlete, Competitor, CompetitorIds, CompetitorsResponse, Event, Score, Team, TeamLeaders, SeasonLeaders } from "@/lib/types";
+import {
+	Standing,
+	Athlete,
+	Competitor,
+	CompetitorIds,
+	CompetitorsResponse,
+	Event,
+	Score,
+	Team,
+	TeamLeaders,
+	SeasonLeaders,
+	ScoreBoardEvent,
+} from "@/lib/types";
 
 // returns current season: number
 export async function getCurrentSeasonYear(): Promise<number> {
@@ -357,4 +371,36 @@ export async function getWeekGames(weekNumber: number): Promise<Event[]> {
 		console.error(`Error fetching games for week ${weekNumber}:`, error);
 		throw error;
 	}
+}
+
+export async function getScoreBoard(): Promise<ScoreBoardEvent[]> {
+	noStore();
+
+	try {
+		const week = await getCurrentWeekNumber();
+		const url = scoreApi(week);
+		const response = await fetch(url, {
+			next: { revalidate: 0 },
+		});
+
+		if (!response.ok) {
+			throw new Error("Failed to fetch week games");
+		}
+
+		const data = await response.json();
+		return data.events;
+	} catch (error) {
+		console.error(`Error fetching games.`, error);
+		throw error;
+	}
+}
+
+export async function getTeamSlug(id: number): Promise<string | null> {
+	const team = Object.values(teams).find((team) => team.id === id.toString());
+	return team ? team.slug : null;
+}
+
+export async function getTeamLink(id: number): Promise<string> {
+	const team = Object.values(teams).find((team) => parseInt(team.id) === id);
+	return team ? `/teams/${team.slug}` : `/teams/${id}`;
 }

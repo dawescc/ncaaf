@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export type Competitor = {
 	id: number;
 	uid: string;
@@ -219,23 +220,443 @@ export type Athlete = {
 	linked: boolean;
 };
 
-export type GameEvent = {
-	id: string;
-	date: string;
-	name: string;
+export interface ScoreBoardEvent {
+	season: {
+		year: number;
+		type: number;
+		slug: string;
+	};
+	uid: string;
 	shortName: string;
-	competitions: Array<{
-		competitors: Competitor[];
-	}>;
+	id: string;
 	status: {
-		type: {
-			state: "pre" | "in" | "post";
-		};
 		displayClock: string;
 		period: number;
+		clock: number;
+		type: {
+			detail: string;
+			id: string;
+			shortDetail: string;
+			description: string;
+			completed: boolean;
+			name: string;
+			state: "pre" | "in" | "post";
+		};
 	};
+	week: {
+		number: number;
+	};
+	date: string;
 	links: Array<{
-		text: string;
+		isPremium: boolean;
+		rel: string[];
 		href: string;
+		language: string;
+		text: string;
+		shortText: string;
+		isExternal: boolean;
 	}>;
-};
+	weather?: {
+		temperature: number;
+		displayValue: string;
+		highTemperature: number;
+		conditionId: string;
+		link: {
+			isPremium: boolean;
+			rel: string[];
+			href: string;
+			language: string;
+			text: string;
+			shortText: string;
+			isExternal: boolean;
+		};
+	};
+	competitions: Array<{
+		status: {
+			isTBDFlex?: boolean;
+			displayClock: string;
+			period: number;
+			clock: number;
+			type: {
+				detail: string;
+				id: string;
+				shortDetail: string;
+				description: string;
+				completed: boolean;
+				name: string;
+				state: "pre" | "in" | "post";
+			};
+		};
+		leaders?: Array<{
+			abbreviation: string;
+			leaders: Array<{
+				displayValue: string;
+				value: number;
+				athlete: {
+					displayName: string;
+					jersey: string;
+					shortName: string;
+					id: string;
+					position: {
+						abbreviation: string;
+					};
+					active: boolean;
+					fullName: string;
+					links: Array<{
+						rel: string[];
+						href: string;
+					}>;
+					team: {
+						id: string;
+					};
+					headshot: string;
+				};
+				team: {
+					id: string;
+				};
+			}>;
+			displayName: string;
+			name: string;
+			shortDisplayName: string;
+		}>;
+		situation?: {
+			distance: number;
+			down: number;
+			possessionText: string;
+			isRedZone: boolean;
+			yardLine: number;
+			lastPlay: {
+				end: {
+					team: {
+						id: string;
+					};
+					yardLine: number;
+				};
+				start: {
+					team: {
+						id: string;
+					};
+					yardLine: number;
+				};
+				id: string;
+				scoreValue: number;
+				probability: {
+					homeWinPercentage: number;
+					awayWinPercentage: number;
+					secondsLeft: number;
+					tiePercentage: number;
+				};
+				drive: {
+					start: {
+						text: string;
+						yardLine: number;
+					};
+					timeElapsed: {
+						displayValue: string;
+					};
+					description: string;
+				};
+				text: string;
+				team: {
+					id: string;
+				};
+				type: {
+					id: string;
+					text: string;
+					abbreviation: string;
+				};
+				statYardage: number;
+				athletesInvolved: Array<{
+					displayName: string;
+					jersey: string;
+					shortName: string;
+					id: string;
+					position: string;
+					fullName: string;
+					links: Array<{
+						rel: string[];
+						href: string;
+					}>;
+					team: {
+						id: string;
+					};
+					headshot: string;
+				}>;
+			};
+			downDistanceText: string;
+			shortDownDistanceText: string;
+			homeTimeouts: number;
+			awayTimeouts: number;
+		};
+		timeValid: boolean;
+		conferenceCompetition: boolean;
+		neutralSite: boolean;
+		type: {
+			id: string;
+			abbreviation: string;
+		};
+		recent: boolean;
+		geoBroadcasts: Array<{
+			market: {
+				id: string;
+				type: string;
+			};
+			lang: string;
+			type: {
+				id: string;
+				shortName: string;
+			};
+			region: string;
+			media: {
+				darkLogo?: string;
+				shortName: string;
+				logo: string;
+			};
+		}>;
+		id: string;
+		date: string;
+		competitors: Array<{
+			uid: string;
+			score: string;
+			id: string;
+			order: number;
+			linescores?: Array<{
+				value: number;
+			}>;
+			homeAway: "home" | "away";
+			curatedRank: {
+				current: number;
+			};
+			team: {
+				id: string;
+				isActive: boolean;
+				uid: string;
+				abbreviation: string;
+				color: string;
+				alternateColor: string;
+				location: string;
+				logo: string;
+				links: Array<{
+					isExternal: boolean;
+					isPremium: boolean;
+					rel: string[];
+					href: string;
+					text: string;
+				}>;
+				venue: {
+					id: string;
+				};
+				shortDisplayName: string;
+				conferenceId: string;
+				name: string;
+				displayName: string;
+			};
+			type: string;
+			statistics: any[];
+			records: Array<{
+				abbreviation?: string;
+				name: string;
+				type: string;
+				summary: string;
+			}>;
+			winner?: boolean;
+		}>;
+		uid: string;
+		groups: {
+			isConference: boolean;
+			id: string;
+			name: string;
+			shortName: string;
+		};
+		playByPlayAvailable: boolean;
+		venue: {
+			id: string;
+			fullName: string;
+			indoor: boolean;
+			address: {
+				state: string;
+				city: string;
+			};
+		};
+		format: {
+			regulation: {
+				periods: number;
+			};
+		};
+		broadcast: string;
+		startDate: string;
+		notes: any[];
+		broadcasts: Array<{
+			names: string[];
+			market: string;
+		}>;
+		attendance?: number;
+		odds?: Array<{
+			spread: number;
+			provider: {
+				id: string;
+				name: string;
+				priority: number;
+			};
+			details: string;
+			awayTeamOdds: {
+				team: {
+					abbreviation: string;
+					id: string;
+					uid: string;
+					name: string;
+					displayName: string;
+					logo: string;
+				};
+				favorite: boolean;
+				underdog: boolean;
+			};
+			open: {
+				under: {
+					value: number;
+					displayValue: string;
+					fraction: string;
+					decimal: number;
+					american: string;
+					alternateDisplayValue: string;
+				};
+				over: {
+					value: number;
+					displayValue: string;
+					fraction: string;
+					decimal: number;
+					american: string;
+					alternateDisplayValue: string;
+				};
+				total: {
+					value: number;
+					displayValue: string;
+					fraction: string;
+					decimal: number;
+					american: string;
+					alternateDisplayValue: string;
+				};
+			};
+			current: {
+				under: {
+					value: number;
+					displayValue: string;
+					fraction: string;
+					decimal: number;
+					american: string;
+					alternateDisplayValue: string;
+				};
+				over: {
+					value: number;
+					displayValue: string;
+					fraction: string;
+					decimal: number;
+					american: string;
+					alternateDisplayValue: string;
+				};
+				total: {
+					american: string;
+					alternateDisplayValue: string;
+				};
+			};
+			homeTeamOdds: {
+				team: {
+					abbreviation: string;
+					id: string;
+					uid: string;
+					name: string;
+					displayName: string;
+					logo: string;
+				};
+				favorite: boolean;
+				underdog: boolean;
+			};
+			overUnder: number;
+		}>;
+		headlines?: Array<{
+			shortLinkText: string;
+			type: string;
+			description: string;
+			video?: Array<{
+				source: string;
+				thumbnail: string;
+				id: number;
+				tracking: {
+					trackingName: string;
+					sportName: string;
+					trackingId: string;
+					leagueName: string;
+					coverageType: string;
+				};
+				duration: number;
+				links: {
+					api: {
+						self: {
+							href: string;
+						};
+					};
+					mobile: {
+						progressiveDownload: {
+							href: string;
+						};
+						alert: {
+							href: string;
+						};
+						source: {
+							href: string;
+						};
+						href: string;
+						streaming: {
+							href: string;
+						};
+					};
+					web: {
+						seo: {
+							href: string;
+						};
+						href: string;
+						self: {
+							dsi: {
+								href: string;
+							};
+							href: string;
+						};
+					};
+					source: {
+						HD: {
+							href: string;
+						};
+						HLS: {
+							href: string;
+							HD: {
+								href: string;
+							};
+						};
+						mezzanine: {
+							href: string;
+						};
+						flash: {
+							href: string;
+						};
+						href: string;
+						full: {
+							href: string;
+						};
+						hds: {
+							href: string;
+						};
+					};
+					sportscenter: {
+						href: string;
+					};
+				};
+				deviceRestrictions: {
+					type: string;
+					devices: string[];
+				};
+				headline: string;
+			}>;
+		}>;
+	}>;
+	name: string;
+}

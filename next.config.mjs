@@ -10,6 +10,14 @@ const nextConfig = {
 			},
 		],
 	},
+	async rewrites() {
+		return [
+			{
+				source: "/teams/:id(\\d+)",
+				destination: "/teams/:id",
+			},
+		];
+	},
 };
 
 export default nextConfig;

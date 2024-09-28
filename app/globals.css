@@ -83,3 +83,18 @@ body {
 		text-wrap: balance;
 	}
 }
+
+:root {
+	--football-color: #000000; /* Default color, will be overridden inline */
+	--dark-football-color: #ffffff; /* Default dark color, will be overridden inline */
+}
+
+.football-color {
+	color: var(--football-color);
+}
+
+@media (prefers-color-scheme: dark) {
+	.football-color {
+		color: var(--dark-football-color);
+	}
+}

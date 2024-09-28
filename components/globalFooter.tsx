@@ -26,7 +26,7 @@ export default function GlobalFooter() {
 						</div>
 
 						<div className='text-center md:text-left'>
-							<blockquote className='text-xl md:text-2xl font-serif font-medium text-accent-foreground'>
+							<blockquote className='text-xl md:text-2xl font-serif font-medium'>
 								<FaQuoteLeft className='inline-block mr-2' />
 								That boy don&#39;t know the meaning of the word fear. In fact, I just saw his grades, and that boy don&#39;t know the meaning of
 								a lot of words.
@@ -70,10 +70,10 @@ export default function GlobalFooter() {
 				</div>
 
 				<div className='mt-8 text-center flex flex-col'>
-					<span className='text-accent text-xs'>
+					<span className='text-xs'>
 						designed && developed with <BsHeartFill className='inline-flex' />
 					</span>
-					<span className='text-xs font-light text-accent/80 mt-8'>
+					<span className='text-xs font-light mt-8'>
 						Not affiliated with NCAA or any other institution mentioned within. All rights belong to their owners.
 					</span>
 				</div>
