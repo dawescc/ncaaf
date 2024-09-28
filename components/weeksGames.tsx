@@ -6,7 +6,7 @@ import { use } from "react";
 import { Card, CardContent } from "./ui/card";
 import { FaFootballBall } from "react-icons/fa";
 import { teams } from "@/data/teams";
-import { formatDateTime } from "@/lib/utils";
+import ClientTime from "./clientTime";
 
 // Define types
 type WeekGamesProps = {
@@ -320,12 +320,13 @@ const WeekGames = async ({ weekNumber }: WeekGamesProps) => {
 	);
 };
 
-const WeekGamesContent = ({ gamesPromise }: { weekNumber: number; gamesPromise: Promise<Event[]> }) => {
+const WeekGamesContent = ({ weekNumber, gamesPromise }: { weekNumber: number; gamesPromise: Promise<Event[]> }) => {
 	const games = use(gamesPromise);
 	games.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
 	return (
 		<div className='space-y-2 max-w-md mx-auto'>
+			<h2 className='mb-4 text-xl md:text-2xl font-bold font-serif'>Week {weekNumber} Schedule</h2>
 			{games.map((game) => (
 				<GameCard
 					key={game.id}
@@ -360,7 +361,7 @@ const GameCard = ({ game }: { game: Event }) => {
 };
 
 const PreGameCard = ({ game, homeTeam, awayTeam, broadcast }: { game: Event; homeTeam: Competitor; awayTeam: Competitor; broadcast: string }) => {
-	const timeDisplay = game.competitions[0].timeValid ? formatDateTime(game.date) : "TBD";
+	const timeDisplay = game.competitions[0].timeValid ? <ClientTime utcDate={game.date} /> : "TBD";
 
 	return (
 		<Card className='overflow-hidden bg-accent'>
