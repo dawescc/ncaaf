@@ -7,18 +7,20 @@ import { Container } from "@/components/ui/container";
 export default async function Home() {
 	return (
 		<Container>
-			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8'>
+			<div className='grid grid-cols-1 sm:grid-cols-[1fr_1.33fr] gap-8'>
 				<div className='pt-4 h-fit'>
 					<Scoreboard />
 				</div>
-				<div className='pt-4 h-fit'>
-					<Top25 />
+				<div className='grid-cols-subgrid col-span-1 grid xl:grid-cols-[1fr_0.66fr] gap-8'>
+					<div className='pt-4 h-fit'>
+						<Top25 />
+					</div>
+					<Card className='pt-4 h-fit'>
+						<CardContent>
+							<ConferenceList />
+						</CardContent>
+					</Card>
 				</div>
-				<Card className='pt-4 h-fit'>
-					<CardContent>
-						<ConferenceList />
-					</CardContent>
-				</Card>
 			</div>
 		</Container>
 	);

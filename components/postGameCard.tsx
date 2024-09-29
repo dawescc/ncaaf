@@ -63,7 +63,7 @@ const PostGameTeamDisplay = ({ team }: TeamDisplayProps) => {
 			<div>
 				<Link
 					href={`/teams/${team.team.id}`}
-					className='text-lg font-bold flex items-center space-x-2'>
+					className='text-lg font-bold flex items-center gap-x-2'>
 					{team.curatedRank.current !== 99 && <span className='text-sm font-normal'>{team.curatedRank.current}&nbsp;</span>}
 					<span className={teamWon ? "text-green-500" : ""}>{team.team.shortDisplayName}</span>
 				</Link>

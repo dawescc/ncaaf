@@ -11,17 +11,19 @@ export default async function Scoreboard() {
 	const sortedEvents = events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
 	return (
-		<div className='flex flex-col gap-y-4 max-w-2xl mx-auto'>
+		<div className='flex flex-col gap-y-4'>
 			<h2 className='section-header-text'>
 				<MdScoreboard className='inline' /> Scoreboard
 			</h2>
-			{sortedEvents.map((event) => (
-				<div key={event.id}>
-					{event.status.type.state === "pre" && <PreGameCard event={event} />}
-					{event.status.type.state === "in" && <LiveGameCard event={event} />}
-					{event.status.type.state === "post" && <PostGameCard event={event} />}
-				</div>
-			))}
+			<div className='flex flex-col gap-4'>
+				{sortedEvents.map((event) => (
+					<div key={event.id}>
+						{event.status.type.state === "pre" && <PreGameCard event={event} />}
+						{event.status.type.state === "in" && <LiveGameCard event={event} />}
+						{event.status.type.state === "post" && <PostGameCard event={event} />}
+					</div>
+				))}
+			</div>
 		</div>
 	);
 }
