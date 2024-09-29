@@ -17,7 +17,10 @@ type TeamLogoProps = {
 };
 
 async function getTeamLogos(teamId: number): Promise<Logo[]> {
-	const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/${teamId}`);
+	const res = await fetch(
+		`https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/${teamId}`,
+		{ next: { revalidate: 86400 } } // Cache for 1 day
+	);
 	if (!res.ok) throw new Error("Failed to fetch team data");
 	const data = await res.json();
 	return data.team.logos;
