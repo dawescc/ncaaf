@@ -1,7 +1,6 @@
 "use server";
 
 import { unstable_noStore as noStore } from "next/cache";
-import { teams } from "@/data/teams";
 import { api, scoreApi } from "./api";
 import {
 	Standing,
