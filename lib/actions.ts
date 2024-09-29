@@ -394,13 +394,3 @@ export async function getScoreBoard(): Promise<ScoreBoardEvent[]> {
 		throw error;
 	}
 }
-
-export async function getTeamSlug(id: number): Promise<string | null> {
-	const team = Object.values(teams).find((team) => team.id === id.toString());
-	return team ? team.slug : null;
-}
-
-export async function getTeamLink(id: number): Promise<string> {
-	const team = Object.values(teams).find((team) => parseInt(team.id) === id);
-	return team ? `/teams/${team.slug}` : `/teams/${id}`;
-}

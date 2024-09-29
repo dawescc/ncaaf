@@ -1,15 +1,14 @@
 import type { Metadata } from "next";
-import { Noto_Sans } from "next/font/google";
+
 import "./globals.css";
 import { GlobalNavigation } from "@/components/globalNavigation";
 import GlobalFooter from "@/components/globalFooter";
+import { notoSans, notoSerif } from "./fonts";
 
 export const metadata: Metadata = {
 	title: "NCAAF",
 	description: "NCAAF by Dawes",
 };
-
-const notoSans = Noto_Sans({ subsets: ["latin"] });
 
 export default function RootLayout({
 	children,
@@ -18,7 +17,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={`${notoSans.className} antialiased flex flex-col min-h-screen`}>
+			<body className={`${notoSans.variable} ${notoSerif.variable} font-sans antialiased flex flex-col min-h-screen`}>
 				<GlobalNavigation />
 				<main className='w-full'>{children}</main>
 				<GlobalFooter />

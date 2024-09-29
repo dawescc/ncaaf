@@ -13,7 +13,7 @@ type ClientTeamLogoProps = {
 
 export default function ClientTeamLogo({ teamId, width, height, className }: ClientTeamLogoProps) {
 	return (
-		<Suspense fallback={<Skeleton className='size-[40px] rounded-md' />}>
+		<Suspense fallback={<Skeleton className={`w-[${width}px] h-[${height}px] rounded-md`} />}>
 			<TeamLogo
 				teamId={teamId}
 				width={width}

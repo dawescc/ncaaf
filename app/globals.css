@@ -6,10 +6,6 @@ body {
 	font-family: "Noto Sans", sans-serif;
 }
 
-.font-serif {
-	font-family: "Noto Serif", serif;
-}
-
 @layer base {
 	:root {
 		--background: 0 0% 100%;
@@ -40,6 +36,10 @@ body {
 
 		--football-color: #000000; /* Default color, will be overridden inline */
 		--dark-football-color: #ffffff; /* Default dark color, will be overridden inline */
+
+		--pregame: var(--accent);
+		--live: var(--card);
+		--completed: var(--card);
 	}
 
 	@media (prefers-color-scheme: dark) {
@@ -68,6 +68,10 @@ body {
 			--chart-3: 30 80% 55%;
 			--chart-4: 280 65% 60%;
 			--chart-5: 340 75% 55%;
+
+			--pregame: var(--accent);
+			--live: var(--card);
+			--completed: var(--card);
 		}
 	}
 }
@@ -98,5 +102,5 @@ body {
 }
 
 .section-header-text {
-	@apply text-4xl lg:text-3xl font-[950] tracking-[-0.04em] font-serif;
+	@apply text-2xl md:text-3xl font-[950] tracking-[-0.04em] font-serif;
 }

@@ -3,6 +3,7 @@ import ClientTime from "@/components/clientTime";
 import { ScoreBoardEvent } from "@/lib/types";
 import Link from "next/link";
 import TeamLogo from "@/components/team/teamLogo";
+import { getTeamSlug } from "@/lib/utils";
 
 type PreGameCardProps = {
 	event: ScoreBoardEvent;
@@ -22,7 +23,7 @@ export default function PreGameCard({ event }: PreGameCardProps) {
 	}
 
 	return (
-		<Card className='overflow-hidden bg-accent'>
+		<Card className='bg-pregame'>
 			<CardContent className='p-4'>
 				<div className='flex flex-col space-y-2'>
 					<div className='flex justify-between items-center text-sm'>
@@ -43,23 +44,26 @@ type TeamDisplayProps = {
 	team: ScoreBoardEvent["competitions"][0]["competitors"][0];
 };
 
-const PreGameTeamDisplay = ({ team }: TeamDisplayProps) => (
-	<div>
-		<Link
-			href={`${team.id}`}
-			className='flex items-center gap-x-2'>
-			<TeamLogo
-				teamId={parseInt(team.team.id)}
-				width={40}
-				height={40}
-			/>
-			<div>
-				<div className='text-sm font-medium'>
-					{team.curatedRank.current !== 99 && <span className='text-xs'>{team.curatedRank.current}&nbsp;</span>}
-					<span className='font-bold'>{team.team.shortDisplayName}</span>
+const PreGameTeamDisplay = ({ team }: TeamDisplayProps) => {
+	const teamSlug = getTeamSlug(parseInt(team.team.id));
+	return (
+		<div>
+			<Link
+				href={`/teams/${teamSlug}`}
+				className='flex items-center gap-x-2'>
+				<TeamLogo
+					teamId={parseInt(team.team.id)}
+					width={40}
+					height={40}
+				/>
+				<div>
+					<div className='text-sm font-medium'>
+						{team.curatedRank.current !== 99 && <span className='text-xs'>{team.curatedRank.current}&nbsp;</span>}
+						<span className='font-bold'>{team.team.shortDisplayName}</span>
+					</div>
+					<div className='text-xs'>{team.records[0].summary}</div>
 				</div>
-				<div className='text-xs'>{team.records[0].summary}</div>
-			</div>
-		</Link>
-	</div>
-);
+			</Link>
+		</div>
+	);
+};

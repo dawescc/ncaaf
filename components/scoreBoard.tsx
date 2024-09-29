@@ -1,4 +1,4 @@
-import { getScoreBoard } from "@/lib/actions";
+import { getScoreBoard, getCurrentWeekNumber } from "@/lib/actions";
 import PreGameCard from "@/components/preGameCard";
 import LiveGameCard from "@/components/liveGameCard";
 import PostGameCard from "@/components/postGameCard";
@@ -9,11 +9,12 @@ export default async function Scoreboard() {
 
 	// Sort events by date (oldest last)
 	const sortedEvents = events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-
+	const week = getCurrentWeekNumber();
 	return (
 		<div className='flex flex-col gap-y-4'>
 			<h2 className='section-header-text'>
-				<MdScoreboard className='inline' /> Scoreboard
+				<MdScoreboard className='inline' />
+				&nbsp;Scoreboard: Week {week}
 			</h2>
 			<div className='flex flex-col gap-4'>
 				{sortedEvents.map((event) => (

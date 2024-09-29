@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
-import TeamLogo from "@/components/team/teamLogo";
+import TeamLogo from "@/components/team/teamLogoClient";
 import { PiRankingFill } from "react-icons/pi";
 
 type Team = {

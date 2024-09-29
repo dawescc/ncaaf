@@ -2,6 +2,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { ScoreBoardEvent } from "@/lib/types";
 import TeamLogo from "@/components/team/teamLogo";
+import { Separator } from "./ui/separator";
+import { Badge } from "./ui/badge";
+import { getTeamSlug } from "@/lib/utils";
 
 type PostGameCardProps = {
 	event: ScoreBoardEvent;
@@ -23,11 +26,11 @@ export default function PostGameCard({ event }: PostGameCardProps) {
 	}
 
 	return (
-		<Card className='overflow-hidden'>
+		<Card className='bg-completed'>
 			<CardContent className='p-4'>
 				<div className='flex flex-col space-y-4'>
 					<div className='flex justify-between items-center text-sm'>
-						<span className='font-semibold'>{timeDisplay}</span>
+						<Badge className='font-semibold'>{timeDisplay}</Badge>
 						{boxscoreLink && (
 							<Link
 								href={boxscoreLink.href}
@@ -38,6 +41,7 @@ export default function PostGameCard({ event }: PostGameCardProps) {
 					</div>
 					<div className='flex flex-col gap-2'>
 						<PostGameTeamDisplay team={awayTeam} />
+						<Separator />
 						<PostGameTeamDisplay team={homeTeam} />
 					</div>
 				</div>
@@ -52,6 +56,7 @@ type TeamDisplayProps = {
 
 const PostGameTeamDisplay = ({ team }: TeamDisplayProps) => {
 	const teamWon = team.winner;
+	const teamSlug = getTeamSlug(parseInt(team.team.id));
 
 	return (
 		<div className='flex items-center gap-2'>
@@ -62,7 +67,7 @@ const PostGameTeamDisplay = ({ team }: TeamDisplayProps) => {
 			/>
 			<div>
 				<Link
-					href={`/teams/${team.team.id}`}
+					href={`/teams/${teamSlug}`}
 					className='text-lg font-bold flex items-center gap-x-2'>
 					{team.curatedRank.current !== 99 && <span className='text-sm font-normal'>{team.curatedRank.current}&nbsp;</span>}
 					<span className={teamWon ? "text-green-500" : ""}>{team.team.shortDisplayName}</span>

@@ -1,3 +1,4 @@
+import { teams } from "@/data/teams";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -15,4 +16,9 @@ export function formatDateTime(date: string | Date): string {
 		minute: "2-digit",
 		timeZoneName: "short",
 	});
+}
+
+export function getTeamSlug(id: number): string {
+	const team = Object.values(teams).find((team) => parseInt(team.id) === id);
+	return team ? team.slug : "-";
 }

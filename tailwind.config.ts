@@ -46,11 +46,19 @@ const config: Config = {
 					"4": "hsl(var(--chart-4))",
 					"5": "hsl(var(--chart-5))",
 				},
+
+				pregame: "hsl(var(--pregame))",
+				live: "hsl(var(--live))",
+				completed: "hsl(var(--completed))",
 			},
 			borderRadius: {
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)",
+			},
+			fontFamily: {
+				sans: ["var(--font-noto-sans)"],
+				serif: ["var(--font-noto-serif)"],
 			},
 		},
 	},

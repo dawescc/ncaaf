@@ -7,6 +7,7 @@ import { FaFootballBall } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getScoreBoard } from "@/lib/actions";
 import TeamLogoClient from "@/components/team/teamLogoClient";
+import { getTeamSlug } from "@/lib/utils";
 
 type LiveGameCardProps = {
 	event: ScoreBoardEvent;
@@ -50,7 +51,7 @@ export default function LiveGameCard({ event: initialEvent }: LiveGameCardProps)
 	const possessionTeamId = situation?.lastPlay?.team?.id;
 
 	return (
-		<Card className='overflow-hidden'>
+		<Card className='bg-live'>
 			<CardContent className='p-4'>
 				<div className='flex flex-col space-y-4'>
 					<div className='flex justify-between items-center text-sm'>
@@ -80,6 +81,7 @@ type TeamDisplayProps = {
 };
 
 const LiveTeamDisplay = ({ team, hasPossession }: TeamDisplayProps) => {
+	const teamSlug = getTeamSlug(parseInt(team.team.id));
 	return (
 		<div className='flex items-center gap-2'>
 			<TeamLogoClient
@@ -89,7 +91,7 @@ const LiveTeamDisplay = ({ team, hasPossession }: TeamDisplayProps) => {
 			/>
 			<div>
 				<Link
-					href={`/teams/${team.id}`}
+					href={`/teams/${teamSlug}`}
 					className='text-lg font-bold flex items-center space-x-2'>
 					{team.curatedRank.current !== 99 && <span className='text-sm font-normal'>{team.curatedRank.current}</span>}
 					<span>{team.team.shortDisplayName}</span>
