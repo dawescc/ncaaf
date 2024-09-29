@@ -1,12 +1,12 @@
 "use client";
 
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { ScoreBoardEvent } from "@/lib/types";
 import { FaFootballBall } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { getScoreBoard } from "@/lib/actions";
+import TeamLogoClient from "@/components/team/teamLogoClient";
 
 type LiveGameCardProps = {
 	event: ScoreBoardEvent;
@@ -82,9 +82,8 @@ type TeamDisplayProps = {
 const LiveTeamDisplay = ({ team, hasPossession }: TeamDisplayProps) => {
 	return (
 		<div className='flex items-center gap-2'>
-			<Image
-				src={team.team.logo}
-				alt={team.team.displayName}
+			<TeamLogoClient
+				teamId={parseInt(team.team.id)}
 				width={40}
 				height={40}
 			/>

@@ -11,7 +11,7 @@ export default async function Scoreboard() {
 
 	return (
 		<div className='flex flex-col gap-y-4 max-w-2xl mx-auto'>
-			<h2 className='text-xl md:text-2xl font-bold font-serif'>Scoreboard</h2>
+			<h2 className='text-2xl font-black tracking-[-0.033em] font-serif'>Scoreboard</h2>
 			{sortedEvents.map((event) => (
 				<div key={event.id}>
 					{event.status.type.state === "pre" && <PreGameCard event={event} />}

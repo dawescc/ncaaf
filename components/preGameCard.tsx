@@ -1,8 +1,8 @@
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import ClientTime from "@/components/clientTime";
 import { ScoreBoardEvent } from "@/lib/types";
 import Link from "next/link";
+import TeamLogo from "@/components/team/teamLogo";
 
 type PreGameCardProps = {
 	event: ScoreBoardEvent;
@@ -48,9 +48,8 @@ const PreGameTeamDisplay = ({ team }: TeamDisplayProps) => (
 		<Link
 			href={`${team.id}`}
 			className='flex items-center gap-x-2'>
-			<Image
-				src={team.team.logo}
-				alt={team.team.displayName}
+			<TeamLogo
+				teamId={parseInt(team.team.id)}
 				width={40}
 				height={40}
 			/>

@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import Link from "next/link";
 import { ScoreBoardEvent } from "@/lib/types";
+import TeamLogo from "@/components/team/teamLogo";
 
 type PostGameCardProps = {
 	event: ScoreBoardEvent;
@@ -55,9 +55,8 @@ const PostGameTeamDisplay = ({ team }: TeamDisplayProps) => {
 
 	return (
 		<div className='flex items-center gap-2'>
-			<Image
-				src={team.team.logo}
-				alt={team.team.displayName}
+			<TeamLogo
+				teamId={parseInt(team.team.id)}
 				width={40}
 				height={40}
 			/>

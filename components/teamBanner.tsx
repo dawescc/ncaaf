@@ -1,4 +1,4 @@
-import Image from "next/image";
+import TeamLogo from "./team/teamLogo";
 
 type TeamBannerProps = {
 	teamId: number;
@@ -45,11 +45,10 @@ const TeamBanner = async ({ teamId }: TeamBannerProps) => {
 				className={`border-b-4`}
 				style={{ borderColor: `#${teamData.color}` }}>
 				<div className='flex items-center space-x-4 p-4'>
-					<Image
-						src={teamData.logos[0].href}
-						alt={`${teamData.displayName} logo`}
-						width={64}
+					<TeamLogo
+						teamId={teamId}
 						height={64}
+						width={64}
 					/>
 					<div>
 						<h1 className='text-3xl font-bold'>
