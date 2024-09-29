@@ -1,5 +1,5 @@
 import Image from "next/image";
-import styles from "./TeamLogo.module.css";
+import styles from "@/components/team/TeamLogo.module.css";
 
 type Logo = {
 	href: string;
