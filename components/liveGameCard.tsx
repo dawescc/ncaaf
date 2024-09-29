@@ -39,8 +39,12 @@ export default function LiveGameCard({ event: initialEvent }: LiveGameCardProps)
 
 	const timeDisplay = `Q${status.period} ⋅ ${status.displayClock}`;
 
+	const downDistance = `${situation?.shortDownDistanceText} ⋅ ${situation?.possessionText}`;
+
+	const lastPlay = `${situation?.lastPlay?.text}`;
+
 	if (!homeTeam || !awayTeam) {
-		return null; // or some error state
+		return null;
 	}
 
 	const possessionTeamId = situation?.lastPlay?.team?.id;
@@ -51,7 +55,7 @@ export default function LiveGameCard({ event: initialEvent }: LiveGameCardProps)
 				<div className='flex flex-col space-y-4'>
 					<div className='flex justify-between items-center text-sm'>
 						<span className='font-semibold'>{timeDisplay}</span>
-						<span>{broadcast}</span>
+						<span>{situation?.shortDownDistanceText ? downDistance : broadcast}</span>
 					</div>
 					<div className='flex flex-col gap-2'>
 						<LiveTeamDisplay
@@ -63,6 +67,7 @@ export default function LiveGameCard({ event: initialEvent }: LiveGameCardProps)
 							hasPossession={possessionTeamId === homeTeam.id}
 						/>
 					</div>
+					{situation?.lastPlay ? <div className='px-1 py-2 border-t-[1px] text-pretty text-xs'>{lastPlay}</div> : null}
 				</div>
 			</CardContent>
 		</Card>

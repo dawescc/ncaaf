@@ -8,17 +8,15 @@ export default async function Home() {
 	return (
 		<Container>
 			<div className='flex flex-col md:flex-row md:flex-wrap gap-8 md:gap-10'>
-				<Card className='pt-4 h-fit'>
-					<CardContent>
-						<Scoreboard />
-					</CardContent>
-				</Card>
-				<Card className='pt-4 h-fit'>
+				<div className='pt-4 h-fit md:max-w-sm'>
+					<Scoreboard />
+				</div>
+				<Card className='pt-4 h-fit md:max-w-md'>
 					<CardContent>
 						<Top25 />
 					</CardContent>
 				</Card>
-				<Card className='pt-4 h-fit'>
+				<Card className='pt-4 h-fit md:max-w-xs'>
 					<CardContent>
 						<ConferenceList />
 					</CardContent>
