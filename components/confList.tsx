@@ -2,11 +2,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { conferences } from "@/data/teams";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
+import { GiAmericanFootballHelmet } from "react-icons/gi";
 
 const ConferenceList = () => {
 	return (
 		<Table>
-			<TableTitle>Conferences</TableTitle>
+			<TableTitle>
+				<GiAmericanFootballHelmet className='inline' /> Conferences
+			</TableTitle>
 			<TableHeader>
 				<TableRow>
 					<TableHead>FBS Division I Conferences</TableHead>

@@ -37,6 +37,9 @@ body {
 		--chart-3: 197 37% 24%;
 		--chart-4: 43 74% 66%;
 		--chart-5: 27 87% 67%;
+
+		--football-color: #000000; /* Default color, will be overridden inline */
+		--dark-football-color: #ffffff; /* Default dark color, will be overridden inline */
 	}
 
 	@media (prefers-color-scheme: dark) {
@@ -84,11 +87,6 @@ body {
 	}
 }
 
-:root {
-	--football-color: #000000; /* Default color, will be overridden inline */
-	--dark-football-color: #ffffff; /* Default dark color, will be overridden inline */
-}
-
 .football-color {
 	color: var(--football-color);
 }
@@ -97,4 +95,8 @@ body {
 	.football-color {
 		color: var(--dark-football-color);
 	}
+}
+
+.section-header-text {
+	@apply text-4xl lg:text-3xl font-[950] tracking-[-0.04em] font-serif;
 }

@@ -1,6 +1,7 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
+import TeamLogo from "@/components/team/teamLogo";
+import { PiRankingFill } from "react-icons/pi";
 
 type Team = {
 	id: number;
@@ -111,7 +112,9 @@ const Top25 = async () => {
 	const { rankings, headline } = await fetchRankings();
 	return (
 		<Table>
-			<TableTitle>{headline.short}</TableTitle>
+			<TableTitle>
+				<PiRankingFill className='inline' /> {headline.short}
+			</TableTitle>
 			<TableCaption>{headline.long}</TableCaption>
 			<TableHeader>
 				<TableRow>
@@ -130,9 +133,8 @@ const Top25 = async () => {
 							<Link
 								href={`/teams/${ranking.team.slug}`}
 								className='flex items-center'>
-								<Image
-									src={ranking.team.logo}
-									alt={ranking.team.name}
+								<TeamLogo
+									teamId={ranking.team.id}
 									width={32}
 									height={32}
 									className='mr-4'
