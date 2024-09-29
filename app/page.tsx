@@ -7,16 +7,16 @@ import { Container } from "@/components/ui/container";
 export default async function Home() {
 	return (
 		<Container>
-			<div className='flex flex-col md:flex-row md:flex-wrap gap-8 md:gap-10'>
-				<div className='pt-4 h-fit md:max-w-sm'>
+			<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8'>
+				<div className='pt-4 h-fit w-full'>
 					<Scoreboard />
 				</div>
-				<Card className='pt-4 h-fit md:max-w-md'>
+				<Card className='pt-4 h-fit'>
 					<CardContent>
 						<Top25 />
 					</CardContent>
 				</Card>
-				<Card className='pt-4 h-fit md:max-w-xs'>
+				<Card className='pt-4 h-fit'>
 					<CardContent>
 						<ConferenceList />
 					</CardContent>
