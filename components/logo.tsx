@@ -1,7 +1,7 @@
-type LogoTypes = {
+type ClassTypes = {
 	className?: string;
 };
-const Logo = ({ className }: LogoTypes) => (
+const Logo = ({ className }: ClassTypes) => (
 	<svg
 		viewBox='8.504 39.647 175.748 117.166'
 		width='175.748'

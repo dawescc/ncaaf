@@ -47,6 +47,7 @@ const config: Config = {
 					"5": "hsl(var(--chart-5))",
 				},
 
+				footer: "hsl(var(--footer))",
 				pregame: "hsl(var(--pregame))",
 				live: "hsl(var(--live))",
 				completed: "hsl(var(--completed))",

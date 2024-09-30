@@ -6,6 +6,10 @@ body {
 	font-family: "Noto Sans", sans-serif;
 }
 
+.font-serif {
+	@apply tracking-[-0.04rem];
+}
+
 @layer base {
 	:root {
 		--background: 0 0% 100%;
@@ -33,6 +37,8 @@ body {
 		--chart-3: 197 37% 24%;
 		--chart-4: 43 74% 66%;
 		--chart-5: 27 87% 67%;
+
+		--footer: 120 2.4% 97.95%;
 
 		--football-color: #000000; /* Default color, will be overridden inline */
 		--dark-football-color: #ffffff; /* Default dark color, will be overridden inline */
@@ -69,6 +75,8 @@ body {
 			--chart-4: 280 65% 60%;
 			--chart-5: 340 75% 55%;
 
+			--footer: 240 6.85% 9.9%;
+
 			--pregame: var(--accent);
 			--live: var(--card);
 			--completed: var(--card);
@@ -102,5 +110,5 @@ body {
 }
 
 .section-header-text {
-	@apply text-2xl md:text-3xl font-[950] tracking-[-0.04em] font-serif;
+	@apply text-2xl md:text-3xl font-[950] font-serif;
 }

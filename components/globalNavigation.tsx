@@ -8,7 +8,7 @@ export function GlobalNavigation() {
 		<div className='px-2 py-1 z-[50] fixed bg-background flex w-full shadow-sm border-b-[1px]'>
 			<div className='font-serif font-bold mr-auto'>
 				<Link href={"/"}>
-					<Logo className='size-12' />
+					<Logo className='size-14 md:size-16' />
 				</Link>
 			</div>
 			<NavigationMenu>
