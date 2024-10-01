@@ -35,10 +35,10 @@ export default function GlobalFooter() {
 						</div>
 
 						<div className='flex justify-center md:justify-end'>
-							<div className='grid grid-cols-2 gap-8 text-center md:text-left'>
+							<div className='grid grid-cols-2 gap-8 text-left'>
 								<div>
 									<h3 className='text-xl font-serif font-bold mb-2'>Links</h3>
-									<ul>
+									<ul className=''>
 										{linkItems.map((item) => (
 											<li key={item.name}>
 												<Link
