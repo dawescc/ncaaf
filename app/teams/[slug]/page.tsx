@@ -10,12 +10,7 @@ import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { slug: string } }) {
 	const slugOrId = params.slug;
-	let team = Object.values(teams).find((team) => team.slug === slugOrId);
-
-	// If not found by slug, try to find by ID
-	if (!team) {
-		team = Object.values(teams).find((team) => team.id === slugOrId);
-	}
+	const team = Object.values(teams).find((team) => team.slug === slugOrId);
 
 	if (!team) {
 		notFound();
