@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { FaQuoteLeft, FaQuoteRight } from "react-icons/fa";
 import Logo from "./logo";
-import { siteConfig } from "@/lib/siteConfig";
-import MadeWithLove from "@/components/mwl";
+import { siteConfig } from "@/config/siteConfig";
+import MadeWithLove from "@/components/ncaaf/mwl";
 
 const linkItems = Object.entries(siteConfig.links).map(([name, href]) => ({
 	name: name.charAt(0).toUpperCase() + name.slice(1),

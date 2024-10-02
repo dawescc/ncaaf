@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
-import { teams, conferences } from "@/data/teams";
+import { teams, conferences } from "@/data/conferences-teams";
 
 type TeamData = {
 	id: number;

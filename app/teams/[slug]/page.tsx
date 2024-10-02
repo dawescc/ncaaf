@@ -1,11 +1,10 @@
-import ConfStandings from "@/components/confStandings";
-import TeamBanner from "@/components/teamBanner";
-import TeamLeaders from "@/components/teamLeaders";
-import TeamSchedule from "@/components/teamSchedule";
-import TeamStats from "@/components/teamStats";
+import ConfStandings from "@/components/conference/conference-standings";
+import TeamBanner from "@/components/team/team-banner";
+import TeamLeaders from "@/components/team/team-leaders";
+import TeamStats from "@/components/team/team-stats";
 import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
-import { teams } from "@/data/teams";
+import { teams } from "@/data/conferences-teams";
 import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { slug: string } }) {

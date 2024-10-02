@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { conferences } from "@/data/teams";
+import { conferences } from "@/data/conferences-teams";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
 import { GiAmericanFootballHelmet } from "react-icons/gi";
 

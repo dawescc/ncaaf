@@ -1,0 +1,12 @@
+.team-logo-dark {
+	display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+	.team-logo {
+		display: none;
+	}
+	.team-logo-dark {
+		display: unset;
+	}
+}

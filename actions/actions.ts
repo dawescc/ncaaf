@@ -1,7 +1,7 @@
 "use server";
 
 import { unstable_noStore as noStore } from "next/cache";
-import { api, scoreApi } from "./api";
+import { api, scoreApi } from "@/lib/api";
 import {
 	Standing,
 	Athlete,
@@ -14,7 +14,7 @@ import {
 	TeamLeaders,
 	SeasonLeaders,
 	ScoreBoardEvent,
-} from "@/lib/types";
+} from "@/types/types";
 
 // returns current season: number
 export async function getCurrentSeasonYear(): Promise<number> {

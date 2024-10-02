@@ -1,7 +1,7 @@
 import Link from "next/link";
 
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
-import Logo from "./logo";
+import Logo from "@/components/ncaaf/logo";
 
 export function GlobalNavigation() {
 	return (

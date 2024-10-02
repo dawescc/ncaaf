@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
-import { getConferenceStandings, getTeamInfo } from "@/lib/actions";
-import TeamLogo from "./team/teamLogo";
+import { getConferenceStandings, getTeamInfo } from "@/actions/actions";
+import TeamLogo from "@/components/team/team-logo";
 
 type Record = {
 	wins: number;
@@ -72,10 +72,11 @@ const ConfStandings = async ({ conf_id }: { conf_id: number }) => {
 								href={`/teams/${standing.team.slug}`}
 								className='flex items-center'>
 								<TeamLogo
-									teamId={parseInt(standing.team.id)}
+									id={standing.team.id}
 									width={32}
 									height={32}
 									className='mr-4'
+									alt=''
 								/>
 								<span className='font-medium'>{standing.team.name}</span>
 							</Link>

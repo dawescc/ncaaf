@@ -1,17 +1,17 @@
-export interface TeamInfo {
+export interface datTeam {
 	id: string;
 	slug: string;
 	conference: number;
 }
 
-export interface ConferenceInfo {
+export interface datConference {
 	id: number;
 	short: string;
 	full: string;
 	href: string;
 }
 
-export const teams: Record<string, TeamInfo> = {
+export const teams: Record<string, datTeam> = {
 	"army-black-knights": { id: "349", slug: "army-black-knights", conference: 1 },
 	"navy-midshipmen": { id: "2426", slug: "navy-midshipmen", conference: 1 },
 	"north-texas-mean-green": { id: "249", slug: "north-texas-mean-green", conference: 1 },
@@ -148,7 +148,7 @@ export const teams: Record<string, TeamInfo> = {
 	"troy-trojans": { id: "2653", slug: "troy-trojans", conference: 37 },
 };
 
-export const conferences: Record<string, ConferenceInfo> = {
+export const conferences: Record<string, datConference> = {
 	acc: {
 		id: 1,
 		short: "ACC",

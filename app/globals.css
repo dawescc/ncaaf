@@ -110,5 +110,5 @@ body {
 }
 
 .section-header-text {
-	@apply text-2xl md:text-3xl font-[950] font-serif;
+	@apply text-2xl md:text-3xl font-[950];
 }

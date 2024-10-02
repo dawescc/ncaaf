@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
-import { PiRankingFill } from "react-icons/pi";
-import TeamLogo from "./team/teamLogo";
+import TeamLogo from "@/components/team/team-logo";
 import { getTeamSlug } from "@/lib/utils";
 
 type Ranking = {
@@ -20,6 +19,7 @@ type Ranking = {
 type TeamInfo = {
 	id: string;
 	shortName: string;
+	displayName: string;
 	logos: {
 		href: string;
 		alt: string;
@@ -80,6 +80,7 @@ async function fetchTeamInfo(teamRef: string): Promise<TeamInfo> {
 	return {
 		id: collegeData.id,
 		shortName: collegeData.shortName,
+		displayName: collegeData.displayName,
 		logos: collegeData.logos,
 	};
 }
@@ -97,40 +98,39 @@ const Top25 = async () => {
 		);
 
 		return (
-			<Table>
-				<TableTitle>
-					<PiRankingFill className='inline' /> {headline.short}
-				</TableTitle>
-				<TableCaption>{headline.long}</TableCaption>
+			<Table className='font-mono'>
+				<TableTitle className='font-sans'>{headline.short}</TableTitle>
+				<TableCaption className='font-sans'>{headline.long}</TableCaption>
 				<TableHeader>
 					<TableRow>
-						<TableHead className='p-2 md:p-4'>Rank</TableHead>
-						<TableHead className='p-2 md:p-4'>Team</TableHead>
-						<TableHead className='p-2 md:p-4'>W</TableHead>
-						<TableHead className='p-2 md:p-4'>L</TableHead>
-						<TableHead className='text-right p-2 md:p-4'>Conf</TableHead>
+						<TableHead>Rank</TableHead>
+						<TableHead>Team</TableHead>
+						<TableHead>W</TableHead>
+						<TableHead>L</TableHead>
+						<TableHead className='text-right'>Conf</TableHead>
 					</TableRow>
 				</TableHeader>
 				<TableBody>
 					{rankingsWithTeamInfo.map((ranking) => (
 						<TableRow key={ranking.current}>
-							<TableCell className='p-2 md:p-4'>{ranking.current}</TableCell>
-							<TableCell className='p-2 md:p-4'>
+							<TableCell>{ranking.current}</TableCell>
+							<TableCell>
 								<Link
 									href={`/teams/${getTeamSlug(parseInt(ranking.teamInfo.id))}`}
-									className='flex items-center'>
+									className='flex items-center gap-2'>
 									<TeamLogo
-										teamId={parseInt(ranking.teamInfo.id)}
-										height={32}
-										width={32}
-										className='mr-4'
+										id={ranking.teamInfo.id}
+										height={20}
+										width={20}
+										className=''
+										alt=''
 									/>
 									<span className='font-medium'>{ranking.teamInfo.shortName}</span>
 								</Link>
 							</TableCell>
-							<TableCell className='p-2 md:p-4'>{ranking.record.stats[0]?.displayValue ?? "N/A"}</TableCell>
-							<TableCell className='p-2 md:p-4'>{ranking.record.stats[1]?.displayValue ?? "N/A"}</TableCell>
-							<TableCell className='text-right p-2 md:p-4'>{ranking.conferenceRecord?.displayValue ?? "N/A"}</TableCell>
+							<TableCell>{ranking.record.stats[0]?.displayValue ?? "N/A"}</TableCell>
+							<TableCell>{ranking.record.stats[1]?.displayValue ?? "N/A"}</TableCell>
+							<TableCell className='text-right'>{ranking.conferenceRecord?.displayValue ?? "N/A"}</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

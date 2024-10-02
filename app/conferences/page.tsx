@@ -1,4 +1,4 @@
-import ConferenceList from "@/components/confList";
+import ConferenceList from "@/components/conference/conference-list";
 import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 

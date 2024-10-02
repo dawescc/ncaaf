@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Table, TableBody, TableCaption, TableCell, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
 import { getTeamLeaders, getAthleteInfo } from "@/lib/actions";
-import { Athlete } from "@/lib/types";
+import { Athlete } from "@/types/types";
 
 type LeaderData = {
 	category: string;

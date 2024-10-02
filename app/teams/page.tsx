@@ -1,4 +1,4 @@
-import TeamsList from "@/components/teamsList";
+import TeamsList from "@/components/team/team-list";
 import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 

@@ -1,4 +1,4 @@
-import TeamLogo from "./team/teamLogo";
+import TeamLogo from "./team-logo";
 
 type TeamBannerProps = {
 	teamId: number;

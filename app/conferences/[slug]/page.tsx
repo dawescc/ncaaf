@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { conferences } from "@/data/teams";
-import ConfStandings from "@/components/confStandings";
+import { conferences } from "@/data/conferences-teams";
+import ConfStandings from "@/components/conference/conference-standings";
 import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 

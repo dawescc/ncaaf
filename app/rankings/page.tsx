@@ -1,4 +1,4 @@
-import Top25 from "@/components/apRankings";
+import Top25 from "@/components/rankings/top-25";
 import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/ui/container";
 
