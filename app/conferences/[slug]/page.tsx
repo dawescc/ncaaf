@@ -1,8 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { conferences } from "@/data/conferences-teams";
-import ConfStandings from "@/components/conference/conference-standings";
-import { Card, CardContent } from "@/components/ui/card";
+import { conferences } from "@/data/conferences";
 import { Container } from "@/components/ui/container";
 
 export default async function ConferencePage({ params }: { params: { slug: string } }) {
@@ -37,13 +35,7 @@ export default async function ConferencePage({ params }: { params: { slug: strin
 					<span className='font-medium text-slate-400 md:text-xl'>{conference.short}</span>
 				</div>
 			</span>
-			<div className='flex flex-col md:flex-row md:flex-wrap gap-8 md:gap-10'>
-				<Card className='pt-4 h-fit'>
-					<CardContent>
-						<ConfStandings conf_id={conference.id} />
-					</CardContent>
-				</Card>
-			</div>
+			<div className='flex flex-col md:flex-row md:flex-wrap gap-8 md:gap-10'></div>
 		</Container>
 	);
 }

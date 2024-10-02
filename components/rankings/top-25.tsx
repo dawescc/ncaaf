@@ -19,6 +19,7 @@ type Ranking = {
 type TeamInfo = {
 	id: string;
 	shortName: string;
+	nickName: string;
 	displayName: string;
 	logos: {
 		href: string;
@@ -80,6 +81,7 @@ async function fetchTeamInfo(teamRef: string): Promise<TeamInfo> {
 	return {
 		id: collegeData.id,
 		shortName: collegeData.shortName,
+		nickName: collegeData.mascot,
 		displayName: collegeData.displayName,
 		logos: collegeData.logos,
 	};
@@ -125,7 +127,9 @@ const Top25 = async () => {
 										className=''
 										alt=''
 									/>
-									<span className='font-medium'>{ranking.teamInfo.shortName}</span>
+									<span className='font-medium'>
+										{ranking.teamInfo.shortName} {ranking.teamInfo.nickName}
+									</span>
 								</Link>
 							</TableCell>
 							<TableCell>{ranking.record.stats[0]?.displayValue ?? "N/A"}</TableCell>

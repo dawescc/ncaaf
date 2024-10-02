@@ -1,58 +1,39 @@
-import Image from "next/image";
 import Link from "next/link";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
-import { teams, conferences } from "@/data/conferences-teams";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { teams } from "@/data/teams";
+import TeamLogo from "@/components/team/team-logo";
 
-type TeamData = {
-	id: number;
-	displayName: string;
-	logos: { href: string }[];
-	slug: string;
-};
-
-const fetchTeamData = async (teamId: string): Promise<TeamData> => {
-	const teamResponse = await fetch(`https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/seasons/2024/teams/${teamId}`);
-	return await teamResponse.json();
-};
-
-const TeamsList = async () => {
-	const teamPromises = Object.values(teams).map((team) => fetchTeamData(team.id));
-	const teamData = await Promise.all(teamPromises);
+const TeamsList = () => {
+	const sortedTeams = Object.values(teams).sort((a, b) => a.shortDisplayName.localeCompare(b.shortDisplayName));
 
 	return (
-		<Table>
-			<TableTitle>Teams</TableTitle>
+		<Table className='font-mono'>
 			<TableHeader>
 				<TableRow>
 					<TableHead>FBS Division I Teams</TableHead>
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{teamData.map((team) => {
-					const localTeamData = Object.values(teams).find((t) => t.id === team.id.toString());
-					const conference = localTeamData
-						? conferences[Object.keys(conferences).find((key) => conferences[key].id === localTeamData.conference) || ""]
-						: undefined;
-
-					return (
-						<TableRow key={team.id}>
-							<TableCell>
-								<Link
-									href={`/teams/${team.slug}`}
-									className='flex items-center'>
-									<Image
-										src={team.logos[0]?.href || conference?.href || ""}
-										alt={`${team.displayName} logo`}
-										width={32}
-										height={32}
-										className='mr-4'
-									/>
-									<span className='font-medium'>{team.displayName}</span>
-								</Link>
-							</TableCell>
-						</TableRow>
-					);
-				})}
+				{sortedTeams.map((team) => (
+					<TableRow key={team.id}>
+						<TableCell>
+							<Link
+								href={`/teams/${team.slug}`}
+								className='flex items-center'>
+								<TeamLogo
+									id={team.id}
+									width={32}
+									height={32}
+									className='mr-4'
+									alt={`${team.displayName} logo`}
+								/>
+								<span className='font-medium'>
+									{team.shortDisplayName} {team.name}
+								</span>
+							</Link>
+						</TableCell>
+					</TableRow>
+				))}
 			</TableBody>
 		</Table>
 	);

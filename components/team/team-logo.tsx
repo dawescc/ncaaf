@@ -1,9 +1,10 @@
 /* eslint-disable jsx-a11y/alt-text */
+import React from "react";
 import styles from "./team-logo.module.css";
 import Image, { ImageProps } from "next/image";
 
 type Props = Omit<ImageProps, "src" | "priority" | "loading"> & {
-	id: string;
+	id: string | number;
 };
 
 const TeamLogo = (props: Props) => {

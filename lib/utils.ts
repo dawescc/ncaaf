@@ -1,4 +1,4 @@
-import { teams } from "@/data/conferences-teams";
+import { teams } from "@/data/teams";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 

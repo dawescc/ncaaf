@@ -1,10 +1,11 @@
 import TeamLogo from "./team-logo";
 
-type TeamBannerProps = {
+type Props = {
 	teamId: number;
 };
 
 type TeamData = {
+	id: number;
 	displayName: string;
 	logos: { href: string }[];
 	record: {
@@ -25,6 +26,7 @@ const fetchTeamData = async (teamId: number): Promise<TeamData> => {
 	}
 	const data = await response.json();
 	const teamData = {
+		id: data.team.id,
 		displayName: data.team.displayName,
 		logos: data.team.logos,
 		record: data.team.record,
@@ -35,7 +37,7 @@ const fetchTeamData = async (teamId: number): Promise<TeamData> => {
 	return teamData;
 };
 
-const TeamBanner = async ({ teamId }: TeamBannerProps) => {
+const TeamBanner = async ({ teamId }: Props) => {
 	try {
 		const teamData = await fetchTeamData(teamId);
 		const overallRecord = teamData.record.items.find((item) => item.description === "Overall Record")?.summary || "N/A";
@@ -46,12 +48,14 @@ const TeamBanner = async ({ teamId }: TeamBannerProps) => {
 				style={{ borderColor: `#${teamData.color}` }}>
 				<div className='flex items-center space-x-4 p-4'>
 					<TeamLogo
-						teamId={teamId}
-						height={64}
+						id={teamData.id.toString()}
 						width={64}
+						height={64}
+						className=''
+						alt={`${teamData.displayName} logo`}
 					/>
 					<div>
-						<h1 className='text-3xl font-bold'>
+						<h1 className='font-serif text-3xl font-bold'>
 							{teamData.rank !== undefined && <span className='text-lg font-medium'>{teamData.rank}</span>} {teamData.displayName}
 						</h1>
 

@@ -2,6 +2,9 @@ import Link from "next/link";
 
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from "@/components/ui/navigation-menu";
 import Logo from "@/components/ncaaf/logo";
+import ConferencesDrawer from "@/components/conference/conferences-drawer";
+import TeamsDrawer from "@/components/team/teams-drawer";
+import { CommandMenu } from "@/components/ncaaf/globalSearch";
 
 export function GlobalNavigation() {
 	return (
@@ -14,28 +17,19 @@ export function GlobalNavigation() {
 			<NavigationMenu>
 				<NavigationMenuList>
 					<NavigationMenuItem>
-						<Link
-							href='/conferences'
-							legacyBehavior
-							passHref>
-							<NavigationMenuLink className={navigationMenuTriggerStyle()}>Conferences</NavigationMenuLink>
-						</Link>
+						<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+							<ConferencesDrawer />
+						</NavigationMenuLink>
 					</NavigationMenuItem>
 					<NavigationMenuItem>
-						<Link
-							href='/teams'
-							legacyBehavior
-							passHref>
-							<NavigationMenuLink className={navigationMenuTriggerStyle()}>Teams</NavigationMenuLink>
-						</Link>
+						<NavigationMenuLink className={navigationMenuTriggerStyle()}>
+							<TeamsDrawer />
+						</NavigationMenuLink>
 					</NavigationMenuItem>
 					<NavigationMenuItem>
-						<Link
-							href='/rankings'
-							legacyBehavior
-							passHref>
-							<NavigationMenuLink className={navigationMenuTriggerStyle()}>AP 25</NavigationMenuLink>
-						</Link>
+						<div className='w-full flex-1 md:w-auto md:flex-none'>
+							<CommandMenu />
+						</div>
 					</NavigationMenuItem>
 				</NavigationMenuList>
 			</NavigationMenu>
