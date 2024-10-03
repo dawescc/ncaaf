@@ -32,7 +32,10 @@ async function fetchNews({ keyword, limit }: { keyword: string; limit: number })
 	try {
 		const rawFeed = await fetchWithRevalidate(feedUrl);
 		const feed = await parser.parseString(rawFeed);
-		return feed.items.filter((item) => item.link !== undefined).slice(0, limit) as Article[];
+		return feed.items.slice(0, limit).map((item) => ({
+			link: item.link,
+			title: item.title,
+		})) as Article[];
 	} catch (error) {
 		console.error("Error fetching or parsing news:", error);
 		return null;
