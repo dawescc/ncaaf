@@ -112,3 +112,9 @@ body {
 .section-header-text {
 	@apply text-2xl md:text-3xl font-[950];
 }
+
+@media (max-width: 640px) {
+	.container {
+		@apply px-4;
+	}
+}

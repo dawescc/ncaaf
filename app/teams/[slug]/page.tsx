@@ -1,21 +1,26 @@
+import Top25 from "@/components/rankings/top-25";
 import TeamBanner from "@/components/team/team-banner";
-import { Container } from "@/components/ui/container";
+import { PageContent, PageHeader, PageSide, PageWrapper } from "@/components/ui/page-wrapper";
 import { teams } from "@/data/teams";
 import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { slug: string } }) {
-	const slugOrId = params.slug;
-	const team = Object.values(teams).find((team) => team.slug === slugOrId);
+	const team = Object.values(teams).find((team) => team.slug === params.slug);
 
 	if (!team) {
 		notFound();
 	}
 
 	return (
-		<Container>
-			<TeamBanner teamId={parseInt(team.id)} />
-			<div className='flex flex-col md:flex-row md:flex-wrap gap-4 py-10'></div>
-		</Container>
+		<PageWrapper>
+			<PageContent>
+				<PageHeader>
+					<TeamBanner teamId={parseInt(team.id)} />
+				</PageHeader>
+				<Top25 />
+			</PageContent>
+			<PageSide group={parseInt(team.conference)}></PageSide>
+		</PageWrapper>
 	);
 }
 

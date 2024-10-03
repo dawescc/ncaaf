@@ -1,41 +1,38 @@
 import Link from "next/link";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { teams } from "@/data/teams";
 import TeamLogo from "@/components/team/team-logo";
+import { cn } from "@/lib/utils";
 
-const TeamsList = () => {
+export interface Props {
+	logo_s?: number;
+}
+
+const TeamsList = ({ logo_s }: Props) => {
 	const sortedTeams = Object.values(teams).sort((a, b) => a.shortDisplayName.localeCompare(b.shortDisplayName));
 
 	return (
-		<Table className='font-mono'>
-			<TableHeader>
-				<TableRow>
-					<TableHead>FBS Division I Teams</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
+		<div className='font-mono w-full text-sm'>
+			<div className={cn("pb-4")}>
+				<h3 className='mb-1 rounded-md px-2 py-1 font-black'>Teams</h3>
 				{sortedTeams.map((team) => (
-					<TableRow key={team.id}>
-						<TableCell>
-							<Link
-								href={`/teams/${team.slug}`}
-								className='flex items-center'>
-								<TeamLogo
-									id={team.id}
-									width={32}
-									height={32}
-									className='mr-4'
-									alt={`${team.displayName} logo`}
-								/>
-								<span className='font-medium'>
-									{team.shortDisplayName} {team.name}
-								</span>
-							</Link>
-						</TableCell>
-					</TableRow>
+					<Link
+						key={team.id}
+						href={`/teams/${team.slug}`}
+						className='group flex w-full items-center border border-transparent px-2 py-1 hover:underline text-muted-foreground'>
+						<TeamLogo
+							id={team.id}
+							width={logo_s || 20}
+							height={logo_s || 20}
+							className='mr-4'
+							alt={`${team.displayName} logo`}
+						/>
+						<span className='font-medium'>
+							{team.shortDisplayName} {team.name}
+						</span>
+					</Link>
 				))}
-			</TableBody>
-		</Table>
+			</div>
+		</div>
 	);
 };
 

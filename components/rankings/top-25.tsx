@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow, TableTitle } from "@/components/ui/table";
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import TeamLogo from "@/components/team/team-logo";
 import { getTeamSlug } from "@/lib/utils";
 
@@ -101,7 +101,6 @@ const Top25 = async () => {
 
 		return (
 			<Table className='font-mono'>
-				<TableTitle className='font-sans'>{headline.short}</TableTitle>
 				<TableCaption className='font-sans'>{headline.long}</TableCaption>
 				<TableHeader>
 					<TableRow>
@@ -119,7 +118,7 @@ const Top25 = async () => {
 							<TableCell>
 								<Link
 									href={`/teams/${getTeamSlug(parseInt(ranking.teamInfo.id))}`}
-									className='flex items-center gap-2'>
+									className='flex items-center gap-2 hover:underline'>
 									<TeamLogo
 										id={ranking.teamInfo.id}
 										height={20}

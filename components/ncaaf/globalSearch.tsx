@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { type DialogProps } from "@radix-ui/react-dialog";
 import { cn } from "@/lib/utils";
@@ -8,13 +8,14 @@ import { Button } from "@/components/ui/button";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
 import { teams } from "@/data/teams";
 import { conferences } from "@/data/conferences";
+import { RxMagnifyingGlass } from "react-icons/rx";
 
 export function CommandMenu({ ...props }: DialogProps) {
 	const router = useRouter();
-	const [open, setOpen] = React.useState(false);
-	const [search, setSearch] = React.useState("");
+	const [open, setOpen] = useState(false);
+	const [search, setSearch] = useState("");
 
-	React.useEffect(() => {
+	useEffect(() => {
 		const down = (e: KeyboardEvent) => {
 			if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || e.key === "/") {
 				if (
@@ -35,7 +36,7 @@ export function CommandMenu({ ...props }: DialogProps) {
 		return () => document.removeEventListener("keydown", down);
 	}, []);
 
-	const runCommand = React.useCallback((command: () => unknown) => {
+	const runCommand = useCallback((command: () => unknown) => {
 		setOpen(false);
 		command();
 	}, []);
@@ -55,6 +56,11 @@ export function CommandMenu({ ...props }: DialogProps) {
 				{...props}>
 				<span className='hidden lg:inline-flex'>Search teams or conferences...</span>
 				<span className='inline-flex lg:hidden'>Search...</span>
+				<kbd className='pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex'>
+					<span className='text-xs'>
+						<RxMagnifyingGlass />
+					</span>
+				</kbd>
 			</Button>
 			<CommandDialog
 				open={open}

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { conferences } from "@/data/conferences";
-import { Container } from "@/components/ui/container";
+import { PageContent, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 
 export default async function ConferencePage({ params }: { params: { slug: string } }) {
 	const confSlug = params.slug;
@@ -21,21 +21,24 @@ export default async function ConferencePage({ params }: { params: { slug: strin
 	}
 
 	return (
-		<Container>
-			<span className='mb-4 flex items-center gap-2 md:gap-4'>
-				<Image
-					src={conference.href}
-					alt={`${conference.full} logo`}
-					width={50}
-					height={50}
-					className='size-16 md:size-20'
-				/>
-				<div className='flex flex-col justify-evenly'>
-					<h1 className='font-bold text-2xl md:text-3xl font-serif'>{conference.full}</h1>
-					<span className='font-medium text-slate-400 md:text-xl'>{conference.short}</span>
-				</div>
-			</span>
-			<div className='flex flex-col md:flex-row md:flex-wrap gap-8 md:gap-10'></div>
-		</Container>
+		<PageWrapper>
+			<PageContent>
+				<PageHeader>
+					<PageTitle>
+						<Image
+							src={conference.href}
+							alt={`${conference.full} logo`}
+							width={50}
+							height={50}
+							className='size-16 md:size-20'
+						/>
+						<h1 className='font-bold text-2xl md:text-3xl font-serif'>{conference.full}</h1>
+						<span className='font-medium text-slate-400 md:text-xl'>{conference.short}</span>
+					</PageTitle>
+				</PageHeader>
+				hi
+			</PageContent>
+			<PageSide group={conference.id}></PageSide>
+		</PageWrapper>
 	);
 }

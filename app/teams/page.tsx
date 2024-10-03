@@ -1,15 +1,17 @@
 import TeamsList from "@/components/team/team-list";
-import { Card, CardContent } from "@/components/ui/card";
-import { Container } from "@/components/ui/container";
+import { PageContent, PageDescription, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 
 export default async function TeamsPage() {
 	return (
-		<Container>
-			<Card className='pt-4 h-fit'>
-				<CardContent>
-					<TeamsList />
-				</CardContent>
-			</Card>
-		</Container>
+		<PageWrapper>
+			<PageContent>
+				<PageHeader>
+					<PageTitle>Teams</PageTitle>
+					<PageDescription>FBSI-A Teams</PageDescription>
+				</PageHeader>
+				<TeamsList />
+			</PageContent>
+			<PageSide group={80}></PageSide>
+		</PageWrapper>
 	);
 }
