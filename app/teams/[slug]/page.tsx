@@ -1,3 +1,4 @@
+import ConferenceList from "@/components/conference/conference-list";
 import Top25 from "@/components/rankings/top-25";
 import TeamBanner from "@/components/team/team-banner";
 import { PageContent, PageHeader, PageSide, PageWrapper } from "@/components/ui/page-wrapper";
@@ -19,7 +20,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 				</PageHeader>
 				<Top25 />
 			</PageContent>
-			<PageSide group={parseInt(team.conference)}></PageSide>
+			<PageSide group={parseInt(team.conference)}>
+				<p className='font-medium'>Conferences</p>
+				<ConferenceList />
+			</PageSide>
 		</PageWrapper>
 	);
 }

@@ -3,7 +3,7 @@ import type { Metadata, Viewport } from "next";
 import "@/app/globals.css";
 import { GlobalNavigation } from "@/components/ncaaf/globalNavigation";
 import GlobalFooter from "@/components/ncaaf/globalFooter";
-import { jetMono, notoSans, notoSerif } from "@/lib/fonts";
+import { fontMono, fontSans, fontSerif } from "@/lib/fonts";
 import { siteConfig } from "@/config/siteConfig";
 import TeamsList from "@/components/team/team-list";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -63,7 +63,7 @@ export default function RootLayout({
 	return (
 		<html
 			lang='en'
-			className={`${notoSans.variable} ${notoSerif.variable} ${jetMono.variable}`}>
+			className={`${fontSans.variable} ${fontSerif.variable} ${fontMono.variable}`}>
 			<body className='font-sans antialiased min-h-screen'>
 				<div className='relative flex min-h-screen flex-col bg-background'>
 					<GlobalNavigation />

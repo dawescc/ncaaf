@@ -1,39 +1,35 @@
 import Link from "next/link";
-import Image from "next/image";
 import { conferences } from "@/data/conferences";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 
-const ConferenceList = () => {
+export interface Props {
+	logo_s?: number;
+}
+
+const ConferenceList = ({ logo_s }: Props) => {
 	const sortedConferences = Object.entries(conferences).sort(([, a], [, b]) => a.full.localeCompare(b.full));
 
 	return (
-		<Table className='font-mono'>
-			<TableHeader>
-				<TableRow>
-					<TableHead>FBS Division I Conferences</TableHead>
-				</TableRow>
-			</TableHeader>
-			<TableBody>
+		<div className='w-full text-sm'>
+			<div className={cn("pb-4")}>
 				{sortedConferences.map(([slug, conference]) => (
-					<TableRow key={slug}>
-						<TableCell>
-							<Link
-								href={`/conferences/${slug}`}
-								className='flex items-center'>
-								<Image
-									src={conference.href}
-									alt={`${conference.full} logo`}
-									width={16}
-									height={16}
-									className='mr-4'
-								/>
-								<span className='font-medium'>{conference.full}</span>
-							</Link>
-						</TableCell>
-					</TableRow>
+					<Link
+						key={slug}
+						href={`/conferences/${slug}`}
+						className='group flex w-full items-center border border-transparent px-2 py-1.5 hover:underline text-muted-foreground'>
+						<Image
+							src={conference.href}
+							alt={`${conference.full} logo`}
+							width={logo_s || 20}
+							height={logo_s || 20}
+							className='mr-4'
+						/>
+						<span className='font-medium'>{conference.full}</span>
+					</Link>
 				))}
-			</TableBody>
-		</Table>
+			</div>
+		</div>
 	);
 };
 

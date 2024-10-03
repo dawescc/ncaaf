@@ -72,9 +72,9 @@ const PageSide = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
 		<div className='sticky top-16 -mt-10 h-[calc(100vh-3.5rem)] pt-4'>
 			<ScrollArea className='h-full pb-10'>
 				<div className='space-y-2'>
+					{children}
 					<p className='font-medium'>News</p>
 					<News groupId={group} />
-					{children}
 				</div>
 			</ScrollArea>
 		</div>

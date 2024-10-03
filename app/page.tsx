@@ -6,7 +6,7 @@ export default async function Home() {
 		<PageWrapper>
 			<PageContent>
 				<PageHeader>
-					<PageTitle>Top 25</PageTitle>
+					<PageTitle className='font-serif'>Top 25</PageTitle>
 					<PageDescription>AP Top 25</PageDescription>
 				</PageHeader>
 				<Top25 />

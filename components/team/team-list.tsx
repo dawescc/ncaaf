@@ -11,14 +11,14 @@ const TeamsList = ({ logo_s }: Props) => {
 	const sortedTeams = Object.values(teams).sort((a, b) => a.shortDisplayName.localeCompare(b.shortDisplayName));
 
 	return (
-		<div className='font-mono w-full text-sm'>
+		<div className='w-full text-sm'>
 			<div className={cn("pb-4")}>
 				<h3 className='mb-1 rounded-md px-2 py-1 font-black'>Teams</h3>
 				{sortedTeams.map((team) => (
 					<Link
 						key={team.id}
 						href={`/teams/${team.slug}`}
-						className='group flex w-full items-center border border-transparent px-2 py-1 hover:underline text-muted-foreground'>
+						className='group flex w-full items-center border border-transparent px-2 py-1.5 hover:underline text-muted-foreground'>
 						<TeamLogo
 							id={team.id}
 							width={logo_s || 20}

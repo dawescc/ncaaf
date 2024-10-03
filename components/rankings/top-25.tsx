@@ -100,7 +100,7 @@ const Top25 = async () => {
 		);
 
 		return (
-			<Table className='font-mono'>
+			<Table>
 				<TableCaption className='font-sans'>{headline.long}</TableCaption>
 				<TableHeader>
 					<TableRow>

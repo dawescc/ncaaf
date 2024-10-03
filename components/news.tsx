@@ -55,8 +55,8 @@ const News = async ({ groupId }: Props) => {
 							<TableCell className='align-top'>
 								<Link
 									href={article.links.web.href}
-									className='hover:underline'>
-									<h3 className='font-bold mb-2'>{article.headline}</h3>
+									className='group'>
+									<h3 className='font-bold mb-2 group-hover:underline'>{article.headline}</h3>
 									{article.images && article.images[0] && (
 										<Image
 											src={article.images[0].url}
@@ -66,8 +66,8 @@ const News = async ({ groupId }: Props) => {
 											className='rounded-md w-full h-auto'
 										/>
 									)}
+									<p className='text-sm text-gray-600 mt-1'>{article.description}</p>
 								</Link>
-								<p className='text-sm text-gray-600 mt-1'>{article.description}</p>
 							</TableCell>
 						</TableRow>
 					))}
