@@ -20,7 +20,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 				</PageHeader>
 				<Top25 />
 			</PageContent>
-			<PageSide group={parseInt(team.conference)}>
+			<PageSide team={parseInt(team.id)}>
 				<p className='font-medium'>Conferences</p>
 				<ConferenceList />
 			</PageSide>

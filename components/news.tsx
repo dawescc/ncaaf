@@ -23,7 +23,8 @@ type ResProps = {
 };
 
 type Props = {
-	groupId: number;
+	groupId?: number | 80;
+	teamId?: number;
 };
 
 async function fetchWithRevalidate(url: string) {
@@ -37,14 +38,16 @@ async function fetchWithRevalidate(url: string) {
 	}
 }
 
-async function fetchNews(groupId: number): Promise<ResProps> {
-	const url = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/news?group=${groupId}`;
+async function fetchNews({ groupId, teamId }: Props): Promise<ResProps> {
+	const url = `http://site.api.espn.com/apis/site/v2/sports/football/college-football/news${groupId !== undefined ? `?group=${groupId}` : ""}${
+		teamId !== undefined ? `${groupId !== undefined ? "&" : "?"}team=${teamId}` : ""
+	}`;
 	return fetchWithRevalidate(url);
 }
 
-const News = async ({ groupId }: Props) => {
+const News = async ({ groupId, teamId }: Props) => {
 	try {
-		const { articles, header } = await fetchNews(groupId);
+		const { articles, header } = await fetchNews({ groupId, teamId });
 
 		return (
 			<Table className='font-mono'>

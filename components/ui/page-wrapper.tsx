@@ -64,22 +64,27 @@ const PageDetail = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 ));
 PageDetail.displayName = "PageDetail";
 
-const PageSide = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { group: number }>(({ className, group, children, ...props }, ref) => (
-	<div
-		ref={ref}
-		className={cn("hidden text-sm xl:block", className)}
-		{...props}>
-		<div className='sticky top-16 -mt-10 h-[calc(100vh-3.5rem)] pt-4'>
-			<ScrollArea className='h-full pb-10'>
-				<div className='space-y-2'>
-					{children}
-					<p className='font-medium'>News</p>
-					<News groupId={group} />
-				</div>
-			</ScrollArea>
+const PageSide = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { group?: number; team?: number }>(
+	({ className, group, team, children, ...props }, ref) => (
+		<div
+			ref={ref}
+			className={cn("hidden text-sm xl:block", className)}
+			{...props}>
+			<div className='sticky top-16 -mt-10 h-[calc(100vh-3.5rem)] pt-4'>
+				<ScrollArea className='h-full pb-10'>
+					<div className='space-y-2'>
+						{children}
+						<p className='font-medium'>News</p>
+						<News
+							groupId={group}
+							teamId={team}
+						/>
+					</div>
+				</ScrollArea>
+			</div>
 		</div>
-	</div>
-));
+	)
+);
 PageSide.displayName = "PageSide";
 
 export { PageWrapper, PageContent, PageHeader, PageTitle, PageDescription, PageDetail, PageSide };
