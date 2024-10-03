@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
 import { teams } from "@/data/teams";
 import { conferences } from "@/data/conferences";
-import { RxMagnifyingGlass } from "react-icons/rx";
+import { PiBinocularsFill } from "react-icons/pi";
 
 export function CommandMenu({ ...props }: DialogProps) {
 	const router = useRouter();
@@ -58,7 +58,7 @@ export function CommandMenu({ ...props }: DialogProps) {
 				<span className='inline-flex lg:hidden'>Search...</span>
 				<kbd className='pointer-events-none absolute right-[0.3rem] top-[0.3rem] hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 sm:flex'>
 					<span className='text-xs'>
-						<RxMagnifyingGlass />
+						<PiBinocularsFill />
 					</span>
 				</kbd>
 			</Button>

@@ -1,4 +1,4 @@
-import ConferenceList from "@/components/conference/conference-list";
+import GoogleNews from "@/components/google-news";
 import Top25 from "@/components/rankings/top-25";
 import TeamBanner from "@/components/team/team-banner";
 import { PageContent, PageHeader, PageSide, PageWrapper } from "@/components/ui/page-wrapper";
@@ -21,8 +21,8 @@ export default async function Page({ params }: { params: { slug: string } }) {
 				<Top25 />
 			</PageContent>
 			<PageSide team={parseInt(team.id)}>
-				<p className='font-medium'>Conferences</p>
-				<ConferenceList />
+				<p className='font-medium'>News</p>
+				<GoogleNews keyword={team.slug} />
 			</PageSide>
 		</PageWrapper>
 	);

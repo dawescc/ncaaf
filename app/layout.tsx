@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 
 import "@/app/globals.css";
-import { GlobalNavigation } from "@/components/ncaaf/globalNavigation";
+import GlobalNavigation from "@/components/ncaaf/globalNavigation";
 import GlobalFooter from "@/components/ncaaf/globalFooter";
 import { fontMono, fontSans, fontSerif } from "@/lib/fonts";
 import { siteConfig } from "@/config/siteConfig";
@@ -55,11 +55,7 @@ export const viewport: Viewport = {
 	],
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html
 			lang='en'

@@ -18,7 +18,7 @@ const TeamsList = ({ logo_s }: Props) => {
 					<Link
 						key={team.id}
 						href={`/teams/${team.slug}`}
-						className='group flex w-full items-center border border-transparent px-2 py-1.5 hover:underline text-muted-foreground'>
+						className='group flex w-full items-center px-2 py-1.5 hover:underline text-muted-foreground'>
 						<TeamLogo
 							id={team.id}
 							width={logo_s || 20}

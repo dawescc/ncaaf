@@ -2,7 +2,7 @@ import * as React from "react";
 import Balancer from "react-wrap-balancer";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import News from "../news";
+import EspnNews from "@/components/espn-news";
 
 const PageWrapper = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(({ className, children, ...props }, ref) => {
 	return (
@@ -64,27 +64,34 @@ const PageDetail = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDiv
 ));
 PageDetail.displayName = "PageDetail";
 
-const PageSide = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement> & { group?: number; team?: number }>(
-	({ className, group, team, children, ...props }, ref) => (
-		<div
-			ref={ref}
-			className={cn("hidden text-sm xl:block", className)}
-			{...props}>
-			<div className='sticky top-16 -mt-10 h-[calc(100vh-3.5rem)] pt-4'>
-				<ScrollArea className='h-full pb-10'>
-					<div className='space-y-2'>
-						{children}
-						<p className='font-medium'>News</p>
-						<News
-							groupId={group}
-							teamId={team}
-						/>
-					</div>
-				</ScrollArea>
-			</div>
+const PageSide = React.forwardRef<
+	HTMLDivElement,
+	React.HTMLAttributes<HTMLDivElement> & { group?: number; team?: number; last?: boolean; limit?: number; noNews?: boolean }
+>(({ className, group, team, last, limit, noNews, children, ...props }, ref) => (
+	<div
+		ref={ref}
+		className={cn("hidden text-sm xl:block", className)}
+		{...props}>
+		<div className='sticky top-16 -mt-10 h-[calc(100vh-3.5rem)] pt-4'>
+			<ScrollArea className='h-full pb-10'>
+				<div className='space-y-2'>
+					{!last && children}
+					{!noNews && (
+						<>
+							<p className='font-medium'>Other Stories</p>
+							<EspnNews
+								groupId={group}
+								teamId={team}
+								limit={limit}
+							/>
+						</>
+					)}
+					{last && children}
+				</div>
+			</ScrollArea>
 		</div>
-	)
-);
+	</div>
+));
 PageSide.displayName = "PageSide";
 
 export { PageWrapper, PageContent, PageHeader, PageTitle, PageDescription, PageDetail, PageSide };
