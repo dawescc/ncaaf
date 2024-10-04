@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { MdStadium } from "react-icons/md";
 import { IoAmericanFootball } from "react-icons/io5";
 import { format, parseISO } from "date-fns";
+import { getTeamSlug } from "@/lib/utils";
+import Link from "next/link";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -23,6 +25,7 @@ interface Competitor {
 	team: {
 		id: string;
 		displayName: string;
+		shortDisplayName: string;
 	};
 	score: number;
 	winner: boolean;
@@ -107,15 +110,20 @@ export default function EventCard({ payload }: { payload: EventPayload }) {
 }
 
 const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor: Competitor; isPossession: boolean; showScore: boolean; isHome: boolean }) => (
-	<div className={`flex items-center grow ${isHome ? "flex-row-reverse" : ""}`}>
-		<TeamLogo
-			id={competitor.team.id}
-			alt={competitor.team.displayName}
-			width={24}
-			height={24}
-			className={`inline ${isHome ? "ml-2" : "mr-2"}`}
-		/>
-		<span className='text-xl'>{competitor.team.displayName}</span>
+	<div className={`flex items-center w-1/2 flex-auto ${isHome ? "flex-row-reverse" : ""}`}>
+		<Link
+			href={`/teams/${getTeamSlug(parseInt(competitor.team.id))}`}
+			className={`flex items-center ${isHome ? "flex-row-reverse" : ""}`}>
+			<TeamLogo
+				id={competitor.team.id}
+				alt={competitor.team.displayName}
+				width={24}
+				height={24}
+				className={`inline ${isHome ? "ml-2" : "mr-2"}`}
+			/>
+			<span className='hidden md:block text-xl'>{competitor.team.displayName}</span>
+			<span className='md:hidden text-base md:text-xl'>{competitor.team.shortDisplayName}</span>
+		</Link>
 		{isPossession && <span className='ml-auto text-yellow-500'>&#9679;</span>}
 		{competitor.winner && <span className='mx-1 font-bold text-green-500'>W</span>}
 		{showScore && <span className={`${isHome ? "mr-auto" : "ml-auto"} text-large font-black`}>{competitor.score}</span>}
