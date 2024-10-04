@@ -9,7 +9,6 @@ import { FaGithubAlt } from "react-icons/fa";
 import { siteConfig } from "@/config/siteConfig";
 import TeamsDrawer from "../team/teams-drawer";
 import TeamLogo from "../team/team-logo";
-import NewsDrawer from "./news-drawer";
 
 const GlobalNavigation = () => {
 	return (
@@ -55,9 +54,6 @@ const GlobalNavigation = () => {
 						</Link>
 						<div className='md:hidden'>
 							<TeamsDrawer />
-						</div>
-						<div className='xl:hidden'>
-							<NewsDrawer />
 						</div>
 					</nav>
 				</div>

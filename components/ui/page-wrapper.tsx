@@ -73,7 +73,7 @@ const PageSide = React.forwardRef<
 		className={cn("hidden text-sm xl:block", className)}
 		{...props}>
 		<div className='sticky top-16 -mt-10 h-[calc(100vh-3.5rem)] pt-4'>
-			<ScrollArea className='h-full pb-10'>
+			<ScrollArea className='h-full pb-0'>
 				<div className='space-y-2'>
 					{!last && children}
 					{!noNews && (

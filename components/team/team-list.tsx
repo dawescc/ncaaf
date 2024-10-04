@@ -13,7 +13,6 @@ const TeamsList = ({ logo_s }: Props) => {
 	return (
 		<div className='w-full text-sm'>
 			<div className={cn("pb-4")}>
-				<h3 className='mb-1 rounded-md px-2 py-1 font-black'>Teams</h3>
 				{sortedTeams.map((team) => (
 					<Link
 						key={team.id}

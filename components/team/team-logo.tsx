@@ -1,4 +1,5 @@
 /* eslint-disable jsx-a11y/alt-text */
+
 import styles from "./team-logo.module.css";
 import Image, { ImageProps } from "next/image";
 

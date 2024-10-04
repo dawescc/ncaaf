@@ -12,10 +12,10 @@ export default function ConferencesDrawer() {
 				<Drawer.Content className='right-0 top-0 bottom-0 fixed z-[100] flex outline-none'>
 					<div className='rounded-lg border bg-card text-card-foreground shadow-sm grow mt-2 mr-2 mb-2 p-5 flex flex-col overflow-y-auto'>
 						<div className='max-w-md mx-auto'>
-							<Drawer.Title className='font-medium mb-2 section-header-text'>Conferences</Drawer.Title>
-							<Drawer.Description className='mb-2'>
+							<div className='mb-2'>
+								<Drawer.Title className='font-medium mb-2'>Conferences</Drawer.Title>
 								<ConferenceList />
-							</Drawer.Description>
+							</div>
 						</div>
 					</div>
 				</Drawer.Content>
