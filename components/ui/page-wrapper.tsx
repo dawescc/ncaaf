@@ -2,7 +2,7 @@ import * as React from "react";
 import Balancer from "react-wrap-balancer";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import EspnNews from "@/components/espn-news";
+import EspnNews from "@/components/news/espn-news";
 
 const PageWrapper = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(({ className, children, ...props }, ref) => {
 	return (

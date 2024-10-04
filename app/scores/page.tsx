@@ -1,6 +1,6 @@
 import ConferenceList from "@/components/conference/conference-list";
-import GoogleNews from "@/components/google-news";
-import Scoreboard from "@/components/score-board";
+import GoogleNews from "@/components/news/google-news";
+import Scoreboard from "@/components/scoreboard/score-board";
 import { PageContent, PageDescription, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 
 export default async function Home() {

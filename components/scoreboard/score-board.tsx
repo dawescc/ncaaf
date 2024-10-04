@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import EventCard from "./event-card";
+import EventCard from "@/components/scoreboard/event-card";
 
 interface EventPayload {
 	id: string;

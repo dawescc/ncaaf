@@ -1,4 +1,4 @@
-import GoogleNews from "@/components/google-news";
+import GoogleNews from "@/components/news/google-news";
 import Top25 from "@/components/rankings/top-25";
 import TeamBanner from "@/components/team/team-banner";
 import { PageContent, PageHeader, PageSide, PageWrapper } from "@/components/ui/page-wrapper";

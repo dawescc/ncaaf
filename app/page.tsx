@@ -1,5 +1,5 @@
 import ConferenceList from "@/components/conference/conference-list";
-import GoogleNews from "@/components/google-news";
+import GoogleNews from "@/components/news/google-news";
 import Top25 from "@/components/rankings/top-25";
 import { PageContent, PageDescription, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 
