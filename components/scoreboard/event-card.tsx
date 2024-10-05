@@ -123,8 +123,8 @@ const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor:
 			/>
 			<span className='hidden md:block text-xl'>{competitor.team.displayName}</span>
 			<span className='md:hidden text-base md:text-xl'>{competitor.team.shortDisplayName}</span>
+			{isPossession && <span className='mx-1 text-yellow-500'>&#9679;</span>}
 		</Link>
-		{isPossession && <span className='ml-auto text-yellow-500'>&#9679;</span>}
 		{competitor.winner && <span className='mx-1 font-bold text-green-500'>W</span>}
 		{showScore && <span className={`${isHome ? "mr-auto" : "ml-auto"} text-large font-black`}>{competitor.score}</span>}
 	</div>
@@ -182,14 +182,14 @@ const EventDisplay = ({ event }: { event: Event }) => {
 				<div className='flex grow justify-between'>
 					<TeamInfo
 						competitor={competition.competitors[1]}
-						isPossession={state === "in" && competition.situation.lastPlay.team.id === competition.competitors[0].team.id}
+						isPossession={state === "in" && competition.situation && competition.situation.lastPlay.team.id === competition.competitors[1].team.id}
 						showScore={showScore}
 						isHome={false}
 					/>
 					<ScoreSeparator show={showScore} />
 					<TeamInfo
 						competitor={competition.competitors[0]}
-						isPossession={state === "in" && competition.situation.lastPlay.team.id === competition.competitors[1].team.id}
+						isPossession={state === "in" && competition.situation && competition.situation.lastPlay.team.id === competition.competitors[0].team.id}
 						showScore={showScore}
 						isHome={true}
 					/>
@@ -198,7 +198,7 @@ const EventDisplay = ({ event }: { event: Event }) => {
 			<div className='pt-1.5 flex gap-1'>
 				<EventStatus event={event} />
 			</div>
-			{state === "in" && (
+			{state === "in" && competition.situation && (
 				<div className='pt-1.5 flex gap-1 items-center'>
 					<IoAmericanFootball className='inline' />
 					<span className='font-light text-accent-foreground'>{competition.situation.lastPlay.text}.</span>
