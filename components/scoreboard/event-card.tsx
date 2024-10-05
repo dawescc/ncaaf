@@ -94,7 +94,6 @@ export default function EventCard({ payload }: { payload: EventPayload }) {
 	}, [payload]);
 
 	const prod = "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?&groups=80";
-	// const test = "http://localhost:3000/test/json/scoreboard_test.json";
 	const { data, error } = useSWR(prod, fetcher, {
 		refreshInterval,
 	});

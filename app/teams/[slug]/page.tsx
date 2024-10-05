@@ -1,5 +1,4 @@
 import GoogleNews from "@/components/news/google-news";
-import Top25 from "@/components/rankings/top-25";
 import TeamBanner from "@/components/team/team-banner";
 import { PageContent, PageHeader, PageSide, PageWrapper } from "@/components/ui/page-wrapper";
 import { teams } from "@/data/teams";
@@ -18,7 +17,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 				<PageHeader>
 					<TeamBanner teamId={parseInt(team.id)} />
 				</PageHeader>
-				<Top25 />
+				Content.
 			</PageContent>
 			<PageSide team={parseInt(team.id)}>
 				<p className='font-medium'>News</p>
