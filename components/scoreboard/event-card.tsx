@@ -154,6 +154,7 @@ const EventStatus = ({ event }: { event: Event }) => {
 				<Badge variant='outline'>
 					{competition.status.displayClock} &sdot; Q{competition.status.period}
 				</Badge>
+
 				<Badge variant='outline'>
 					{competition.situation.shortDownDistanceText} &sdot; {competition.situation.possessionText}
 				</Badge>
@@ -183,14 +184,14 @@ const EventDisplay = ({ event }: { event: Event }) => {
 				<div className='flex grow justify-between'>
 					<TeamInfo
 						competitor={competition.competitors[1]}
-						isPossession={state === "in" && competition.situation && competition.situation.lastPlay.team.id === competition.competitors[1].team.id}
+						isPossession={(state === "in" && competition.situation?.lastPlay?.team?.id === competition.competitors[1]?.team?.id) || false}
 						showScore={showScore}
 						isHome={false}
 					/>
 					<ScoreSeparator show={showScore} />
 					<TeamInfo
 						competitor={competition.competitors[0]}
-						isPossession={state === "in" && competition.situation && competition.situation.lastPlay.team.id === competition.competitors[0].team.id}
+						isPossession={(state === "in" && competition.situation?.lastPlay?.team?.id === competition.competitors[1]?.team?.id) || false}
 						showScore={showScore}
 						isHome={true}
 					/>
@@ -199,7 +200,7 @@ const EventDisplay = ({ event }: { event: Event }) => {
 			<div className='pt-1.5 flex gap-1'>
 				<EventStatus event={event} />
 			</div>
-			{state === "in" && competition.situation && (
+			{state === "in" && competition.situation.lastPlay && (
 				<div className='pt-1.5 flex gap-1 items-center'>
 					<IoAmericanFootball className='inline' />
 					<span className='font-light text-accent-foreground'>{competition.situation.lastPlay.text}.</span>
