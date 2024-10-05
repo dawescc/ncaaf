@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
 
 import "@/app/globals.css";
-import GlobalNavigation from "@/components/ncaaf/globalNavigation";
-import GlobalFooter from "@/components/ncaaf/globalFooter";
+import GlobalNavigation from "@/components/ncaaf/global-navigation";
+import GlobalFooter from "@/components/ncaaf/global-footer";
 import { fontMono, fontSans, fontSerif } from "@/lib/fonts";
 import { siteConfig } from "@/config/siteConfig";
 import TeamsList from "@/components/team/team-list";
