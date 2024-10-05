@@ -53,10 +53,7 @@ const GlobalNavigation = () => {
 								<span className='sr-only'>Github</span>
 							</div>
 						</Link>
-						<Link
-							href='/scores'
-							target='_blank'
-							rel='noreferrer'>
+						<Link href='/scores'>
 							<div
 								className={cn(
 									buttonVariants({
