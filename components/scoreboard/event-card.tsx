@@ -86,6 +86,8 @@ export default function EventCard({ payload }: { payload: EventPayload }) {
 	const [refreshInterval, setRefreshInterval] = useState(determineRefreshInterval(payload));
 
 	useEffect(() => {
+		setRefreshInterval(determineRefreshInterval(payload));
+
 		const interval = setInterval(() => {
 			setRefreshInterval(determineRefreshInterval(payload));
 		}, 60000);
