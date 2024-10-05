@@ -11,7 +11,7 @@ export default async function Home() {
 					<PageTitle className='font-serif'>Scoreboard</PageTitle>
 					<PageDescription>Division I-A Scores</PageDescription>
 				</PageHeader>
-				<Scoreboard />
+				<Scoreboard groups={80} />
 			</PageContent>
 			<PageSide noNews>
 				<p className='font-medium'>News</p>

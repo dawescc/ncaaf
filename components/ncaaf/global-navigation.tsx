@@ -7,9 +7,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { FaGithubAlt } from "react-icons/fa";
 import { siteConfig } from "@/config/siteConfig";
-import TeamsDrawer from "@/components/team/teams-drawer";
 import TeamLogo from "@/components/team/team-logo";
-import { MdScoreboard } from "react-icons/md";
+import { MobileNav } from "./mobile-navigation";
 
 const GlobalNavigation = () => {
 	return (
@@ -53,21 +52,7 @@ const GlobalNavigation = () => {
 								<span className='sr-only'>Github</span>
 							</div>
 						</Link>
-						<Link href='/scores'>
-							<div
-								className={cn(
-									buttonVariants({
-										variant: "ghost",
-									}),
-									"h-8 w-8 px-0"
-								)}>
-								<MdScoreboard className='h-4 w-4' />
-								<span className='sr-only'>Scores</span>
-							</div>
-						</Link>
-						<div className='md:hidden'>
-							<TeamsDrawer />
-						</div>
+						<MobileNav />
 					</nav>
 				</div>
 			</div>

@@ -60,15 +60,15 @@ const EspnNews = async ({ groupId, teamId, limit }: Props) => {
 		if (articles.length === 0) return <div className='pb-4'>No articles found</div>;
 
 		return (
-			<div className={cn("pb-4")}>
+			<div className={cn("pb-4 flex flex-col gap-0.5")}>
 				{articles.map((article, index) => (
 					<Link
 						key={index}
 						href={article.links.web.href}
 						target='_blank'
 						rel='noopener noreferrer'
-						className='group flex w-full items-center px-2 py-1.5 hover:underline text-muted-foreground'>
-						{article.headline}
+						className='group px-2 py-1.5 hover:underline text-muted-foreground'>
+						<span className='font-bold inline'>ESPN:</span> {article.headline}
 					</Link>
 				))}
 			</div>

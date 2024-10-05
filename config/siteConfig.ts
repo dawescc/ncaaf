@@ -8,6 +8,12 @@ export const siteConfig = {
 		github: "https://github.com/dawescc",
 		website: "https://dawes.cc",
 	},
+	pages: [
+		{ title: "Home", href: "/" },
+		{ title: "Scores", href: "/scores" },
+		{ title: "Teams", href: "/teams" },
+		{ title: "Conferences", href: "/conferences" },
+	],
 };
 
 export type SiteConfig = typeof siteConfig;

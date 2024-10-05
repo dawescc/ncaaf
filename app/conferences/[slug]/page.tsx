@@ -3,6 +3,7 @@ import Image from "next/image";
 import { conferences } from "@/data/conferences";
 import { PageContent, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 import GoogleNews from "@/components/news/google-news";
+import Scoreboard from "@/components/scoreboard/score-board";
 
 export default async function ConferencePage({ params }: { params: { slug: string } }) {
 	const confSlug = params.slug;
@@ -36,7 +37,7 @@ export default async function ConferencePage({ params }: { params: { slug: strin
 						{conference.full}
 					</PageTitle>
 				</PageHeader>
-				Content.
+				<Scoreboard groups={conference.id} />
 			</PageContent>
 			<PageSide group={conference.id}>
 				<p className='font-medium'>News</p>

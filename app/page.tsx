@@ -1,6 +1,7 @@
 import ConferenceList from "@/components/conference/conference-list";
 import GoogleNews from "@/components/news/google-news";
 import Top25 from "@/components/rankings/top-25";
+import Scoreboard from "@/components/scoreboard/score-board";
 import { PageContent, PageDescription, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 
 export default async function Home() {
@@ -9,9 +10,14 @@ export default async function Home() {
 			<PageContent>
 				<PageHeader>
 					<PageTitle className='font-serif'>Top 25</PageTitle>
-					<PageDescription>AP Top 25</PageDescription>
+					<PageDescription>The current AP Top 25.</PageDescription>
 				</PageHeader>
 				<Top25 />
+				<PageHeader className='mt-8'>
+					<PageTitle className='font-serif'>Top 25 Scoreboard</PageTitle>
+					<PageDescription>Scores for Top 25 Teams.</PageDescription>
+				</PageHeader>
+				<Scoreboard />
 			</PageContent>
 			<PageSide
 				group={80}

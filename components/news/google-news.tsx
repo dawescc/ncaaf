@@ -7,6 +7,7 @@ const parser = new Parser();
 interface Article {
 	link: string;
 	title: string;
+	source: string;
 }
 
 async function fetchWithRevalidate(url: string) {
@@ -32,10 +33,20 @@ async function fetchNews({ keyword, limit }: { keyword: string; limit: number })
 	try {
 		const rawFeed = await fetchWithRevalidate(feedUrl);
 		const feed = await parser.parseString(rawFeed);
-		return feed.items.slice(0, limit).map((item) => ({
-			link: item.link,
-			title: item.title,
-		})) as Article[];
+		return feed.items.slice(0, limit).map((item) => {
+			// Extract source from title
+			const sourceMatch = item.title?.match(/- ([^-]+)$/);
+			const source = sourceMatch ? sourceMatch[1].trim() : "Unknown Source";
+
+			// Remove the source from the title
+			const titleWithoutSource = item.title?.replace(/- [^-]+$/, "").trim();
+
+			return {
+				link: item.link,
+				title: titleWithoutSource,
+				source: source,
+			};
+		}) as Article[];
 	} catch (error) {
 		console.error("Error fetching or parsing news:", error);
 		return null;
@@ -49,15 +60,15 @@ export default async function GoogleNews({ keyword = "college-football", limit =
 	if (articles.length === 0) return <div className='pb-4'>No articles found</div>;
 
 	return (
-		<div className={cn("pb-4")}>
+		<div className={cn("pb-4 flex flex-col gap-0.5")}>
 			{articles.map((article: Article, index: number) => (
 				<Link
 					key={index}
 					href={article.link}
 					target='_blank'
 					rel='noopener noreferrer'
-					className='group flex w-full items-center px-2 py-1.5 hover:underline text-muted-foreground'>
-					{article.title}
+					className='group w-full px-2 py-1.5 hover:underline text-muted-foreground'>
+					<span className='font-bold inline'>{article.source}:</span> {article.title}
 				</Link>
 			))}
 		</div>

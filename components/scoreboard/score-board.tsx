@@ -6,14 +6,20 @@ interface EventPayload {
 	startDate: string;
 	status: "pre" | "in" | "post";
 	valid: boolean;
+	groups?: number;
 }
 
-async function fetchScoreboard(): Promise<EventPayload[]> {
-	const url = "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?&groups=80";
+async function fetchScoreboard(groups?: number): Promise<EventPayload[]> {
+	const url = groups
+		? `https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?groups=${groups}`
+		: `https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard`;
+
 	const response = await fetch(url, {
 		next: { revalidate: 3600 },
 	});
+
 	if (!response.ok) throw new Error("Failed to fetch scoreboard");
+
 	const data = await response.json();
 
 	return data.events
@@ -29,8 +35,8 @@ async function fetchScoreboard(): Promise<EventPayload[]> {
 		);
 }
 
-export default async function Scoreboard() {
-	const events = await fetchScoreboard();
+export default async function Scoreboard({ groups }: { groups?: number }) {
+	const events = await fetchScoreboard(groups);
 
 	return (
 		<div className='grid grid-cols-1 gap-4'>
