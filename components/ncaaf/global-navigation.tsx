@@ -54,7 +54,7 @@ const GlobalNavigation = () => {
 							</div>
 						</Link>
 						<Link
-							href={siteConfig.links.github}
+							href='/scores'
 							target='_blank'
 							rel='noreferrer'>
 							<div
