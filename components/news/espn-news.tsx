@@ -29,7 +29,7 @@ type Props = {
 
 async function fetchWithRevalidate(url: string) {
 	try {
-		const response = await fetch(url, { next: { revalidate: 3600 } }); // Revalidate every hour
+		const response = await fetch(url, { next: { revalidate: 1800 } }); // Revalidate every 30min
 		if (!response.ok) throw new Error(`Failed to fetch ${url}`);
 		return response.json();
 	} catch (error) {
