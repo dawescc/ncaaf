@@ -101,7 +101,6 @@ const Top25 = async () => {
 
 		return (
 			<Table>
-				<TableCaption className='font-sans'>{headline.long}</TableCaption>
 				<TableHeader>
 					<TableRow>
 						<TableHead>Rank</TableHead>
@@ -137,6 +136,7 @@ const Top25 = async () => {
 						</TableRow>
 					))}
 				</TableBody>
+				<TableCaption className='font-sans'>{headline.short}</TableCaption>
 			</Table>
 		);
 	} catch (error) {
