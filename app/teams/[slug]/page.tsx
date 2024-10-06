@@ -1,5 +1,6 @@
 import GoogleNews from "@/components/news/google-news";
 import TeamBanner from "@/components/team/team-banner";
+import TeamSchedule from "@/components/team/team-schedule";
 import { PageContent, PageHeader, PageSide, PageWrapper } from "@/components/ui/page-wrapper";
 import { teams } from "@/data/teams";
 import { notFound } from "next/navigation";
@@ -17,7 +18,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 				<PageHeader>
 					<TeamBanner teamId={parseInt(team.id)} />
 				</PageHeader>
-				Content.
+				<TeamSchedule team={parseInt(team.id)} />
 			</PageContent>
 			<PageSide team={parseInt(team.id)}>
 				<p className='font-medium'>News</p>
