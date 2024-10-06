@@ -35,7 +35,7 @@ type ConferenceRecord = {
 
 async function fetchWithRevalidate(url: string) {
 	try {
-		const response = await fetch(url, { next: { revalidate: 43200 } }); // Revalidate every 12 hours
+		const response = await fetch(url, { next: { revalidate: 28800 } });
 		if (!response.ok) throw new Error(`Failed to fetch ${url}`);
 		return response.json();
 	} catch (error) {
