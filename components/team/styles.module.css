@@ -1,9 +1,0 @@
-.logo {
-	content: var(--logo-light);
-}
-
-@media (prefers-color-scheme: dark) {
-	.logo {
-		content: var(--logo-dark);
-	}
-}

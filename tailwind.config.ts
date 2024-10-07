@@ -4,6 +4,13 @@ const config: Config = {
 	darkMode: ["class"],
 	content: ["./pages/**/*.{js,ts,jsx,tsx,mdx}", "./components/**/*.{js,ts,jsx,tsx,mdx}", "./app/**/*.{js,ts,jsx,tsx,mdx}"],
 	theme: {
+		container: {
+			center: true,
+			padding: "2rem",
+			screens: {
+				"2xl": "1400px",
+			},
+		},
 		extend: {
 			colors: {
 				background: "hsl(var(--background))",
@@ -60,6 +67,7 @@ const config: Config = {
 			fontFamily: {
 				sans: ["var(--font-noto-sans)"],
 				serif: ["var(--font-noto-serif)"],
+				mono: ["var(--font-jet-mono)"],
 			},
 		},
 	},
