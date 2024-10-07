@@ -1,7 +1,9 @@
 import GoogleNews from "@/components/news/google-news";
 import TeamBanner from "@/components/team/team-banner";
 import TeamSchedule from "@/components/team/team-schedule";
-import { PageContent, PageHeader, PageSide, PageWrapper } from "@/components/ui/page-wrapper";
+import TeamPlayerStats from "@/components/team/team-stat-leaders";
+import TeamStats from "@/components/team/team-stats";
+import { PageContent, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 import { teams } from "@/data/teams";
 import { notFound } from "next/navigation";
 
@@ -18,7 +20,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
 				<PageHeader>
 					<TeamBanner teamId={parseInt(team.id)} />
 				</PageHeader>
+				<PageHeader className='mt-8'>
+					<PageTitle className='font-serif'>Schedule</PageTitle>
+				</PageHeader>
 				<TeamSchedule team={parseInt(team.id)} />
+				<PageHeader className='mt-8'>
+					<PageTitle className='font-serif'>Team Leaders</PageTitle>
+				</PageHeader>
+				<TeamPlayerStats team={parseInt(team.id)} />
+				<PageHeader className='mt-8'>
+					<PageTitle className='font-serif'>Team Statistics</PageTitle>
+				</PageHeader>
+				<TeamStats team={parseInt(team.id)} />
 			</PageContent>
 			<PageSide team={parseInt(team.id)}>
 				<p className='font-medium'>News</p>
@@ -39,9 +52,9 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 	}
 
 	return {
-		title: team.slug,
+		title: team.displayName,
 		alternates: {
-			canonical: `/teams/${team.slug}`,
+			canonical: `/teams/${team.displayName}`,
 		},
 	};
 }
