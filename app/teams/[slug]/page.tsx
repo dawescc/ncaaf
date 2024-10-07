@@ -1,7 +1,7 @@
 import GoogleNews from "@/components/news/google-news";
 import TeamBanner from "@/components/team/team-banner";
 import TeamSchedule from "@/components/team/team-schedule";
-import TeamPlayerStats from "@/components/team/team-stat-leaders";
+import TeamStatLeaders from "@/components/team/team-stat-leaders";
 import TeamStats from "@/components/team/team-stats";
 import { PageContent, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 import { teams } from "@/data/teams";
@@ -27,7 +27,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Team Leaders</PageTitle>
 				</PageHeader>
-				<TeamPlayerStats team={parseInt(team.id)} />
+				<TeamStatLeaders team={parseInt(team.id)} />
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Team Statistics</PageTitle>
 				</PageHeader>

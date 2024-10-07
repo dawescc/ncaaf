@@ -3,7 +3,7 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import Image from "next/image";
 
-interface TeamPlayerStatsProps {
+interface Props {
 	team: number;
 }
 
@@ -33,7 +33,7 @@ interface Category {
 }
 
 async function fetchTeamPlayerStats(team: number): Promise<Category[]> {
-	const response = await fetch(`https://site.web.api.espn.com/apis/site/v3/sports/football/college-football/leaders?team=${team}`);
+	const response = await fetch(`https://site.web.api.espn.com/apis/site/v3/sports/football/college-football/leaders?team=${team}&limit=5`);
 
 	if (!response.ok) throw new Error("Failed to fetch data");
 
@@ -41,7 +41,7 @@ async function fetchTeamPlayerStats(team: number): Promise<Category[]> {
 	return data.leaders.categories;
 }
 
-const TeamPlayerStats = async ({ team }: TeamPlayerStatsProps) => {
+const TeamStatLeaders = async ({ team }: Props) => {
 	try {
 		const categories = await fetchTeamPlayerStats(team);
 
@@ -156,4 +156,4 @@ const TeamPlayerStats = async ({ team }: TeamPlayerStatsProps) => {
 	}
 };
 
-export default TeamPlayerStats;
+export default TeamStatLeaders;

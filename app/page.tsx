@@ -1,5 +1,4 @@
-import GroupPlayerStats from "@/components/conference/conference-leaders-by-player";
-import GroupTeamStats from "@/components/conference/conference-leaders-by-team";
+import GroupLeaders from "@/components/conference/conference-leaders";
 import ConferenceList from "@/components/conference/conference-list";
 import GoogleNews from "@/components/news/google-news";
 import Top25 from "@/components/rankings/top-25";
@@ -21,21 +20,16 @@ export default async function Home() {
 				</PageHeader>
 				<Scoreboard />
 				<PageHeader className='mt-8'>
-					<PageTitle className='font-serif'>Team Statistics</PageTitle>
-					<PageDescription>All FBS I-A.</PageDescription>
+					<PageTitle className='font-serif'>Top 10 Statistics</PageTitle>
+					<PageDescription>Top 10 Statistical Leaders of all FBA I-A Teams and Players.</PageDescription>
 				</PageHeader>
-				<GroupTeamStats group={80} />
-				<PageHeader className='mt-8'>
-					<PageTitle className='font-serif'>Player Statistics</PageTitle>
-					<PageDescription>All FBS I-A.</PageDescription>
-				</PageHeader>
-				<GroupPlayerStats group={80} />
+				<GroupLeaders group={80} />
 			</PageContent>
 			<PageSide
 				group={80}
 				limit={5}>
 				<p className='font-medium'>News</p>
-				<GoogleNews keyword={"ncaaf-college-football"} />
+				<GoogleNews keyword={"college-football"} />
 
 				<p className='font-medium'>Conferences</p>
 				<ConferenceList />

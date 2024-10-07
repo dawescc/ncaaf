@@ -4,8 +4,7 @@ import { conferences } from "@/data/conferences";
 import { PageContent, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 import GoogleNews from "@/components/news/google-news";
 import Scoreboard from "@/components/scoreboard/score-board";
-import GroupTeamStats from "@/components/conference/conference-leaders-by-team";
-import GroupPlayerStats from "@/components/conference/conference-leaders-by-player";
+import GroupLeaders from "@/components/conference/conference-leaders";
 
 export default async function ConferencePage({ params }: { params: { slug: string } }) {
 	const confSlug = params.slug;
@@ -44,13 +43,9 @@ export default async function ConferencePage({ params }: { params: { slug: strin
 				</PageHeader>
 				<Scoreboard groups={conference.id} />
 				<PageHeader className='mt-8'>
-					<PageTitle className='font-serif'>Team Statistics</PageTitle>
+					<PageTitle className='font-serif'>Statistical Leaders</PageTitle>
 				</PageHeader>
-				<GroupTeamStats group={conference.id} />
-				<PageHeader className='mt-8'>
-					<PageTitle className='font-serif'>Player Statistics</PageTitle>
-				</PageHeader>
-				<GroupPlayerStats group={conference.id} />
+				<GroupLeaders group={conference.id} />
 			</PageContent>
 			<PageSide group={conference.id}>
 				<p className='font-medium'>News</p>

@@ -68,7 +68,7 @@ export default async function GoogleNews({ keyword = "college-football", limit =
 					target='_blank'
 					rel='noopener noreferrer'
 					className='group w-full px-2 py-1.5 hover:underline text-muted-foreground'>
-					<span className='font-bold inline'>{article.source}:</span> {article.title}
+					<span className='font-bold inline '>{article.source}:</span> {article.title}
 				</Link>
 			))}
 		</div>
