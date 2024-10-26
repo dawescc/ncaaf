@@ -184,7 +184,7 @@ const EventDisplay = ({ event }: { event: Event }) => {
 				<div className='flex grow justify-between'>
 					<TeamInfo
 						competitor={competition.competitors[1]}
-						isPossession={(state === "in" && competition.situation?.lastPlay?.team?.id === competition.competitors[1]?.team?.id) || false}
+						isPossession={(state === "in" && competition.situation?.lastPlay?.team?.id === competition.competitors[0]?.team?.id) || false}
 						showScore={showScore}
 						isHome={false}
 					/>
