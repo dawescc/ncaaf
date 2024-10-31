@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-
+import { Analytics } from "@vercel/analytics/react";
 import "@/app/globals.css";
 import GlobalNavigation from "@/components/ncaaf/global-navigation";
 import GlobalFooter from "@/components/ncaaf/global-footer";
@@ -79,6 +79,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 					</main>
 					<GlobalFooter />
 				</div>
+				<Analytics />
 			</body>
 		</html>
 	);
