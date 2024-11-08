@@ -111,23 +111,21 @@ export default function EventCard({ payload }: { payload: EventPayload }) {
 }
 
 const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor: Competitor; isPossession: boolean; showScore: boolean; isHome: boolean }) => (
-	<div className={`flex items-center w-1/2 flex-auto ${isHome ? "flex-row-reverse" : ""}`}>
+	<div className={`flex items-center w-1/2 gap-2 flex-auto ${isHome ? "flex-row-reverse" : ""}`}>
 		<Link
 			href={`/teams/${getTeamSlug(parseInt(competitor.team.id))}`}
-			className={`flex items-center ${isHome ? "flex-row-reverse" : ""}`}>
+			className={`flex items-center  ${isHome ? "flex-row-reverse" : ""}`}>
 			<TeamLogo
 				id={competitor.team.id}
 				alt={competitor.team.displayName}
 				width={24}
 				height={24}
-				className={`inline ${isHome ? "ml-2" : "mr-2"}`}
+				className={`inline ${isHome ? "ml-2" : "mr-2"} size-12 md:size-10`}
 			/>
-			<span className='hidden md:block text-xl'>{competitor.team.displayName}</span>
-			<span className='md:hidden text-base md:text-xl'>{competitor.team.shortDisplayName}</span>
+			<span className={`text-lg md:text-xl ${competitor.winner ? "text-green-500" : ""}`}>{competitor.team.shortDisplayName}</span>
 			{isPossession && <span className='mx-1 text-yellow-500'>&#9679;</span>}
 		</Link>
-		{competitor.winner && <span className='mx-1 font-bold text-green-500'>W</span>}
-		{showScore && <span className={`${isHome ? "mr-auto" : "ml-auto"} text-large font-black`}>{competitor.score}</span>}
+		{showScore && <span className={`${isHome ? "mr-auto" : "ml-auto"} text-xl font-black`}>{competitor.score}</span>}
 	</div>
 );
 
@@ -180,7 +178,7 @@ const EventDisplay = ({ event }: { event: Event }) => {
 
 	return (
 		<div className='bg-card text-card-foreground border rounded-lg shadow-sm text-sm p-2'>
-			<div className='flex items-center'>
+			<div className='flex items-center mb-2'>
 				<div className='flex grow justify-between'>
 					<TeamInfo
 						competitor={competition.competitors[1]}
@@ -197,12 +195,12 @@ const EventDisplay = ({ event }: { event: Event }) => {
 					/>
 				</div>
 			</div>
-			<div className='pt-1.5 flex gap-1'>
+			<div className='pt-1.5 flex gap-1  mb-2'>
 				<EventStatus event={event} />
 			</div>
 			{state === "in" && competition.situation.lastPlay && (
 				<div className='pt-1.5 flex gap-1 items-center'>
-					<IoAmericanFootball className='inline' />
+					<IoAmericanFootball className='inline mr-1' />
 					<span className='font-light text-accent-foreground'>{competition.situation.lastPlay.text}.</span>
 				</div>
 			)}
