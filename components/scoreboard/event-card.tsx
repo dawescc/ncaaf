@@ -6,7 +6,6 @@ import useSWR from "swr";
 import { Skeleton } from "@/components/ui/skeleton";
 import TeamLogo from "@/components/team/team-logo";
 import { Badge } from "@/components/ui/badge";
-import { MdStadium } from "react-icons/md";
 import { IoAmericanFootball } from "react-icons/io5";
 import { format, parseISO } from "date-fns";
 import { getTeamSlug } from "@/lib/utils";
@@ -26,6 +25,9 @@ interface Competitor {
 		id: string;
 		displayName: string;
 		shortDisplayName: string;
+		abbreviation: string;
+		name: string;
+		color: string;
 	};
 	score: number;
 	winner: boolean;
@@ -111,10 +113,11 @@ export default function EventCard({ payload }: { payload: EventPayload }) {
 }
 
 const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor: Competitor; isPossession: boolean; showScore: boolean; isHome: boolean }) => (
-	<div className={`flex items-center w-1/2 gap-2 flex-auto ${isHome ? "flex-row-reverse" : ""}`}>
+	<div className={`flex items-center flex-1 gap-2 px-1 ${isHome ? "flex-row-reverse items-start" : "items-start"}`}>
+		{isPossession && <span className='mx-1 text-yellow-500'>&#9679;</span>}
 		<Link
 			href={`/teams/${getTeamSlug(parseInt(competitor.team.id))}`}
-			className={`flex items-center  ${isHome ? "flex-row-reverse" : ""}`}>
+			className={`flex items-center justify-center text-center flex-col gap-2 group max-w-[1/2]`}>
 			<TeamLogo
 				id={competitor.team.id}
 				alt={competitor.team.displayName}
@@ -122,19 +125,28 @@ const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor:
 				height={24}
 				className={`inline ${isHome ? "ml-2" : "mr-2"} size-12 md:size-10`}
 			/>
-			<span className={`text-lg md:text-xl ${competitor.winner ? "text-green-500" : ""}`}>{competitor.team.shortDisplayName}</span>
-			{isPossession && <span className='mx-1 text-yellow-500'>&#9679;</span>}
+			<span className={`hidden lg:block text-lg md:text-lg font-serif font-bold group-hover:underline`}>{competitor.team.displayName}</span>
+			<span className={`hidden sm:block lg:hidden text-lg md:text-lg font-serif font-bold group-hover:underline`}>
+				{competitor.team.shortDisplayName}
+			</span>
+			<span className={`sm:hidden text-lg md:text-lg font-serif font-bold group-hover:underline`}>{competitor.team.abbreviation}</span>
 		</Link>
-		{showScore && <span className={`${isHome ? "mr-auto" : "ml-auto"} text-xl font-black`}>{competitor.score}</span>}
+		{showScore && (
+			<span
+				className={`${isHome ? "mr-auto" : "ml-auto"} text-4xl font-mono font-black ${competitor.winner ? "text-green-500" : ""} ${
+					isPossession ? "underline" : ""
+				}`}>
+				{competitor.score}
+			</span>
+		)}
 	</div>
 );
-
-const ScoreSeparator = ({ show }: { show: boolean }) => (show ? <div className='flex justify-center items-center px-4'>&sdot;</div> : null);
 
 const EventStatus = ({ event }: { event: Event }) => {
 	const state = event.status.type.state;
 	const competition = event.competitions[0];
 
+	/*
 	if (state === "post") {
 		return (
 			<>
@@ -168,6 +180,34 @@ const EventStatus = ({ event }: { event: Event }) => {
 				<Badge variant='secondary'>{competition.broadcasts[0].names}</Badge>
 			</>
 		);
+	} */
+
+	if (state === "post") {
+		return (
+			<div className='flex flex-col items-center justify-center px-2 gap-2'>
+				<Badge>Final</Badge>
+				<Badge variant='secondary'>{format(parseISO(event.date), "PP")}</Badge>
+			</div>
+		);
+	} else if (state === "in") {
+		return (
+			<div className='flex flex-col items-center justify-center px-2 gap-2'>
+				<Badge variant='outline'>
+					{competition.status.displayClock} &sdot; Q{competition.status.period}
+				</Badge>
+
+				<Badge variant='outline'>
+					{competition.situation.shortDownDistanceText} &sdot; {competition.situation.possessionText}
+				</Badge>
+			</div>
+		);
+	} else {
+		return (
+			<div className='flex flex-col items-center justify-center px-2 gap-2'>
+				<Badge variant='secondary'>{format(parseISO(event.date), "PPp")}</Badge>
+				<Badge variant='secondary'>{competition.broadcasts[0].names}</Badge>
+			</div>
+		);
 	}
 };
 
@@ -186,7 +226,7 @@ const EventDisplay = ({ event }: { event: Event }) => {
 						showScore={showScore}
 						isHome={false}
 					/>
-					<ScoreSeparator show={showScore} />
+					<EventStatus event={event} />
 					<TeamInfo
 						competitor={competition.competitors[0]}
 						isPossession={(state === "in" && competition.situation?.lastPlay?.team?.id === competition.competitors[0]?.team?.id) || false}
@@ -195,9 +235,7 @@ const EventDisplay = ({ event }: { event: Event }) => {
 					/>
 				</div>
 			</div>
-			<div className='pt-1.5 flex gap-1  mb-2'>
-				<EventStatus event={event} />
-			</div>
+
 			{state === "in" && competition.situation.lastPlay && (
 				<div className='pt-1.5 flex gap-1 items-center'>
 					<IoAmericanFootball className='inline mr-1' />
