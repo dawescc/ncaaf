@@ -33,6 +33,20 @@ interface Competitor {
 	winner: boolean;
 }
 
+interface Leader {
+	name: string;
+	shortDisplayName: string;
+	leaders: Array<{
+		displayValue: string;
+		athlete: {
+			displayName: string;
+		};
+		team: {
+			id: string;
+		};
+	}>;
+}
+
 interface Event {
 	id: string;
 	date: string;
@@ -62,6 +76,7 @@ interface Event {
 			names: string[];
 		}[];
 		attendance: string;
+		leaders: Leader[];
 	}[];
 	status: {
 		type: {
@@ -113,11 +128,10 @@ export default function EventCard({ payload }: { payload: EventPayload }) {
 }
 
 const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor: Competitor; isPossession: boolean; showScore: boolean; isHome: boolean }) => (
-	<div className={`flex items-center flex-1 gap-2 px-1 ${isHome ? "flex-row-reverse items-start" : "items-start"}`}>
-		{isPossession && <span className='mx-1 text-yellow-500'>&#9679;</span>}
+	<div className={`flex items-center flex-1 gap-2 px-1 ${isHome ? "flex-row-reverse" : ""}`}>
 		<Link
 			href={`/teams/${getTeamSlug(parseInt(competitor.team.id))}`}
-			className={`flex items-center justify-center text-center flex-col gap-2 group max-w-[1/2]`}>
+			className={`flex flex-col gap-2 group flex-1 max-w-[1/2] items-center`}>
 			<TeamLogo
 				id={competitor.team.id}
 				alt={competitor.team.displayName}
@@ -145,42 +159,6 @@ const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor:
 const EventStatus = ({ event }: { event: Event }) => {
 	const state = event.status.type.state;
 	const competition = event.competitions[0];
-
-	/*
-	if (state === "post") {
-		return (
-			<>
-				<Badge>Final</Badge>
-				<Badge variant='secondary'>{format(parseISO(event.date), "PP")}</Badge>
-				<Badge variant='secondary'>
-					<MdStadium />
-					&nbsp;&nbsp;{parseInt(competition.attendance).toLocaleString()}
-				</Badge>
-			</>
-		);
-	} else if (state === "in") {
-		return (
-			<>
-				<Badge variant='outline'>
-					{competition.status.displayClock} &sdot; Q{competition.status.period}
-				</Badge>
-
-				<Badge variant='outline'>
-					{competition.situation.shortDownDistanceText} &sdot; {competition.situation.possessionText}
-				</Badge>
-			</>
-		);
-	} else {
-		return (
-			<>
-				<Badge variant='secondary'>{format(parseISO(event.date), "PPp")}</Badge>
-				<Badge variant='secondary'>
-					{competition.venue.fullName}, {competition.venue.address.state}
-				</Badge>
-				<Badge variant='secondary'>{competition.broadcasts[0].names}</Badge>
-			</>
-		);
-	} */
 
 	if (state === "post") {
 		return (
@@ -236,9 +214,30 @@ const EventDisplay = ({ event }: { event: Event }) => {
 				</div>
 			</div>
 
+			{(state === "post" || state === "in") && competition.leaders && (
+				<div className='pt-2 pb-1 mb-2 border-t-[1px] grid grid-cols-3 gap-2 items-center  text-center'>
+					{competition.leaders.map((leader) => (
+						<div
+							key={leader.name}
+							className='flex flex-col h-full gap-2 items-center'>
+							<span className='font-semibold text-xs text-muted-foreground'>{leader.shortDisplayName}</span>
+							<TeamLogo
+								id={leader.leaders[0].team.id}
+								alt=''
+								width={16}
+								height={16}
+								className='size-4'
+							/>
+							<span className='flex items-baseline font-base text-sm'>{leader.leaders[0].athlete.displayName}</span>
+							<span className='text-muted-foreground font-mono text-xs'>{leader.leaders[0].displayValue}</span>
+						</div>
+					))}
+				</div>
+			)}
+
 			{state === "in" && competition.situation.lastPlay && (
-				<div className='pt-1.5 flex gap-1 items-center'>
-					<IoAmericanFootball className='inline mr-1' />
+				<div className='pt-2 border-t-[1px] flex gap-2 items-center font-mono'>
+					<IoAmericanFootball className='inline mr-2' />
 					<span className='font-light text-accent-foreground'>{competition.situation.lastPlay.text}.</span>
 				</div>
 			)}
