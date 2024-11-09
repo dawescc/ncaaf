@@ -11,6 +11,7 @@ export const siteConfig = {
 	pages: [
 		{ title: "Home", href: "/" },
 		{ title: "Scores", href: "/scores" },
+		{ title: "News", href: "/news" },
 		{ title: "Teams", href: "/teams" },
 		{ title: "Conferences", href: "/conferences" },
 	],

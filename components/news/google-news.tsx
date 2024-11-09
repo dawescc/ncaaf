@@ -53,21 +53,21 @@ async function fetchNews({ keyword, limit }: { keyword: string; limit: number })
 	}
 }
 
-export default async function GoogleNews({ keyword = "college-football", limit = 5 }: { keyword?: string; limit?: number }) {
+export default async function GoogleNews({ keyword = "college-football", limit = 5, className }: { keyword?: string; limit?: number; className?: string }) {
 	const articles = await fetchNews({ keyword, limit });
 
 	if (!articles) return <div className='pb-4'>Error fetching news</div>;
 	if (articles.length === 0) return <div className='pb-4'>No articles found</div>;
 
 	return (
-		<div className={cn("pb-4 flex flex-col gap-0.5")}>
+		<div className={cn(`pb-4 flex flex-col gap-0.5 ${className}`)}>
 			{articles.map((article: Article, index: number) => (
 				<Link
 					key={index}
 					href={article.link}
 					target='_blank'
 					rel='noopener noreferrer'
-					className='group w-full px-2 py-1.5 hover:underline text-muted-foreground'>
+					className='group w-full px-2 py-1.5 hover:underline'>
 					<span className='font-bold inline '>{article.source}:</span> {article.title}
 				</Link>
 			))}

@@ -25,6 +25,7 @@ type Props = {
 	groupId?: number | 80;
 	teamId?: number;
 	limit?: number | 5;
+	className?: string;
 };
 
 async function fetchWithRevalidate(url: string) {
@@ -52,7 +53,7 @@ async function fetchNews({ groupId = 80, teamId, limit = 5 }: Props): Promise<Re
 	return fetchWithRevalidate(url);
 }
 
-const EspnNews = async ({ groupId, teamId, limit }: Props) => {
+const EspnNews = async ({ groupId, teamId, limit, className }: Props) => {
 	try {
 		const { articles } = await fetchNews({ groupId, teamId, limit });
 
@@ -60,14 +61,14 @@ const EspnNews = async ({ groupId, teamId, limit }: Props) => {
 		if (articles.length === 0) return <div className='pb-4'>No articles found</div>;
 
 		return (
-			<div className={cn("pb-4 flex flex-col gap-0.5")}>
+			<div className={cn(`pb-4 flex flex-col gap-0.5 ${className}`)}>
 				{articles.map((article, index) => (
 					<Link
 						key={index}
 						href={article.links.web.href}
 						target='_blank'
 						rel='noopener noreferrer'
-						className='group px-2 py-1.5 hover:underline text-muted-foreground'>
+						className='group px-2 py-1.5 hover:underline'>
 						<span className='font-bold inline'>ESPN:</span> {article.headline}
 					</Link>
 				))}
