@@ -226,7 +226,7 @@ const LastPlay = ({ competition }: { competition: Event["competitions"][0] }) =>
 					<div className='size-[24px] rounded-full athlete-image grid place-items-center text-[6px] font-serif select-none'>NCAAF</div>
 				)}
 
-				<span>{competition.situation.lastPlay.text}.</span>
+				<span className='flex items-center text-pretty'>{competition.situation.lastPlay.text}.</span>
 			</span>
 		</div>
 	);
@@ -304,10 +304,7 @@ const LoadDisplay = () => {
 	return (
 		<div className='bg-card text-card-foreground border rounded-lg shadow-sm text-sm p-2'>
 			<div className='flex items-center'>
-				<Skeleton className='h-20 w-full' />
-			</div>
-			<div className='pt-1.5 flex gap-1'>
-				<Skeleton className='h-14 w-full' />
+				<Skeleton className='h-24 w-full' />
 			</div>
 		</div>
 	);
