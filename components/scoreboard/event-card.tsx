@@ -49,6 +49,11 @@ interface Leader {
 	}>;
 }
 
+interface Athlete {
+	links: { href: string }[];
+	headshot: string;
+}
+
 interface Event {
 	id: string;
 	date: string;
@@ -56,7 +61,7 @@ interface Event {
 		competitors: Competitor[];
 		situation: {
 			lastPlay: {
-				athletesInvolved: any;
+				athletesInvolved: Athlete[];
 				team: {
 					id: string;
 				};
@@ -204,19 +209,24 @@ const LastPlay = ({ competition }: { competition: Event["competitions"][0] }) =>
 	return (
 		<div className='border-t-[1px] py-3 font-mono'>
 			<span className='font-light text-accent-foreground grid grid-cols-[30px_1fr]'>
-				<Link
-					href={competition.situation.lastPlay.athletesInvolved[0]?.links[0]?.href || "#"}
-					target='_blank'
-					rel='noopener noreferrer'>
-					<Image
-						src={competition.situation.lastPlay.athletesInvolved[0].headshot}
-						alt='Leader Headshot'
-						width={24}
-						height={24}
-						className='rounded-full'
-					/>
-				</Link>
-				{competition.situation.lastPlay.text}.
+				{competition.situation.lastPlay.athletesInvolved ? (
+					<Link
+						href={competition.situation.lastPlay.athletesInvolved[0].links[0]?.href || "#"}
+						target='_blank'
+						rel='noopener noreferrer'>
+						<Image
+							src={competition.situation.lastPlay.athletesInvolved[0].headshot}
+							alt='Leader Headshot'
+							width={24}
+							height={24}
+							className='athlete-image aspect-square rounded-full object-cover overflow-clip'
+						/>
+					</Link>
+				) : (
+					<div className='size-[24px] rounded-full athlete-image grid place-items-center text-[6px] font-serif select-none'>NCAAF</div>
+				)}
+
+				<span>{competition.situation.lastPlay.text}.</span>
 			</span>
 		</div>
 	);

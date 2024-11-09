@@ -95,6 +95,10 @@ body {
 	body {
 		@apply bg-background text-foreground;
 	}
+
+	.athlete-image {
+		@apply bg-muted;
+	}
 }
 
 @layer utilities {
