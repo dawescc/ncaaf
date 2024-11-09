@@ -205,7 +205,7 @@ const LastPlay = ({ competition }: { competition: Event["competitions"][0] }) =>
 		<div className='border-t-[1px] py-3 font-mono'>
 			<span className='font-light text-accent-foreground grid grid-cols-[30px_1fr]'>
 				<Link
-					href={competition.situation.lastPlay.athletesInvolved[0].links[0].href || "#"}
+					href={competition.situation.lastPlay.athletesInvolved[0]?.links[0]?.href || "#"}
 					target='_blank'
 					rel='noopener noreferrer'>
 					<Image
