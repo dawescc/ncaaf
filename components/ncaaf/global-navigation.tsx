@@ -3,10 +3,6 @@ import Link from "next/link";
 import Logo from "@/components/ncaaf/logo";
 
 import { CommandMenu } from "@/components/ncaaf/global-search";
-import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { FaGithubAlt } from "react-icons/fa";
-import { siteConfig } from "@/config/siteConfig";
 import TeamLogo from "@/components/team/team-logo";
 import { MobileNav } from "./mobile-navigation";
 
@@ -37,21 +33,6 @@ const GlobalNavigation = () => {
 						<CommandMenu />
 					</div>
 					<nav className='flex items-center'>
-						<Link
-							href={siteConfig.links.github}
-							target='_blank'
-							rel='noreferrer'>
-							<div
-								className={cn(
-									buttonVariants({
-										variant: "ghost",
-									}),
-									"h-8 w-8 px-0"
-								)}>
-								<FaGithubAlt className='h-4 w-4' />
-								<span className='sr-only'>Github</span>
-							</div>
-						</Link>
 						<MobileNav />
 					</nav>
 				</div>

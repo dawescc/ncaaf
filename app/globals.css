@@ -107,6 +107,10 @@ body {
 	color: var(--football-color);
 }
 
+.link {
+	@apply underline hover:no-underline group-hover:no-underline cursor-pointer;
+}
+
 @media (prefers-color-scheme: dark) {
 	.football-color {
 		color: var(--dark-football-color);

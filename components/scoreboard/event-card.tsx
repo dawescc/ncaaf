@@ -7,9 +7,11 @@ import { Skeleton } from "@/components/ui/skeleton";
 import TeamLogo from "@/components/team/team-logo";
 import { Badge } from "@/components/ui/badge";
 import { IoAmericanFootball } from "react-icons/io5";
+import { RiExpandUpDownFill } from "react-icons/ri";
 import { format, parseISO } from "date-fns";
 import { getTeamSlug } from "@/lib/utils";
 import Link from "next/link";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -215,28 +217,41 @@ const EventDisplay = ({ event }: { event: Event }) => {
 			</div>
 
 			{(state === "post" || state === "in") && competition.leaders && (
-				<div className='pt-2 pb-1 mb-2 border-t-[1px] grid grid-cols-3 gap-2 items-center  text-center'>
-					{competition.leaders.map((leader) => (
-						<div
-							key={leader.name}
-							className='flex flex-col h-full gap-2 items-center'>
-							<span className='font-semibold text-xs text-muted-foreground'>{leader.shortDisplayName}</span>
-							<TeamLogo
-								id={leader.leaders[0].team.id}
-								alt=''
-								width={16}
-								height={16}
-								className='size-4'
-							/>
-							<span className='flex items-baseline font-base text-sm'>{leader.leaders[0].athlete.displayName}</span>
-							<span className='text-muted-foreground font-mono text-xs'>{leader.leaders[0].displayValue}</span>
+				<Collapsible className='bg-muted/50 rounded-b-sm border-[1px] py-1'>
+					<div className='flex items-center justify-center py-1'>
+						<CollapsibleTrigger asChild>
+							<div className='flex-1 flex justify-center items-center cursor-pointer'>
+								Stat Leaders
+								<RiExpandUpDownFill className='ml-2' />
+								<span className='sr-only'>Toggle</span>
+							</div>
+						</CollapsibleTrigger>
+					</div>
+					<CollapsibleContent>
+						<div className='pt-2 pb-1 mb-2 grid grid-cols-3 gap-2 items-center  text-center'>
+							{competition.leaders.map((leader) => (
+								<div
+									key={leader.name}
+									className='flex flex-col h-full gap-2 items-center'>
+									<span className='font-semibold text-xs text-muted-foreground'>{leader.shortDisplayName}</span>
+									<TeamLogo
+										id={leader.leaders[0].team.id}
+										alt=''
+										width={16}
+										height={16}
+										className='size-4'
+									/>
+									<span className='flex items-baseline font-base text-sm'>{leader.leaders[0].athlete.displayName}</span>
+									<span className='text-muted-foreground font-mono text-xs'>{leader.leaders[0].displayValue}</span>
+								</div>
+							))}
 						</div>
-					))}
-				</div>
+					</CollapsibleContent>
+				</Collapsible>
 			)}
 
 			{state === "in" && competition.situation.lastPlay && (
-				<div className='pt-2 border-t-[1px] flex gap-2 items-center font-mono'>
+				<div className='mt-2 pt-2 border-t-[1px] flex gap-2 items-center font-mono'>
 					<IoAmericanFootball className='inline mr-2' />
 					<span className='font-light text-accent-foreground'>{competition.situation.lastPlay.text}.</span>
 				</div>

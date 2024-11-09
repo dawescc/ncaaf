@@ -25,9 +25,9 @@ export function MobileNav() {
 						buttonVariants({
 							variant: "ghost",
 						}),
-						"h-8 w-8 px-0"
+						"px-2"
 					)}>
-					<CgMenuLeftAlt />
+					<CgMenuLeftAlt className='size-8 md:size-6' />
 					<span className='sr-only'>Toggle Menu</span>
 				</Button>
 			</SheetTrigger>
