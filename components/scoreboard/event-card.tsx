@@ -31,6 +31,9 @@ interface Competitor {
 		name: string;
 		color: string;
 	};
+	curatedRank: {
+		current: number;
+	};
 	score: number;
 	winner: boolean;
 }
@@ -147,11 +150,19 @@ const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor:
 				height={24}
 				className={`inline ${isHome ? "ml-2" : "mr-2"} size-12 md:size-10`}
 			/>
-			<span className={`hidden lg:block text-lg md:text-lg font-serif font-bold group-hover:underline`}>{competitor.team.displayName}</span>
+			<span className={`hidden lg:block text-lg md:text-lg font-serif font-bold group-hover:underline`}>
+				{competitor.curatedRank?.current !== 99 ? <sup className='font-mono mr-1'>{competitor.curatedRank.current}</sup> : null}
+				{competitor.team.displayName}
+			</span>
 			<span className={`hidden sm:block lg:hidden text-lg md:text-lg font-serif font-bold group-hover:underline`}>
+				{competitor.curatedRank?.current !== 99 ? <sup className='font-mono mr-1'>{competitor.curatedRank.current}</sup> : null}
+
 				{competitor.team.shortDisplayName}
 			</span>
-			<span className={`sm:hidden text-lg md:text-lg font-serif font-bold group-hover:underline`}>{competitor.team.abbreviation}</span>
+			<span className={`sm:hidden text-lg md:text-lg font-serif font-bold group-hover:underline`}>
+				{competitor.curatedRank?.current !== 99 ? <sup className='font-mono mr-1'>{competitor.curatedRank.current}</sup> : null}
+				{competitor.team.abbreviation}
+			</span>
 		</Link>
 		{showScore && (
 			<span
