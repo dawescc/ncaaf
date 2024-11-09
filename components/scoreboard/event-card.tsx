@@ -6,7 +6,7 @@ import useSWR from "swr";
 import { Skeleton } from "@/components/ui/skeleton";
 import TeamLogo from "@/components/team/team-logo";
 import { Badge } from "@/components/ui/badge";
-import { IoAmericanFootball } from "react-icons/io5";
+import Image from "next/image";
 import { RiExpandUpDownFill } from "react-icons/ri";
 import { format, parseISO } from "date-fns";
 import { getTeamSlug } from "@/lib/utils";
@@ -56,6 +56,7 @@ interface Event {
 		competitors: Competitor[];
 		situation: {
 			lastPlay: {
+				athletesInvolved: any;
 				team: {
 					id: string;
 				};
@@ -164,14 +165,14 @@ const EventStatus = ({ event }: { event: Event }) => {
 
 	if (state === "post") {
 		return (
-			<div className='flex flex-col items-center justify-center px-2 gap-2'>
+			<div className='flex flex-col items-center justify-center px-3 gap-2'>
 				<Badge>Final</Badge>
 				<Badge variant='secondary'>{format(parseISO(event.date), "PP")}</Badge>
 			</div>
 		);
 	} else if (state === "in") {
 		return (
-			<div className='flex flex-col items-center justify-center px-2 gap-2'>
+			<div className='flex flex-col items-center justify-center px-3 gap-2'>
 				<Badge variant='outline'>
 					{competition.status.displayClock} &sdot; Q{competition.status.period}
 				</Badge>
@@ -183,12 +184,78 @@ const EventStatus = ({ event }: { event: Event }) => {
 		);
 	} else {
 		return (
-			<div className='flex flex-col items-center justify-center px-2 gap-2'>
-				<Badge variant='secondary'>{format(parseISO(event.date), "PPp")}</Badge>
-				<Badge variant='secondary'>{competition.broadcasts[0].names}</Badge>
+			<div className='flex flex-col items-center justify-center px-3 gap-2'>
+				<Badge
+					variant='secondary'
+					className='text-sm'>
+					{format(parseISO(event.date), "PPp")}
+				</Badge>
+				<Badge
+					variant='secondary'
+					className='text-sm'>
+					{competition.broadcasts[0].names}
+				</Badge>
 			</div>
 		);
 	}
+};
+
+const LastPlay = ({ competition }: { competition: Event["competitions"][0] }) => {
+	return (
+		<div className='border-t-[1px] py-3 font-mono'>
+			<span className='font-light text-accent-foreground grid grid-cols-[30px_1fr]'>
+				<Link
+					href={competition.situation.lastPlay.athletesInvolved[0].links[0].href || "#"}
+					target='_blank'
+					rel='noopener noreferrer'>
+					<Image
+						src={competition.situation.lastPlay.athletesInvolved[0].headshot}
+						alt='Leader Headshot'
+						width={24}
+						height={24}
+						className='rounded-full'
+					/>
+				</Link>
+				{competition.situation.lastPlay.text}.
+			</span>
+		</div>
+	);
+};
+
+const StatLeaders = ({ competition }: { competition: Event["competitions"][0] }) => {
+	return (
+		<Collapsible className='bg-muted/50 rounded-b-sm border-[1px] py-1'>
+			<div className='flex items-center justify-center py-1'>
+				<CollapsibleTrigger asChild>
+					<div className='flex-1 flex justify-center items-center cursor-pointer'>
+						Stat Leaders
+						<RiExpandUpDownFill className='ml-2' />
+						<span className='sr-only'>Toggle</span>
+					</div>
+				</CollapsibleTrigger>
+			</div>
+			<CollapsibleContent>
+				<div className='pt-2 pb-1 mb-2 grid grid-cols-3 gap-2 items-center text-center'>
+					{competition.leaders.map((leader) => (
+						<div
+							key={leader.name}
+							className='flex flex-col h-full gap-2 items-center'>
+							<span className='font-semibold text-xs text-muted-foreground'>{leader.shortDisplayName}</span>
+							<TeamLogo
+								id={leader.leaders[0].team.id}
+								alt=''
+								width={16}
+								height={16}
+								className='size-6'
+							/>
+							<span className='flex items-baseline font-base text-sm'>{leader.leaders[0].athlete.displayName}</span>
+							<span className='text-muted-foreground font-mono text-xs'>{leader.leaders[0].displayValue}</span>
+						</div>
+					))}
+				</div>
+			</CollapsibleContent>
+		</Collapsible>
+	);
 };
 
 const EventDisplay = ({ event }: { event: Event }) => {
@@ -216,46 +283,9 @@ const EventDisplay = ({ event }: { event: Event }) => {
 				</div>
 			</div>
 
-			{(state === "post" || state === "in") && competition.leaders && (
-				<Collapsible className='bg-muted/50 rounded-b-sm border-[1px] py-1'>
-					<div className='flex items-center justify-center py-1'>
-						<CollapsibleTrigger asChild>
-							<div className='flex-1 flex justify-center items-center cursor-pointer'>
-								Stat Leaders
-								<RiExpandUpDownFill className='ml-2' />
-								<span className='sr-only'>Toggle</span>
-							</div>
-						</CollapsibleTrigger>
-					</div>
-					<CollapsibleContent>
-						<div className='pt-2 pb-1 mb-2 grid grid-cols-3 gap-2 items-center  text-center'>
-							{competition.leaders.map((leader) => (
-								<div
-									key={leader.name}
-									className='flex flex-col h-full gap-2 items-center'>
-									<span className='font-semibold text-xs text-muted-foreground'>{leader.shortDisplayName}</span>
-									<TeamLogo
-										id={leader.leaders[0].team.id}
-										alt=''
-										width={16}
-										height={16}
-										className='size-4'
-									/>
-									<span className='flex items-baseline font-base text-sm'>{leader.leaders[0].athlete.displayName}</span>
-									<span className='text-muted-foreground font-mono text-xs'>{leader.leaders[0].displayValue}</span>
-								</div>
-							))}
-						</div>
-					</CollapsibleContent>
-				</Collapsible>
-			)}
+			{state === "in" && competition.situation.lastPlay && <LastPlay competition={competition} />}
 
-			{state === "in" && competition.situation.lastPlay && (
-				<div className='mt-2 pt-2 border-t-[1px] flex gap-2 items-center font-mono'>
-					<IoAmericanFootball className='inline mr-2' />
-					<span className='font-light text-accent-foreground'>{competition.situation.lastPlay.text}.</span>
-				</div>
-			)}
+			{(state === "post" || state === "in") && competition.leaders && <StatLeaders competition={competition} />}
 		</div>
 	);
 };
@@ -264,10 +294,10 @@ const LoadDisplay = () => {
 	return (
 		<div className='bg-card text-card-foreground border rounded-lg shadow-sm text-sm p-2'>
 			<div className='flex items-center'>
-				<Skeleton className='h-4 w-full' />
+				<Skeleton className='h-20 w-full' />
 			</div>
 			<div className='pt-1.5 flex gap-1'>
-				<Skeleton className='h-8 w-full' />
+				<Skeleton className='h-14 w-full' />
 			</div>
 		</div>
 	);
