@@ -226,6 +226,7 @@ const LastPlay = ({ competition }: { competition: Event["competitions"][0] }) =>
 						target='_blank'
 						rel='noopener noreferrer'>
 						<Image
+							unoptimized
 							src={competition.situation.lastPlay.athletesInvolved[0].headshot}
 							alt='Leader Headshot'
 							width={24}
