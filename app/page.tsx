@@ -1,7 +1,7 @@
 import GroupLeaders from "@/components/conference/conference-leaders";
 import ConferenceList from "@/components/conference/conference-list";
 import GoogleNews from "@/components/news/google-news";
-import { Rankings } from "@/components/rankings/rank-select";
+import Top25 from "@/components/rankings/top-25";
 import Scoreboard from "@/components/scoreboard/score-board";
 import { PageContent, PageDescription, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 import Link from "next/link";
@@ -15,7 +15,7 @@ export default function Home() {
 					<PageDescription>The current Top 25.</PageDescription>
 				</PageHeader>
 
-				<Rankings />
+				<Top25 />
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Top 25 Scoreboard</PageTitle>
 					<PageDescription>
