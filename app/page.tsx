@@ -1,21 +1,21 @@
 import GroupLeaders from "@/components/conference/conference-leaders";
 import ConferenceList from "@/components/conference/conference-list";
 import GoogleNews from "@/components/news/google-news";
-import Top25 from "@/components/rankings/top-25";
+import { Rankings } from "@/components/rankings/rank-select";
 import Scoreboard from "@/components/scoreboard/score-board";
 import { PageContent, PageDescription, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 import Link from "next/link";
 
-export default async function Home() {
+export default function Home() {
 	return (
 		<PageWrapper>
 			<PageContent>
 				<PageHeader>
 					<PageTitle className='font-serif'>Top 25</PageTitle>
-					<PageDescription>The current CFP Top 25.</PageDescription>
+					<PageDescription>The current Top 25.</PageDescription>
 				</PageHeader>
 
-				<Top25 rank='cfp' />
+				<Rankings />
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Top 25 Scoreboard</PageTitle>
 					<PageDescription>
