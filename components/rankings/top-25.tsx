@@ -3,6 +3,8 @@ import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, Tabl
 import TeamLogo from "@/components/team/team-logo";
 import { getTeamSlug } from "@/lib/utils";
 
+type Rank = "ap" | "cfp";
+
 type Ranking = {
 	current: number;
 	team: {
@@ -61,8 +63,13 @@ async function getConferenceRecord(teamId: string, season: string): Promise<Conf
 	return null;
 }
 
-async function fetchRankings(): Promise<{ rankings: Ranking[]; headline: { long: string; short: string } }> {
-	const rankingsData = await fetchWithRevalidate("https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/rankings/1");
+async function fetchRankings(rank: Rank): Promise<{ rankings: Ranking[]; headline: { long: string; short: string } }> {
+	const rankingIds: Record<Rank, string> = {
+		ap: "1",
+		cfp: "21",
+	};
+
+	const rankingsData = await fetchWithRevalidate(`https://sports.core.api.espn.com/v2/sports/football/leagues/college-football/rankings/${rankingIds[rank]}`);
 
 	return {
 		rankings: rankingsData.ranks,
@@ -87,9 +94,9 @@ async function fetchTeamInfo(teamRef: string): Promise<TeamInfo> {
 	};
 }
 
-const Top25 = async () => {
+const Top25 = async ({ rank = "ap" }: { rank?: Rank }) => {
 	try {
-		const [{ rankings, headline }, currentSeason] = await Promise.all([fetchRankings(), getCurrentSeason()]);
+		const [{ rankings, headline }, currentSeason] = await Promise.all([fetchRankings(rank), getCurrentSeason()]);
 
 		const rankingsWithTeamInfo = await Promise.all(
 			rankings.map(async (ranking) => {

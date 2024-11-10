@@ -12,9 +12,10 @@ export default async function Home() {
 			<PageContent>
 				<PageHeader>
 					<PageTitle className='font-serif'>Top 25</PageTitle>
-					<PageDescription>The current AP Top 25.</PageDescription>
+					<PageDescription>The current CFP Top 25.</PageDescription>
 				</PageHeader>
-				<Top25 />
+
+				<Top25 rank='cfp' />
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Top 25 Scoreboard</PageTitle>
 					<PageDescription>
