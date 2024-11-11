@@ -5,10 +5,11 @@ import TeamStatLeaders from "@/components/team/team-stat-leaders";
 import TeamStats from "@/components/team/team-stats";
 import { PageContent, PageHeader, PageSide, PageTitle, PageWrapper } from "@/components/ui/page-wrapper";
 import { teams } from "@/data/teams";
+import { getTeam } from "@/lib/utils";
 import { notFound } from "next/navigation";
 
 export default async function Page({ params }: { params: { slug: string } }) {
-	const team = Object.values(teams).find((team) => team.slug === params.slug);
+	const team = getTeam(params.slug);
 
 	if (!team) {
 		notFound();
@@ -17,23 +18,21 @@ export default async function Page({ params }: { params: { slug: string } }) {
 	return (
 		<PageWrapper>
 			<PageContent>
-				<PageHeader>
-					<TeamBanner teamId={parseInt(team.id)} />
-				</PageHeader>
+				<TeamBanner teamId={team.id} />
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Schedule</PageTitle>
 				</PageHeader>
-				<TeamSchedule team={parseInt(team.id)} />
+				<TeamSchedule team={team.id} />
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Team Leaders</PageTitle>
 				</PageHeader>
-				<TeamStatLeaders team={parseInt(team.id)} />
+				<TeamStatLeaders team={team.id} />
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Team Statistics</PageTitle>
 				</PageHeader>
-				<TeamStats team={parseInt(team.id)} />
+				<TeamStats team={team.id} />
 			</PageContent>
-			<PageSide team={parseInt(team.id)}>
+			<PageSide team={team.id}>
 				<p className='font-medium'>News</p>
 				<GoogleNews keyword={team.slug} />
 			</PageSide>

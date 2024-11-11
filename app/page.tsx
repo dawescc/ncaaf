@@ -14,8 +14,8 @@ export default function Home() {
 					<PageTitle className='font-serif'>Top 25</PageTitle>
 					<PageDescription>The current Top 25.</PageDescription>
 				</PageHeader>
+				<Top25 rank='cfp' />
 
-				<Top25 />
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Top 25 Scoreboard</PageTitle>
 					<PageDescription>
@@ -29,6 +29,7 @@ export default function Home() {
 					</PageDescription>
 				</PageHeader>
 				<Scoreboard />
+
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Top 10 Statistics</PageTitle>
 					<PageDescription>Top 10 Statistical Leaders of all FBA I-A Teams and Players.</PageDescription>
