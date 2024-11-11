@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import EventCard from "@/components/scoreboard/event-card"; // Import the EventCard for live events
-import ScheduleEventCard from "@/components/team/schedule-event"; // Import the ScheduleEventCard for non-live events
+import EventCard from "@/components/scoreboard/event-card";
 
 interface EventPayload {
 	id: string;
@@ -24,8 +23,8 @@ async function fetchScoreboard(team: number): Promise<EventPayload[]> {
 	return data.events
 		.map((event: any) => ({
 			id: event.id,
-			startDate: event.date, // Ensure this matches the API response structure
-			status: event.competitions[0].status.type.state, // Access status from competition
+			startDate: event.date,
+			status: event.competitions[0].status.type.state,
 			valid: event.timeValid,
 			team,
 		}))
@@ -45,19 +44,12 @@ export default async function TeamSchedule({ team }: { team: number }) {
 
 	return (
 		<div className='grid grid-cols-1 gap-4'>
-			{events.map((event) =>
-				event.status === "in" ? (
-					<EventCard
-						key={event.id}
-						payload={event}
-					/>
-				) : (
-					<ScheduleEventCard
-						key={event.id}
-						payload={event}
-					/>
-				)
-			)}
+			{events.map((event) => (
+				<EventCard
+					key={event.id}
+					payload={event}
+				/>
+			))}
 		</div>
 	);
 }

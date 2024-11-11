@@ -1,4 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+export interface EventPayload {
+	id: string;
+	startDate: string;
+	status: "pre" | "in" | "post";
+	valid: boolean;
+	team?: number;
+}
+
 export type Competitor = {
 	id: number;
 	uid: string;

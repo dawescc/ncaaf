@@ -12,15 +12,9 @@ import { format, parseISO } from "date-fns";
 import { getTeamSlug } from "@/lib/utils";
 import Link from "next/link";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { EventPayload } from "@/types/types";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-interface EventPayload {
-	id: string;
-	startDate: string;
-	status: "pre" | "in" | "post";
-	valid: boolean;
-}
 
 interface Competitor {
 	team: {
@@ -123,22 +117,106 @@ export default function EventCard({ payload }: { payload: EventPayload }) {
 		return () => clearInterval(interval);
 	}, [payload]);
 
-	const prod = "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?&groups=80";
-	const { data, error } = useSWR(prod, fetcher, {
+	// Determine which API endpoint to use based on whether team is provided
+	const apiUrl = payload.team
+		? `https://site.api.espn.com/apis/site/v2/sports/football/college-football/teams/${payload.team}/schedule`
+		: `https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?&groups=80`;
+
+	const { data, error } = useSWR(apiUrl, fetcher, {
 		refreshInterval,
 	});
 
 	if (error) return <div className='text-red-500'>Failed to load event</div>;
 	if (!data) return <LoadDisplay />;
 
-	const event = data.events.find((e: any) => e.id === payload.id);
+	// For team schedule endpoint, the event is already in the correct format
+	const event = payload.team ? data.events.find((e: any) => e.id === payload.id) : data.events.find((e: any) => e.id === payload.id).competitions[0];
 
 	if (!event) return <div>Event not found</div>;
 
 	return <EventDisplay event={event} />;
 }
 
-const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor: Competitor; isPossession: boolean; showScore: boolean; isHome: boolean }) => (
+// Update the EventDisplay component to handle both data structures
+const EventDisplay = ({ event }: { event: any }) => {
+	// For scoreboard data, the event is the competition
+	// For schedule data, we need to get the first competition
+	const competition = event.competitions ? event.competitions[0] : event;
+	const state = event.status?.type?.state || competition.status?.type?.state;
+	const showScore = ["in", "post"].includes(state);
+
+	return (
+		<div className='bg-card text-card-foreground border rounded-lg shadow-sm text-sm p-2'>
+			<div className='flex items-center mb-2'>
+				<div className='flex grow justify-between'>
+					<TeamInfo
+						competitor={competition.competitors[1]}
+						isPossession={(state === "in" && competition.situation?.lastPlay?.team?.id === competition.competitors[1]?.team?.id) || false}
+						showScore={showScore}
+						isHome={false}
+					/>
+					<EventStatus event={event} />
+					<TeamInfo
+						competitor={competition.competitors[0]}
+						isPossession={(state === "in" && competition.situation?.lastPlay?.team?.id === competition.competitors[0]?.team?.id) || false}
+						showScore={showScore}
+						isHome={true}
+					/>
+				</div>
+			</div>
+
+			{state === "in" && competition.situation?.lastPlay && <LastPlay competition={competition} />}
+			{(state === "post" || state === "in") && competition.leaders && <StatLeaders competition={competition} />}
+		</div>
+	);
+};
+
+// Update the EventStatus component to handle both data structures
+const EventStatus = ({ event }: { event: any }) => {
+	const competition = event.competitions ? event.competitions[0] : event;
+	const state = event.status?.type?.state || competition.status?.type?.state;
+
+	if (state === "post") {
+		return (
+			<div className='flex flex-col items-center justify-center px-3 gap-2'>
+				<Badge>Final</Badge>
+				<Badge variant='secondary'>{format(parseISO(event.date), "PP")}</Badge>
+			</div>
+		);
+	} else if (state === "in") {
+		return (
+			<div className='flex flex-col items-center justify-center px-3 gap-2'>
+				<Badge variant='outline'>
+					{competition.status.displayClock} &sdot; Q{competition.status.period}
+				</Badge>
+				{competition.situation && (
+					<Badge variant='outline'>
+						{competition.situation.shortDownDistanceText} &sdot; {competition.situation.possessionText}
+					</Badge>
+				)}
+			</div>
+		);
+	} else {
+		return (
+			<div className='flex flex-col items-center justify-center px-3 gap-2'>
+				<Badge
+					variant='secondary'
+					className='text-sm'>
+					{format(parseISO(event.date), "PPp")}
+				</Badge>
+				{competition.broadcasts?.[0]?.names && (
+					<Badge
+						variant='secondary'
+						className='text-sm'>
+						{competition.broadcasts[0].names}
+					</Badge>
+				)}
+			</div>
+		);
+	}
+};
+
+const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor: any; isPossession: boolean; showScore: boolean; isHome: boolean }) => (
 	<div className={`flex items-center flex-1 gap-2 px-1 ${isHome ? "flex-row-reverse" : ""}`}>
 		<Link
 			href={`/teams/${getTeamSlug(parseInt(competitor.team.id))}`}
@@ -156,7 +234,6 @@ const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor:
 			</span>
 			<span className={`hidden sm:block lg:hidden text-lg md:text-lg font-serif font-bold group-hover:underline`}>
 				{competitor.curatedRank?.current !== 99 ? <sup className='font-mono mr-1'>{competitor.curatedRank.current}</sup> : null}
-
 				{competitor.team.shortDisplayName}
 			</span>
 			<span className={`sm:hidden text-lg md:text-lg font-serif font-bold group-hover:underline`}>
@@ -169,52 +246,11 @@ const TeamInfo = ({ competitor, isPossession, showScore, isHome }: { competitor:
 				className={`${isHome ? "mr-auto" : "ml-auto"} text-4xl font-mono font-black ${competitor.winner ? "text-green-500" : ""} ${
 					isPossession ? "underline" : ""
 				}`}>
-				{competitor.score}
+				{typeof competitor.score === "object" ? competitor.score.value : competitor.score}
 			</span>
 		)}
 	</div>
 );
-
-const EventStatus = ({ event }: { event: Event }) => {
-	const state = event.status.type.state;
-	const competition = event.competitions[0];
-
-	if (state === "post") {
-		return (
-			<div className='flex flex-col items-center justify-center px-3 gap-2'>
-				<Badge>Final</Badge>
-				<Badge variant='secondary'>{format(parseISO(event.date), "PP")}</Badge>
-			</div>
-		);
-	} else if (state === "in") {
-		return (
-			<div className='flex flex-col items-center justify-center px-3 gap-2'>
-				<Badge variant='outline'>
-					{competition.status.displayClock} &sdot; Q{competition.status.period}
-				</Badge>
-
-				<Badge variant='outline'>
-					{competition.situation.shortDownDistanceText} &sdot; {competition.situation.possessionText}
-				</Badge>
-			</div>
-		);
-	} else {
-		return (
-			<div className='flex flex-col items-center justify-center px-3 gap-2'>
-				<Badge
-					variant='secondary'
-					className='text-sm'>
-					{format(parseISO(event.date), "PPp")}
-				</Badge>
-				<Badge
-					variant='secondary'
-					className='text-sm'>
-					{competition.broadcasts[0].names}
-				</Badge>
-			</div>
-		);
-	}
-};
 
 const LastPlay = ({ competition }: { competition: Event["competitions"][0] }) => {
 	return (
@@ -277,38 +313,6 @@ const StatLeaders = ({ competition }: { competition: Event["competitions"][0] })
 				</div>
 			</CollapsibleContent>
 		</Collapsible>
-	);
-};
-
-const EventDisplay = ({ event }: { event: Event }) => {
-	const competition = event.competitions[0];
-	const state = event.status.type.state;
-	const showScore = ["in", "post"].includes(state);
-
-	return (
-		<div className='bg-card text-card-foreground border rounded-lg shadow-sm text-sm p-2'>
-			<div className='flex items-center mb-2'>
-				<div className='flex grow justify-between'>
-					<TeamInfo
-						competitor={competition.competitors[1]}
-						isPossession={(state === "in" && competition.situation?.lastPlay?.team?.id === competition.competitors[1]?.team?.id) || false}
-						showScore={showScore}
-						isHome={false}
-					/>
-					<EventStatus event={event} />
-					<TeamInfo
-						competitor={competition.competitors[0]}
-						isPossession={(state === "in" && competition.situation?.lastPlay?.team?.id === competition.competitors[0]?.team?.id) || false}
-						showScore={showScore}
-						isHome={true}
-					/>
-				</div>
-			</div>
-
-			{state === "in" && competition.situation.lastPlay && <LastPlay competition={competition} />}
-
-			{(state === "post" || state === "in") && competition.leaders && <StatLeaders competition={competition} />}
-		</div>
 	);
 };
 

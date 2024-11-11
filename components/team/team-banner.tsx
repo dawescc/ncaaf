@@ -45,8 +45,8 @@ const TeamBanner = async ({ teamId }: Props) => {
 		return (
 			<div
 				className={`border-b-4`}
-				style={{ borderColor: `#${teamData.color}` }}>
-				<div className='flex items-center space-x-4 p-4'>
+				style={{ backgroundColor: `#${teamData.color};` }}>
+				<div className='flex items-center gap-4 p-4'>
 					<TeamLogo
 						id={teamData.id.toString()}
 						width={64}

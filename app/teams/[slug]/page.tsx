@@ -19,19 +19,23 @@ export default async function Page({ params }: { params: { slug: string } }) {
 		<PageWrapper>
 			<PageContent>
 				<TeamBanner teamId={team.id} />
+
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Schedule</PageTitle>
 				</PageHeader>
 				<TeamSchedule team={team.id} />
+
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Team Leaders</PageTitle>
 				</PageHeader>
 				<TeamStatLeaders team={team.id} />
+
 				<PageHeader className='mt-8'>
 					<PageTitle className='font-serif'>Team Statistics</PageTitle>
 				</PageHeader>
 				<TeamStats team={team.id} />
 			</PageContent>
+
 			<PageSide team={team.id}>
 				<p className='font-medium'>News</p>
 				<GoogleNews keyword={team.slug} />

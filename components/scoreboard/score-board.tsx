@@ -1,13 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import EventCard from "@/components/scoreboard/event-card";
-
-interface EventPayload {
-	id: string;
-	startDate: string;
-	status: "pre" | "in" | "post";
-	valid: boolean;
-	groups?: number;
-}
+import { EventPayload } from "@/types/types";
 
 async function fetchScoreboard(groups?: number): Promise<EventPayload[]> {
 	const url = groups
